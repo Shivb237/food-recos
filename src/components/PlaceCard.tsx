@@ -4,6 +4,8 @@ import { PlaceMedia } from "./PlaceMedia";
 import { photoExpected } from "../lib/coverage";
 import { useSaved } from "../lib/storage";
 import { HeartChip } from "./Social";
+import { mealText } from "./PriceBand";
+import { BAND_LABEL } from "../../shared/price";
 
 const TIER = ["", "₹", "₹₹", "₹₹₹"];
 
@@ -14,9 +16,10 @@ const TIER = ["", "₹", "₹₹", "₹₹₹"];
 export function PlaceCard({ place, onOpen }: { place: Place; onOpen: (p: Place) => void }) {
   const saved = useSaved().includes(place.id);
   const photo = photoExpected(place);
+  const meal = mealText(place);
   const meta = photo
     ? [place.cuisine, place.priceTier ? TIER[place.priceTier] : null].filter(Boolean).join(" · ")
-    : place.price;
+    : [place.priceBand ? BAND_LABEL[place.priceBand] : null, meal].filter(Boolean).join(" · ") || null;
   return (
     <button class="card" type="button" onClick={() => onOpen(place)}>
       <PlaceMedia
@@ -26,6 +29,7 @@ export function PlaceCard({ place, onOpen }: { place: Place; onOpen: (p: Place) 
       <span class="card-body">
         {photo && <span class="card-name">{place.name}</span>}
         {meta && <span class="card-meta">{meta}</span>}
+        {photo && meal && <span class="card-meta">{meal}</span>}
         {place.flag && <span class="gtk">Good to know</span>}
       </span>
     </button>

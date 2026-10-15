@@ -9,7 +9,7 @@ Ratings, prices and notes per place are in `data/places.json`. This file covers 
 - EazyDiner for Punjabi Affair.
 - Delivery-only brands with no listing found have no rating: Bihari Bowl, Chai Chakhna Company, Pikadili, Tadka Treats, Mealful Rolls, Greens & More, ATH, California Burrito, Great Indian Khichdi, Home Plate, Sai Bihari Dhaba, Bihari Dhaba, Punjabi Paratha Junction, Balle Balle Punjabi, Box8, Rolls Mania, Manakamana Kitchen.
 
-## Segment conflicts flagged to Shivang (he kept his placements)
+## Segment conflicts (superseded Oct 2026 by the price bands in `docs/price-research.md`)
 
 - **Rajthali** (Best offers): priced like premium, ₹400–600 per person on Google.
 - **ITC Aashirvaad Soul Creations** (Premium): Swiggy lists ₹500 for two, so mid-range.

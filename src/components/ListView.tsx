@@ -1,4 +1,5 @@
-import { useEffect, useRef } from "preact/hooks";
+import { useEffect, useRef, useState } from "preact/hooks";
+import { BANDS, BAND_LABEL, type PriceBand } from "../../shared/price";
 import type { Mood, Place, Section } from "../../shared/types";
 import { PlaceCard } from "./PlaceCard";
 import { PickCard } from "./Hero";
@@ -18,10 +19,12 @@ export interface ListProps {
   onPick: () => void;
 }
 
-export function ListView({ title, sub, places, sections, grouped, chips, search, onBack, onOpen, onPick }: ListProps) {
+export function ListView({ title, sub, places: allPlaces, sections, grouped, chips, search, onBack, onOpen, onPick }: ListProps) {
   const input = useRef<HTMLInputElement>(null);
   useEffect(() => { if (search) input.current?.focus(); }, []);
 
+  const [band, setBand] = useState<PriceBand | null>(null);
+  const places = band ? allPlaces.filter((p) => p.priceBand === band) : allPlaces;
   const count = `${places.length} ${places.length === 1 ? "place" : "places"}`;
   const groups = grouped
     ? sections.map((s) => ({ section: s, items: places.filter((p) => p.section === s.id) })).filter((g) => g.items.length)
@@ -52,6 +55,12 @@ export function ListView({ title, sub, places, sections, grouped, chips, search,
             />
           </label>
         )}
+        <div class="chips" role="group" aria-label="Price">
+          <button class="chip" type="button" aria-pressed={band === null} onClick={() => setBand(null)}>Any price</button>
+          {BANDS.map((b) => (
+            <button key={b} class="chip" type="button" aria-pressed={band === b} onClick={() => setBand(band === b ? null : b)}>{BAND_LABEL[b]}</button>
+          ))}
+        </div>
         {chips && (
           <div class="chips" role="group" aria-label="Other moods">
             {chips.moods.map((m) => (

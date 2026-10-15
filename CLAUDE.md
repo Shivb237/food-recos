@@ -35,13 +35,13 @@ Read this file first. Details live in `docs/`:
 - **Order links:** Swiggy and Zomato on every place. Google Maps link where known.
 - **Likes and comments like Instagram** (heart, double-tap, comment thread, "Most loved", "What people are saying").
 - Keep: section rows, "See all", search, "Can't decide? pick for me" with a shuffle, details in a bottom sheet, save for later, recently viewed, confetti on key moments.
-- Respect his section placement even where research suggests a different price segment (he decides). Show the segment notes as "Good to know".
+- Price bands (changed Oct 2026 at his request): Budget / Mid-range / Premium by the delivery-menu price of a veg meal for one (under ₹200 / ₹200–349 / ₹350+). Budget, Mid-range and Premium sections are filled by band; the other sections keep his placement and just show the band. Ordering prices differ from dining-out prices, so use delivery menus. See `docs/price-research.md`.
 - Don't list dishes to order. His rule: "Not sharing what I ordered, they can explore themselves."
 
 ## Content rules
 
 - Section names are his: Best offers & taste, Premium, Healthy, Budget, Special mentions, plus "New to try" (Claude's suggestions, not yet tried by him).
-- ITC Aashirvaad Soul Creations and Norfest – The Dhaba were moved into Premium at his request.
+- ITC Aashirvaad Soul Creations is Premium by price. Norfest moved to Mid-range under the price rules (he had earlier asked for Premium; mention if he objects).
 - Google lists Norfest's Manikonda dine-in outlet as permanently closed. Keep the "check app" warning.
 - Ratings and prices were checked October 2026. Treat them as snapshots; the Places API can supply live ratings later (cost note in architecture.md).
 

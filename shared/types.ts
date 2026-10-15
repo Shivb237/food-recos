@@ -1,5 +1,7 @@
-export const SECTION_IDS = ["best", "new", "premium", "healthy", "budget", "special"] as const;
+export const SECTION_IDS = ["best", "new", "premium", "mid", "healthy", "budget", "special"] as const;
 export type SectionId = (typeof SECTION_IDS)[number];
+
+export type PriceBand = "budget" | "mid" | "premium";
 
 export const VEG_KINDS = ["pure", "both", "options"] as const;
 export type VegKind = (typeof VEG_KINDS)[number];
@@ -37,9 +39,18 @@ export interface Place {
   moods: string[];
   veg: VegKind;
   rating: Rating | null;
+  /** Dining-out price as found on Google/Swiggy/EazyDiner, e.g. "₹400–600 per person". Not the ordering price. */
   price: string | null;
-  /** 1 = under ₹250 per person, 2 = ₹250–700, 3 = above ₹700. Null when price is unknown. */
+  /** 1, 2, 3 = budget, mid-range, premium (see shared/price.ts). Null when there is no price data. */
   priceTier: 1 | 2 | 3 | null;
+  /** Typical veg main meal for one, in rupees, on the DELIVERY menu (Swiggy/Zomato). Null if unknown or not a meal (sweets). */
+  mealPrice: number | null;
+  /** Derived from mealPrice by bandFor(). */
+  priceBand: PriceBand | null;
+  /** Where mealPrice came from, in plain words. Never names the dish on the site. */
+  priceSource: string | null;
+  /** menu: found on a Swiggy/Zomato menu. estimate: inferred from other signals; please check. */
+  priceConfidence: "menu" | "estimate" | null;
   note: string | null;
   /** "Good to know" text. */
   flag: string | null;

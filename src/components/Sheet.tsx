@@ -10,6 +10,7 @@ import { burstAt, reducedMotion } from "../lib/fx";
 import { pushRecent, toggleSaved, useSaved } from "../lib/storage";
 import { toast } from "../lib/toast";
 import { Comments, SocialBar } from "./Social";
+import { PriceBand, mealText } from "./PriceBand";
 import { setLike, useSocial } from "../lib/social";
 
 const FOCUSABLE = 'a[href],button:not([disabled]),input,[tabindex]:not([tabindex="-1"])';
@@ -140,21 +141,25 @@ export function PlaceDetail({ place, label, onAgain }: { place: Place; label?: s
       <div class="sline">
         <VegBadge veg={place.veg} />
         {place.cuisine && <span>{place.cuisine}</span>}
-        <span class="secpill">{section.title}</span>
+        {/* Budget, Mid-range and Premium sections just repeat the price band, so show only one of them. */}
+        {!["budget", "mid", "premium"].includes(place.section) && <span class="secpill">{section.title}</span>}
+        <PriceBand place={place} />
       </div>
 
       <SocialBar place={place} />
 
       {place.closed && <div class="sflag closed"><b>Check the app first</b>{place.flag}</div>}
 
-      {(place.rating || place.price) && (
+      {(place.rating || place.price || place.mealPrice) && (
         <div class="facts">
           {place.rating && (
             <div class="fact"><span>Rating · {place.rating.source}</span><b>{place.rating.value.toFixed(1)} ★</b> <small>({place.rating.count})</small></div>
           )}
-          {place.price && <div class="fact"><span>Price</span><b>{place.price}</b></div>}
+          {place.mealPrice && <div class="fact"><span>Ordering</span><b>{mealText(place)}</b></div>}
+          {place.price && <div class="fact"><span>Dining out</span><b>{place.price}</b></div>}
         </div>
       )}
+      {place.mealPrice && <p class="pricenote">Ordering prices are from delivery menus, October 2026{place.priceConfidence === "estimate" ? ", and this one is an estimate" : ""}. Dining-out prices are usually different.</p>}
       {place.note && <p class="snote">{place.note}</p>}
       {place.flag && !place.closed && <div class="sflag"><b>Good to know</b>{place.flag}</div>}
 

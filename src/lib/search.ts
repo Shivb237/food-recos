@@ -9,6 +9,8 @@ const VEG_WORDS = {
   options: "veg options",
 } as const;
 
+const BAND_WORDS = { budget: "budget cheap affordable", mid: "mid range midrange mid-range", premium: "premium expensive pricey fine dining" } as const;
+
 export interface SearchIndex {
   entries: { place: Place; name: string; cuisine: string; rest: string }[];
 }
@@ -22,7 +24,7 @@ export function buildIndex(places: Place[], moods: Mood[], sections: Section[]):
       name: normalise(place.name),
       cuisine: normalise(place.cuisine ?? ""),
       rest: normalise(
-        [sectionTitle.get(place.section), ...place.moods.map((m) => moodText.get(m)), VEG_WORDS[place.veg], place.note].join(" "),
+        [sectionTitle.get(place.section), ...place.moods.map((m) => moodText.get(m)), VEG_WORDS[place.veg], place.note, place.priceBand ? BAND_WORDS[place.priceBand] : ""].join(" "),
       ),
     })),
   };

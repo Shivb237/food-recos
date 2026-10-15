@@ -19,6 +19,7 @@ export const SECTION_EYEBROW: Record<string, string> = {
   best: "Go-to favourites",
   new: "Fresh finds",
   premium: "Proper meals",
+  mid: "Everyday good",
   healthy: "Light & clean",
   budget: "Easy on the pocket",
   special: "Worth knowing",

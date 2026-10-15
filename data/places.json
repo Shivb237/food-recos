@@ -18,6 +18,11 @@
       "sub": "For when you want a proper meal."
     },
     {
+      "id": "mid",
+      "title": "Mid-range",
+      "sub": "Good meals without the splurge."
+    },
+    {
       "id": "healthy",
       "title": "Healthy",
       "sub": "Light days, clean plates."
@@ -104,7 +109,7 @@
       "veg": "options",
       "rating": null,
       "price": null,
-      "priceTier": null,
+      "priceTier": 2,
       "note": null,
       "flag": null,
       "closed": false,
@@ -112,7 +117,11 @@
       "swiggyUrl": null,
       "zomatoUrl": "https://www.zomato.com/hyderabad/bihari-bowl-jubilee-hills",
       "photo": null,
-      "triedByShivang": true
+      "triedByShivang": true,
+      "mealPrice": 270,
+      "priceBand": "mid",
+      "priceSource": "No Hyderabad menu found; Bihari Bowl bowls in Chennai/Pune are ₹259–271",
+      "priceConfidence": "estimate"
     },
     {
       "id": "rajthali",
@@ -134,13 +143,17 @@
       "price": "₹400–600 per person",
       "priceTier": 2,
       "note": "Unlimited thali, Jubilee Hills.",
-      "flag": "Priced like a premium place, more than the rest of this section.",
+      "flag": null,
       "closed": false,
       "googleMapsUrl": "https://maps.google.com/maps?cid=8471537223578018234",
       "swiggyUrl": null,
       "zomatoUrl": "https://www.zomato.com/hyderabad/rajthali-jubilee-hills",
       "photo": null,
-      "triedByShivang": true
+      "triedByShivang": true,
+      "mealPrice": 260,
+      "priceBand": "mid",
+      "priceSource": "Zomato delivery menu (Jubilee Hills): meal boxes ₹180–340, middle of the range",
+      "priceConfidence": "menu"
     },
     {
       "id": "chai-chakhna-company",
@@ -155,7 +168,7 @@
       "veg": "options",
       "rating": null,
       "price": null,
-      "priceTier": null,
+      "priceTier": 1,
       "note": null,
       "flag": null,
       "closed": false,
@@ -163,7 +176,11 @@
       "swiggyUrl": null,
       "zomatoUrl": null,
       "photo": null,
-      "triedByShivang": true
+      "triedByShivang": true,
+      "mealPrice": 150,
+      "priceBand": "budget",
+      "priceSource": "Zomato average about ₹150 per order; no full menu found",
+      "priceConfidence": "estimate"
     },
     {
       "id": "meal-o-clock-pure-veg",
@@ -191,7 +208,11 @@
       "swiggyUrl": null,
       "zomatoUrl": "https://www.zomato.com/hyderabad/meal-o-clock-pure-veg-hitech-city",
       "photo": null,
-      "triedByShivang": true
+      "triedByShivang": true,
+      "mealPrice": 150,
+      "priceBand": "budget",
+      "priceSource": "Zomato average about ₹100 per order; mini veg thali on menu, price not found",
+      "priceConfidence": "estimate"
     },
     {
       "id": "pikadili",
@@ -204,7 +225,7 @@
       "veg": "options",
       "rating": null,
       "price": null,
-      "priceTier": null,
+      "priceTier": 3,
       "note": null,
       "flag": null,
       "closed": false,
@@ -212,7 +233,11 @@
       "swiggyUrl": null,
       "zomatoUrl": "https://www.zomato.com/hyderabad/pikadilli-4-manikonda",
       "photo": null,
-      "triedByShivang": true
+      "triedByShivang": true,
+      "mealPrice": 400,
+      "priceBand": "premium",
+      "priceSource": "No delivery menu found; dine-in about ₹1,500 for two points to premium",
+      "priceConfidence": "estimate"
     },
     {
       "id": "millet-express",
@@ -233,15 +258,19 @@
         "source": "Swiggy"
       },
       "price": "₹200 for two",
-      "priceTier": 1,
+      "priceTier": 2,
       "note": "Also has a few egg and chicken items.",
-      "flag": "Budget-priced and healthy, so it fits Budget and Healthy too.",
+      "flag": null,
       "closed": false,
       "googleMapsUrl": null,
       "swiggyUrl": null,
       "zomatoUrl": null,
       "photo": null,
-      "triedByShivang": true
+      "triedByShivang": true,
+      "mealPrice": 229,
+      "priceBand": "mid",
+      "priceSource": "Zomato delivery menu (Manikonda): veg khichdi ₹229, paneer ₹249",
+      "priceConfidence": "menu"
     },
     {
       "id": "the-kulcha-kulture",
@@ -268,7 +297,11 @@
       "swiggyUrl": null,
       "zomatoUrl": "https://www.zomato.com/hyderabad/the-kulcha-kulture-gandipet",
       "photo": null,
-      "triedByShivang": true
+      "triedByShivang": true,
+      "mealPrice": 280,
+      "priceBand": "mid",
+      "priceSource": "Mini kulcha thali exists but price not found; about ₹450 for two dining in",
+      "priceConfidence": "estimate"
     },
     {
       "id": "haldirams",
@@ -293,7 +326,11 @@
       "swiggyUrl": "https://www.swiggy.com/restaurants/haldirams-restaurant-gachibowli-forest-dept-colony-hyderabad-311437",
       "zomatoUrl": "https://www.zomato.com/hyderabad/haldirams-gachibowli",
       "photo": null,
-      "triedByShivang": true
+      "triedByShivang": true,
+      "mealPrice": 349,
+      "priceBand": "mid",
+      "priceSource": "Zomato delivery menu, another Hyderabad outlet: veg thali ₹349",
+      "priceConfidence": "menu"
     },
     {
       "id": "tadka-treats",
@@ -314,7 +351,11 @@
       "swiggyUrl": null,
       "zomatoUrl": null,
       "photo": null,
-      "triedByShivang": true
+      "triedByShivang": true,
+      "mealPrice": null,
+      "priceBand": null,
+      "priceSource": null,
+      "priceConfidence": null
     },
     {
       "id": "mealful-rolls",
@@ -330,7 +371,7 @@
       "veg": "options",
       "rating": null,
       "price": null,
-      "priceTier": null,
+      "priceTier": 1,
       "note": null,
       "flag": null,
       "closed": false,
@@ -338,7 +379,11 @@
       "swiggyUrl": null,
       "zomatoUrl": null,
       "photo": null,
-      "triedByShivang": true
+      "triedByShivang": true,
+      "mealPrice": 198,
+      "priceBand": "budget",
+      "priceSource": "Zomato delivery menu: pack of 2 big rolls ₹198",
+      "priceConfidence": "menu"
     },
     {
       "id": "raju-gari-biryani",
@@ -357,7 +402,7 @@
         "source": "Google Maps"
       },
       "price": "₹200–400 per person",
-      "priceTier": 2,
+      "priceTier": 1,
       "note": "Has a paneer-mushroom biryani.",
       "flag": "Reviews say quality varies between orders.",
       "closed": false,
@@ -365,7 +410,11 @@
       "swiggyUrl": null,
       "zomatoUrl": "https://www.zomato.com/hyderabad/raju-gari-biryani-manikonda",
       "photo": null,
-      "triedByShivang": true
+      "triedByShivang": true,
+      "mealPrice": 165,
+      "priceBand": "budget",
+      "priceSource": "Zomato delivery menu, other Hyderabad outlets: paneer biryani ₹165, veg dum biryani ₹149",
+      "priceConfidence": "menu"
     },
     {
       "id": "1881-dum-house",
@@ -384,7 +433,7 @@
         "source": "Swiggy"
       },
       "price": null,
-      "priceTier": null,
+      "priceTier": 2,
       "note": "19 veg items, including a tandoori paneer dum biryani.",
       "flag": null,
       "closed": false,
@@ -392,7 +441,11 @@
       "swiggyUrl": null,
       "zomatoUrl": "https://www.zomato.com/hyderabad/1881-dum-house-lucknows-legacy-manikonda",
       "photo": null,
-      "triedByShivang": true
+      "triedByShivang": true,
+      "mealPrice": 330,
+      "priceBand": "mid",
+      "priceSource": "No veg menu prices found; typical premium-biryani pricing",
+      "priceConfidence": "estimate"
     },
     {
       "id": "biryani-by-kilo",
@@ -414,13 +467,17 @@
       "price": "₹700 for two",
       "priceTier": 2,
       "note": "Cooked per order in clay handis. Has a paneer biryani.",
-      "flag": "Pricier than the rest of this section.",
+      "flag": null,
       "closed": false,
       "googleMapsUrl": null,
       "swiggyUrl": "https://www.swiggy.com/city/hyderabad/biryani-by-kilo-sri-krishna-sanjay-commercial-gachibowli-rest594950",
       "zomatoUrl": "https://www.zomato.com/hyderabad/biryani-by-kilo-gachibowli",
       "photo": null,
-      "triedByShivang": true
+      "triedByShivang": true,
+      "mealPrice": 319,
+      "priceBand": "mid",
+      "priceSource": "No Hyderabad menu found; single paneer biryani is ₹319 at other outlets",
+      "priceConfidence": "estimate"
     },
     {
       "id": "salt",
@@ -448,14 +505,18 @@
       "swiggyUrl": null,
       "zomatoUrl": "https://www.zomato.com/hyderabad/salt-indian-restaurant-nanakramguda",
       "photo": null,
-      "triedByShivang": true
+      "triedByShivang": true,
+      "mealPrice": 450,
+      "priceBand": "premium",
+      "priceSource": "Dine-in about ₹1,400–1,600 for two; delivery menu prices not found",
+      "priceConfidence": "estimate"
     },
     {
       "id": "amritsari-aangan",
       "name": "Amritsari Aangan",
       "searchName": "Amritsari Aangan",
       "placesQuery": null,
-      "section": "premium",
+      "section": "mid",
       "cuisine": "Punjabi",
       "moods": [
         "punjabi",
@@ -468,7 +529,7 @@
         "source": "Google Maps"
       },
       "price": "₹400–1,200 per person",
-      "priceTier": 3,
+      "priceTier": 2,
       "note": "Kondapur branch. The closer Narsingi branch is 4.1 from 1,599 reviews.",
       "flag": null,
       "closed": false,
@@ -476,14 +537,18 @@
       "swiggyUrl": null,
       "zomatoUrl": "https://www.zomato.com/hyderabad/amritsari-aangan-kondapur",
       "photo": null,
-      "triedByShivang": true
+      "triedByShivang": true,
+      "mealPrice": 219,
+      "priceBand": "mid",
+      "priceSource": "Zomato delivery menu (Narsingi/Gandipet outlet): veg rice thali ₹219",
+      "priceConfidence": "menu"
     },
     {
       "id": "the-punjabis-swag",
       "name": "The Punjabis Swag",
       "searchName": "The Punjabis Swag",
       "placesQuery": null,
-      "section": "premium",
+      "section": "mid",
       "cuisine": "Punjabi dhaba-style",
       "moods": [
         "punjabi",
@@ -504,7 +569,11 @@
       "swiggyUrl": null,
       "zomatoUrl": "https://www.zomato.com/hyderabad/the-punjabis-swag-gachibowli",
       "photo": null,
-      "triedByShivang": true
+      "triedByShivang": true,
+      "mealPrice": 300,
+      "priceBand": "mid",
+      "priceSource": "No menu prices found; about ₹500–550 for two dining in",
+      "priceConfidence": "estimate"
     },
     {
       "id": "punjabi-affair",
@@ -520,7 +589,7 @@
       "veg": "both",
       "rating": null,
       "price": "₹800 for two",
-      "priceTier": 2,
+      "priceTier": 3,
       "note": "Only 4 reviews on EazyDiner, too few to judge.",
       "flag": null,
       "closed": false,
@@ -528,14 +597,18 @@
       "swiggyUrl": null,
       "zomatoUrl": "https://www.zomato.com/hyderabad/punjabi-affair-kondapur",
       "photo": null,
-      "triedByShivang": true
+      "triedByShivang": true,
+      "mealPrice": 350,
+      "priceBand": "premium",
+      "priceSource": "Veg thali about ₹350; Zomato delivery menu (Kondapur) veg mains ₹359–469",
+      "priceConfidence": "menu"
     },
     {
       "id": "norfest-the-dhaba",
       "name": "Norfest – The Dhaba",
       "searchName": "Norfest The Dhaba",
       "placesQuery": null,
-      "section": "premium",
+      "section": "mid",
       "cuisine": "North Indian dhaba",
       "moods": [
         "punjabi"
@@ -543,7 +616,7 @@
       "veg": "options",
       "rating": null,
       "price": null,
-      "priceTier": null,
+      "priceTier": 2,
       "note": null,
       "flag": "Google lists the Manikonda dine-in outlet as permanently closed. If it still shows on Swiggy or Zomato, it's delivering from another kitchen.",
       "closed": true,
@@ -551,7 +624,11 @@
       "swiggyUrl": null,
       "zomatoUrl": "https://www.zomato.com/hyderabad/norfest-the-dhaba-manikonda",
       "photo": null,
-      "triedByShivang": true
+      "triedByShivang": true,
+      "mealPrice": 299,
+      "priceBand": "mid",
+      "priceSource": "Gachibowli outlet delivery menu: veg thali ₹299; the Manikonda outlet lists larger thalis from ₹709",
+      "priceConfidence": "estimate"
     },
     {
       "id": "itc-aashirvaad-soul-creations",
@@ -572,15 +649,19 @@
         "source": "Swiggy"
       },
       "price": "₹500 for two",
-      "priceTier": 2,
+      "priceTier": 3,
       "note": "Pav bhaji and khichdi run about ₹280–300.",
-      "flag": "Mid-range by price, cheaper than the rest of Premium.",
+      "flag": null,
       "closed": false,
       "googleMapsUrl": null,
       "swiggyUrl": null,
       "zomatoUrl": "https://www.zomato.com/hyderabad/itc-aashirvaad-soul-creations-gachibowli",
       "photo": null,
-      "triedByShivang": true
+      "triedByShivang": true,
+      "mealPrice": 400,
+      "priceBand": "premium",
+      "priceSource": "Hyderabad prices not found; same-brand veg thalis ₹297–447 in other cities, and about ₹400–500 by Shivang's orders",
+      "priceConfidence": "estimate"
     },
     {
       "id": "greens-and-more",
@@ -595,7 +676,7 @@
       "veg": "options",
       "rating": null,
       "price": null,
-      "priceTier": null,
+      "priceTier": 2,
       "note": null,
       "flag": null,
       "closed": false,
@@ -603,7 +684,11 @@
       "swiggyUrl": null,
       "zomatoUrl": "https://www.zomato.com/hyderabad/greens-more-gachibowli",
       "photo": null,
-      "triedByShivang": true
+      "triedByShivang": true,
+      "mealPrice": 290,
+      "priceBand": "mid",
+      "priceSource": "Zomato delivery menu, Hitech City outlet: salads and bowls ₹290–320",
+      "priceConfidence": "menu"
     },
     {
       "id": "ath-all-things-healthy",
@@ -618,7 +703,7 @@
       "veg": "options",
       "rating": null,
       "price": null,
-      "priceTier": null,
+      "priceTier": 1,
       "note": null,
       "flag": null,
       "closed": false,
@@ -626,7 +711,11 @@
       "swiggyUrl": null,
       "zomatoUrl": "https://www.zomato.com/hyderabad/ath-all-things-healthy-manikonda",
       "photo": null,
-      "triedByShivang": true
+      "triedByShivang": true,
+      "mealPrice": 190,
+      "priceBand": "budget",
+      "priceSource": "Zomato average about ₹150 per order; no full menu found",
+      "priceConfidence": "estimate"
     },
     {
       "id": "harvest-salad-co",
@@ -648,13 +737,17 @@
       "price": "₹700 for two",
       "priceTier": 2,
       "note": "Salads and bowls cost ₹329–399.",
-      "flag": "Pricier than the rest of this section.",
+      "flag": null,
       "closed": false,
       "googleMapsUrl": null,
       "swiggyUrl": null,
       "zomatoUrl": "https://www.zomato.com/hyderabad/harvest-salad-co-manikonda",
       "photo": null,
-      "triedByShivang": true
+      "triedByShivang": true,
+      "mealPrice": 299,
+      "priceBand": "mid",
+      "priceSource": "Zomato delivery menu: veg bowls ₹299",
+      "priceConfidence": "menu"
     },
     {
       "id": "lo-low-carb-and-keto-foods",
@@ -681,7 +774,11 @@
       "swiggyUrl": null,
       "zomatoUrl": "https://www.zomato.com/hyderabad/lo-low-carb-and-keto-foods-manikonda",
       "photo": null,
-      "triedByShivang": true
+      "triedByShivang": true,
+      "mealPrice": 299,
+      "priceBand": "mid",
+      "priceSource": "No Hyderabad menu found; keto meals ₹289–339 at other cities' outlets",
+      "priceConfidence": "estimate"
     },
     {
       "id": "california-burrito",
@@ -697,7 +794,7 @@
       "veg": "options",
       "rating": null,
       "price": null,
-      "priceTier": null,
+      "priceTier": 2,
       "note": null,
       "flag": "Not healthy by default. Pick a bowl or salad.",
       "closed": false,
@@ -705,7 +802,11 @@
       "swiggyUrl": null,
       "zomatoUrl": "https://www.zomato.com/hyderabad/california-burrito-manikonda",
       "photo": null,
-      "triedByShivang": true
+      "triedByShivang": true,
+      "mealPrice": 279,
+      "priceBand": "mid",
+      "priceSource": "Zomato delivery menu, nearby outlets: veg rice bowl ₹249–279",
+      "priceConfidence": "menu"
     },
     {
       "id": "great-indian-khichdi-by-eatfit",
@@ -721,7 +822,7 @@
       "veg": "pure",
       "rating": null,
       "price": null,
-      "priceTier": null,
+      "priceTier": 2,
       "note": null,
       "flag": null,
       "closed": false,
@@ -729,7 +830,11 @@
       "swiggyUrl": null,
       "zomatoUrl": "https://www.zomato.com/hyderabad/great-indian-khichdi-by-eatfit-gachibowli",
       "photo": null,
-      "triedByShivang": true
+      "triedByShivang": true,
+      "mealPrice": 209,
+      "priceBand": "mid",
+      "priceSource": "Zomato delivery menu (Gachibowli): dal makhani chawal ₹209",
+      "priceConfidence": "menu"
     },
     {
       "id": "home-plate-by-eatfit",
@@ -745,7 +850,7 @@
       "veg": "options",
       "rating": null,
       "price": null,
-      "priceTier": null,
+      "priceTier": 2,
       "note": null,
       "flag": null,
       "closed": false,
@@ -753,7 +858,11 @@
       "swiggyUrl": null,
       "zomatoUrl": "https://www.zomato.com/hyderabad/home-plate-by-eatfit-gachibowli",
       "photo": null,
-      "triedByShivang": true
+      "triedByShivang": true,
+      "mealPrice": 262,
+      "priceBand": "mid",
+      "priceSource": "Zomato delivery menu, another Hyderabad outlet: veg thali ₹262",
+      "priceConfidence": "menu"
     },
     {
       "id": "sai-bihari-dhaba",
@@ -769,7 +878,7 @@
       "veg": "options",
       "rating": null,
       "price": null,
-      "priceTier": null,
+      "priceTier": 1,
       "note": null,
       "flag": null,
       "closed": false,
@@ -777,7 +886,11 @@
       "swiggyUrl": null,
       "zomatoUrl": null,
       "photo": null,
-      "triedByShivang": true
+      "triedByShivang": true,
+      "mealPrice": 150,
+      "priceBand": "budget",
+      "priceSource": "Zomato average about ₹150 per order; no menu found",
+      "priceConfidence": "estimate"
     },
     {
       "id": "bihari-dhaba",
@@ -793,7 +906,7 @@
       "veg": "options",
       "rating": null,
       "price": null,
-      "priceTier": null,
+      "priceTier": 1,
       "note": null,
       "flag": null,
       "closed": false,
@@ -801,7 +914,11 @@
       "swiggyUrl": null,
       "zomatoUrl": "https://www.zomato.com/hyderabad/bihari-dhaba-gachibowli",
       "photo": null,
-      "triedByShivang": true
+      "triedByShivang": true,
+      "mealPrice": 150,
+      "priceBand": "budget",
+      "priceSource": "About ₹200 for two; no delivery menu prices found",
+      "priceConfidence": "estimate"
     },
     {
       "id": "udupis-upahar",
@@ -829,7 +946,11 @@
       "swiggyUrl": null,
       "zomatoUrl": "https://www.zomato.com/hyderabad/udipis-upahar-manikonda",
       "photo": null,
-      "triedByShivang": true
+      "triedByShivang": true,
+      "mealPrice": 160,
+      "priceBand": "budget",
+      "priceSource": "No meal prices found; about ₹300 for two",
+      "priceConfidence": "estimate"
     },
     {
       "id": "jdm-punjabi-dhaba",
@@ -858,7 +979,11 @@
       "swiggyUrl": null,
       "zomatoUrl": "https://www.zomato.com/hyderabad/jdm-punjabi-dhaba-gachibowli",
       "photo": null,
-      "triedByShivang": true
+      "triedByShivang": true,
+      "mealPrice": 170,
+      "priceBand": "budget",
+      "priceSource": "Zomato delivery menu (Gachibowli): veg thali ₹160, paneer meal ₹170",
+      "priceConfidence": "menu"
     },
     {
       "id": "punjabi-paratha-junction",
@@ -874,7 +999,7 @@
       "veg": "options",
       "rating": null,
       "price": null,
-      "priceTier": null,
+      "priceTier": 1,
       "note": null,
       "flag": null,
       "closed": false,
@@ -882,7 +1007,11 @@
       "swiggyUrl": null,
       "zomatoUrl": "https://www.zomato.com/hyderabad/punjabi-paratha-junction-manikonda",
       "photo": null,
-      "triedByShivang": true
+      "triedByShivang": true,
+      "mealPrice": 180,
+      "priceBand": "budget",
+      "priceSource": "About ₹300 for two; no menu prices found",
+      "priceConfidence": "estimate"
     },
     {
       "id": "balle-balle-punjabi",
@@ -898,7 +1027,7 @@
       "veg": "options",
       "rating": null,
       "price": null,
-      "priceTier": null,
+      "priceTier": 1,
       "note": null,
       "flag": null,
       "closed": false,
@@ -906,14 +1035,18 @@
       "swiggyUrl": null,
       "zomatoUrl": "https://www.zomato.com/hyderabad/balle-balle-punjabi-manikonda",
       "photo": null,
-      "triedByShivang": true
+      "triedByShivang": true,
+      "mealPrice": 150,
+      "priceBand": "budget",
+      "priceSource": "Zomato average about ₹100 per order; no menu prices found",
+      "priceConfidence": "estimate"
     },
     {
       "id": "box8",
       "name": "Box8",
       "searchName": "Box8",
       "placesQuery": null,
-      "section": "budget",
+      "section": "mid",
       "cuisine": "Meal bowls",
       "moods": [
         "cheap"
@@ -921,7 +1054,7 @@
       "veg": "options",
       "rating": null,
       "price": null,
-      "priceTier": null,
+      "priceTier": 2,
       "note": null,
       "flag": null,
       "closed": false,
@@ -929,7 +1062,11 @@
       "swiggyUrl": null,
       "zomatoUrl": "https://www.zomato.com/hyderabad/box8-desi-meals-manikonda",
       "photo": null,
-      "triedByShivang": true
+      "triedByShivang": true,
+      "mealPrice": 259,
+      "priceBand": "mid",
+      "priceSource": "Zomato delivery menu, other Hyderabad outlets: paneer mini meal ₹259, thali ₹279–329",
+      "priceConfidence": "menu"
     },
     {
       "id": "rolls-mania",
@@ -946,7 +1083,7 @@
       "veg": "options",
       "rating": null,
       "price": null,
-      "priceTier": null,
+      "priceTier": 1,
       "note": null,
       "flag": null,
       "closed": false,
@@ -954,7 +1091,11 @@
       "swiggyUrl": null,
       "zomatoUrl": "https://www.zomato.com/hyderabad/rolls-mania-gachibowli",
       "photo": null,
-      "triedByShivang": true
+      "triedByShivang": true,
+      "mealPrice": 170,
+      "priceBand": "budget",
+      "priceSource": "No Hyderabad menu found; average about ₹350 for two",
+      "priceConfidence": "estimate"
     },
     {
       "id": "vellanki-foods",
@@ -981,7 +1122,11 @@
       "swiggyUrl": null,
       "zomatoUrl": "https://www.zomato.com/hyderabad/vellanki-foods-madhapur",
       "photo": null,
-      "triedByShivang": true
+      "triedByShivang": true,
+      "mealPrice": null,
+      "priceBand": null,
+      "priceSource": null,
+      "priceConfidence": null
     },
     {
       "id": "manakamana-kitchen",
@@ -997,7 +1142,7 @@
       "veg": "options",
       "rating": null,
       "price": null,
-      "priceTier": null,
+      "priceTier": 1,
       "note": "Cheap rotis. Order these when you have sabzi at home or are making some.",
       "flag": null,
       "closed": false,
@@ -1005,7 +1150,11 @@
       "swiggyUrl": null,
       "zomatoUrl": null,
       "photo": null,
-      "triedByShivang": true
+      "triedByShivang": true,
+      "mealPrice": 100,
+      "priceBand": "budget",
+      "priceSource": "Sells rotis, not full meals; no menu found",
+      "priceConfidence": "estimate"
     },
     {
       "id": "amrutham-pure-vegetarian",
@@ -1035,7 +1184,11 @@
       "swiggyUrl": null,
       "zomatoUrl": null,
       "photo": null,
-      "triedByShivang": false
+      "triedByShivang": false,
+      "mealPrice": 160,
+      "priceBand": "budget",
+      "priceSource": "Under ₹200 per person; no delivery menu found",
+      "priceConfidence": "estimate"
     },
     {
       "id": "suruchi-tiffin-room",
@@ -1063,7 +1216,11 @@
       "swiggyUrl": null,
       "zomatoUrl": null,
       "photo": null,
-      "triedByShivang": false
+      "triedByShivang": false,
+      "mealPrice": 150,
+      "priceBand": "budget",
+      "priceSource": "Under ₹200 per person; no delivery menu found",
+      "priceConfidence": "estimate"
     },
     {
       "id": "sai-deeksha-tiffins-and-snacks",
@@ -1091,7 +1248,11 @@
       "swiggyUrl": null,
       "zomatoUrl": null,
       "photo": null,
-      "triedByShivang": false
+      "triedByShivang": false,
+      "mealPrice": 150,
+      "priceBand": "budget",
+      "priceSource": "Under ₹200 per person; no delivery menu found",
+      "priceConfidence": "estimate"
     },
     {
       "id": "taara-kitchen",
@@ -1119,7 +1280,11 @@
       "swiggyUrl": null,
       "zomatoUrl": null,
       "photo": null,
-      "triedByShivang": false
+      "triedByShivang": false,
+      "mealPrice": 190,
+      "priceBand": "budget",
+      "priceSource": "Under ₹200 per person; same-address Taram Kitchen is about ₹200 per order",
+      "priceConfidence": "estimate"
     },
     {
       "id": "vaishnavi-tiffin-centre",
@@ -1147,7 +1312,11 @@
       "swiggyUrl": null,
       "zomatoUrl": null,
       "photo": null,
-      "triedByShivang": false
+      "triedByShivang": false,
+      "mealPrice": 150,
+      "priceBand": "budget",
+      "priceSource": "About ₹200 for two; no menu found",
+      "priceConfidence": "estimate"
     },
     {
       "id": "varalakshmi-tiffins",
@@ -1174,7 +1343,11 @@
       "swiggyUrl": null,
       "zomatoUrl": null,
       "photo": null,
-      "triedByShivang": false
+      "triedByShivang": false,
+      "mealPrice": 140,
+      "priceBand": "budget",
+      "priceSource": "Zomato delivery menu (Gachibowli): dosas ₹109–179, idly ₹115–149",
+      "priceConfidence": "menu"
     },
     {
       "id": "vedham-pure-vegetarian",
@@ -1195,7 +1368,7 @@
         "source": "Google Maps"
       },
       "price": "₹200–600 per person",
-      "priceTier": 2,
+      "priceTier": 3,
       "note": "A nicer sit-down place. Gachibowli.",
       "flag": null,
       "closed": false,
@@ -1203,7 +1376,11 @@
       "swiggyUrl": null,
       "zomatoUrl": null,
       "photo": null,
-      "triedByShivang": false
+      "triedByShivang": false,
+      "mealPrice": 350,
+      "priceBand": "premium",
+      "priceSource": "No delivery menu found; dine-in ₹800–1,100 for two points to premium",
+      "priceConfidence": "estimate"
     },
     {
       "id": "oye-punjabi",
@@ -1231,7 +1408,11 @@
       "swiggyUrl": null,
       "zomatoUrl": "https://www.zomato.com/hyderabad/oye-punjabi-gachibowli",
       "photo": null,
-      "triedByShivang": false
+      "triedByShivang": false,
+      "mealPrice": 190,
+      "priceBand": "budget",
+      "priceSource": "About ₹200 for two; no delivery menu prices found",
+      "priceConfidence": "estimate"
     },
     {
       "id": "protein-ka-tadka",
@@ -1258,7 +1439,11 @@
       "swiggyUrl": null,
       "zomatoUrl": "https://www.zomato.com/hyderabad/protein-ka-tadka-manikonda",
       "photo": null,
-      "triedByShivang": false
+      "triedByShivang": false,
+      "mealPrice": 280,
+      "priceBand": "mid",
+      "priceSource": "No menu prices found; ₹200–400 per person on Google",
+      "priceConfidence": "estimate"
     },
     {
       "id": "mojo-pizza",
@@ -1279,7 +1464,7 @@
         "source": "Google Maps"
       },
       "price": null,
-      "priceTier": null,
+      "priceTier": 1,
       "note": "Veg pizzas with double toppings. Alkapur Township.",
       "flag": null,
       "closed": false,
@@ -1287,7 +1472,11 @@
       "swiggyUrl": null,
       "zomatoUrl": "https://www.zomato.com/hyderabad/mojo-pizza-2x-toppings-manikonda",
       "photo": null,
-      "triedByShivang": false
+      "triedByShivang": false,
+      "mealPrice": 199,
+      "priceBand": "budget",
+      "priceSource": "Items from ₹99; no pizza menu prices found; about ₹150 per order",
+      "priceConfidence": "estimate"
     }
   ]
 }

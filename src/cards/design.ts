@@ -59,6 +59,7 @@ const HUE_STEPS = 16;
 const BASE: Record<SectionId, { hue: number; sat: number }> = {
   best: { hue: 32, sat: 82 },
   premium: { hue: 342, sat: 66 },
+  mid: { hue: 290, sat: 50 },
   healthy: { hue: 146, sat: 58 },
   budget: { hue: 193, sat: 72 },
   special: { hue: 14, sat: 58 },
