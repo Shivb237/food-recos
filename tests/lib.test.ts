@@ -83,3 +83,12 @@ describe("order links", () => {
     expect(zomatoLink(p)).toBe("https://www.zomato.com/hyderabad/salt");
   });
 });
+
+describe("pick-for-me pool", () => {
+  it("needs at least two open places to be worth showing", () => {
+    const open = (ps: Place[]) => ps.filter((p) => !p.closed);
+    expect(open([byId("salt")]).length >= 2).toBe(false);
+    expect(open([byId("salt"), byId("norfest-the-dhaba")]).length >= 2).toBe(false); // Norfest is closed
+    expect(open([byId("salt"), byId("rajthali")]).length >= 2).toBe(true);
+  });
+});

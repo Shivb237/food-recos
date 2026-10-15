@@ -125,13 +125,13 @@ export function App() {
     list = {
       title: m?.label ?? "Not found", places: items, sections, grouped: true,
       chips: { moods, active: route.id, onSelect: (id) => go({ route: { view: "mood", id }, place: null }, "replace", { nav: true }) },
-      onBack: back, onOpen: openPlace, onPick: () => runPick(items, true),
+      onBack: back, onOpen: openPlace, onPick: (pool) => runPick(pool, true),
     };
   } else if (route.view === "section") {
     const s = sectionById[route.id as keyof typeof sectionById];
     const items = places.filter((p) => p.section === route.id);
     docTitle = `${s?.title ?? "Section"} · ${SITE}`;
-    list = { title: s?.title ?? "Not found", sub: s?.sub, places: items, sections, grouped: false, onBack: back, onOpen: openPlace, onPick: () => runPick(items, true) };
+    list = { title: s?.title ?? "Not found", sub: s?.sub, places: items, sections, grouped: false, onBack: back, onOpen: openPlace, onPick: (pool) => runPick(pool, true) };
   } else if (route.view === "search") {
     const items = searchPlaces(index, route.q);
     docTitle = `Search · ${SITE}`;
@@ -143,7 +143,7 @@ export function App() {
         suggestions: moods,
         onSuggest: (m) => go({ route: { view: "search", q: m.short }, place: null }, "replace", (history.state as HistoryState | null) ?? {}),
       },
-      onBack: back, onOpen: openPlace, onPick: () => runPick(items, true),
+      onBack: back, onOpen: openPlace, onPick: (pool) => runPick(pool, true),
     };
   }
   useEffect(() => { document.title = place ? `${place.name} · ${SITE}` : docTitle; }, [docTitle, place]);

@@ -16,7 +16,8 @@ export interface ListProps {
   search?: { q: string; onChange: (q: string) => void; suggestions: Mood[]; onSuggest: (m: Mood) => void };
   onBack: () => void;
   onOpen: (p: Place) => void;
-  onPick: () => void;
+  /** Called with the places currently shown (after any price filter). */
+  onPick: (pool: Place[]) => void;
 }
 
 export function ListView({ title, sub, places: allPlaces, sections, grouped, chips, search, onBack, onOpen, onPick }: ListProps) {
@@ -25,6 +26,8 @@ export function ListView({ title, sub, places: allPlaces, sections, grouped, chi
 
   const [band, setBand] = useState<PriceBand | null>(null);
   const places = band ? allPlaces.filter((p) => p.priceBand === band) : allPlaces;
+  // Picking one of fewer than two places is pointless, and places reported closed are never picked.
+  const pickable = places.filter((p) => !p.closed);
   const count = `${places.length} ${places.length === 1 ? "place" : "places"}`;
   const groups = grouped
     ? sections.map((s) => ({ section: s, items: places.filter((p) => p.section === s.id) })).filter((g) => g.items.length)
@@ -79,7 +82,7 @@ export function ListView({ title, sub, places: allPlaces, sections, grouped, chi
         <div class="empty"><b>Nothing matches</b>Try a different word, like a cuisine (dosa, biryani) or a mood.</div>
       ) : (
         <>
-          {places.some((p) => !p.closed) && <PickCard onPick={onPick} hint={`Pick one of these ${places.length} for me`} />}
+          {pickable.length >= 2 && <PickCard onPick={() => onPick(pickable)} hint={`Pick one of these ${pickable.length} for me`} />}
           {groups.map((g) => (
             <section key={g.section?.id ?? "all"} class="group" style={g.section ? ({ "--c": `var(--c-${g.section.id})` } as Record<string, string>) : undefined}>
               {g.section && <h2 class="gtitle">{g.section.title}</h2>}
