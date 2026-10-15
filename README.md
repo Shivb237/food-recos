@@ -17,3 +17,4 @@ npm run build       # validate + typecheck + production build
 - `/dev/photos` (dev server only): pick the food photo per place and fix weak Google matches.
 - Photos: `npm run places:resolve` (find Google place IDs), `npm run places:coverage` (who gets a photo). Needs `GOOGLE_MAPS_API_KEY` in `.env.local`.
 - Mood photos in `public/moods/` are from Pexels; credits are in `src/moodCredits.ts` and the footer.
+# food-recos
