@@ -14,6 +14,12 @@ export interface PhotoDeps {
   /** Hard ceiling on billed photo requests per UTC day. */
   dailyCap: number;
   kv: KV;
+  /**
+   * How long Vercel's shared cache may keep a successful answer (seconds). 0 turns the shared cache off.
+   * Without it every card on every visit costs Google lookups. NOTE: this caches Google's temporary image link
+   * (photoUri), not the photo name or the image itself. Set PHOTO_CACHE_SECONDS=0 to disable.
+   */
+  cacheSeconds?: number;
   fetchImpl?: typeof fetch;
   now?: () => Date;
 }
@@ -69,6 +75,7 @@ export function orderByPicks<T>(list: T[], picks: number[]): T[] {
 export function createPhotoHandler(deps: PhotoDeps) {
   const doFetch = deps.fetchImpl ?? fetch;
   const now = deps.now ?? (() => new Date());
+  const ttl = Math.max(0, deps.cacheSeconds ?? 43200);
 
   return async function handlePhoto(req: Request): Promise<Response> {
     if (req.method !== "GET") return json({ error: "method not allowed" }, 405, "no-store");
@@ -77,6 +84,7 @@ export function createPhotoHandler(deps: PhotoDeps) {
     const entry = read(deps.placeIds)[slug];
     if (!entry || !entry.approved) return json({ error: "unknown place" }, 404, "no-store");
 
+    const fresh = q.get("fresh") === "1"; // the app asks for this when a cached image link has gone stale
     const n = clamp(Number(q.get("n") ?? 1), 1, 4, 1);
     const w = clamp(Number(q.get("w") ?? 480), 160, 1200, 480);
     if (!deps.apiKey) return json({ photos: [], reason: "not-configured" }, 200, "no-store");
@@ -141,7 +149,8 @@ export function createPhotoHandler(deps: PhotoDeps) {
       if (!photos.length && limited) return json({ photos: [], reason: "rate-limited" }, 200, "no-store");
       // Nothing came back and it wasn't a rate limit: say what happened (counts only), so it can be diagnosed from outside.
       if (!photos.length) return json({ photos: [], reason: chosen.length ? "photo-requests-failed" : "no-photos-listed", listed: (body.photos ?? []).length, failures }, 200, "no-store");
-      return json({ photos });
+      const shared = !fresh && ttl > 0 ? `public, max-age=300, s-maxage=${ttl}, stale-while-revalidate=${ttl}` : undefined;
+      return json({ photos }, 200, shared ?? "private, max-age=300");
     } catch {
       await refund(n);
       return json({ photos: [], reason: "upstream" }, 502, "no-store");

@@ -36,6 +36,7 @@ export function createRoutes(data: ServerData, env: Env = process.env, kv: KV = 
     picks: data.picks,
     apiKey: env.GOOGLE_MAPS_API_KEY || undefined,
     dailyCap: Number(env.PHOTO_DAILY_CAP) > 0 ? Number(env.PHOTO_DAILY_CAP) : 150,
+    cacheSeconds: env.PHOTO_CACHE_SECONDS !== undefined && env.PHOTO_CACHE_SECONDS !== "" ? Number(env.PHOTO_CACHE_SECONDS) : 43200,
     kv,
   });
   const social = createSocialHandler({

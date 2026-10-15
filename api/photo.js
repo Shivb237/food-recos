@@ -2480,12 +2480,14 @@ function orderByPicks(list, picks) {
 function createPhotoHandler(deps) {
   const doFetch = deps.fetchImpl ?? fetch;
   const now = deps.now ?? (() => /* @__PURE__ */ new Date());
+  const ttl = Math.max(0, deps.cacheSeconds ?? 43200);
   return async function handlePhoto(req) {
     if (req.method !== "GET") return json2({ error: "method not allowed" }, 405, "no-store");
     const q = new URL(req.url).searchParams;
     const slug = q.get("id") ?? "";
     const entry = read(deps.placeIds)[slug];
     if (!entry || !entry.approved) return json2({ error: "unknown place" }, 404, "no-store");
+    const fresh = q.get("fresh") === "1";
     const n = clamp(Number(q.get("n") ?? 1), 1, 4, 1);
     const w = clamp(Number(q.get("w") ?? 480), 160, 1200, 480);
     if (!deps.apiKey) return json2({ photos: [], reason: "not-configured" }, 200, "no-store");
@@ -2542,7 +2544,8 @@ function createPhotoHandler(deps) {
       await refund(n - photos.length);
       if (!photos.length && limited) return json2({ photos: [], reason: "rate-limited" }, 200, "no-store");
       if (!photos.length) return json2({ photos: [], reason: chosen.length ? "photo-requests-failed" : "no-photos-listed", listed: (body.photos ?? []).length, failures }, 200, "no-store");
-      return json2({ photos });
+      const shared = !fresh && ttl > 0 ? `public, max-age=300, s-maxage=${ttl}, stale-while-revalidate=${ttl}` : void 0;
+      return json2({ photos }, 200, shared ?? "private, max-age=300");
     } catch {
       await refund(n);
       return json2({ photos: [], reason: "upstream" }, 502, "no-store");
@@ -2564,6 +2567,7 @@ function createRoutes(data, env = process.env, kv = kvFromEnv(env), redis = defa
     picks: data.picks,
     apiKey: env.GOOGLE_MAPS_API_KEY || void 0,
     dailyCap: Number(env.PHOTO_DAILY_CAP) > 0 ? Number(env.PHOTO_DAILY_CAP) : 150,
+    cacheSeconds: env.PHOTO_CACHE_SECONDS !== void 0 && env.PHOTO_CACHE_SECONDS !== "" ? Number(env.PHOTO_CACHE_SECONDS) : 43200,
     kv
   });
   const social = createSocialHandler({

@@ -39,6 +39,10 @@ Chosen by Shivang: **self-hosted site + Google Places API (New) photos.** Nothin
 - Every photo shown needs a fresh Details call plus a media call, so **lazy-load photos only for cards on screen**, share one request per place within a page view, and fetch the 4-photo gallery only when a details sheet opens.
 - Set a **daily quota cap** on the Places API in Google Cloud so a spike can't bill beyond what Shivang wants, plus a budget alert.
 
+### Photo speed and quotas (Oct 2026)
+
+Each place needs one free "Place Details" lookup plus one billed photo download, and a page shows about 10 places, so without caching every visit cost about 10 lookups. A 300-a-day lookup quota ran out within about 30 visits, and cards then fell back to generated art. Fixes: `/api/photo` answers are cached by Vercel's shared cache for `PHOTO_CACHE_SECONDS` (default 12 h), so Google is asked about once per place per half-day; the app retries failures later, never sticks on a skeleton (4.5 s max), and asks for a `fresh` link if a cached image link has gone stale. Judgment call: this caches Google's temporary `photoUri`, not photo names or image bytes; set `PHOTO_CACHE_SECONDS=0` to turn it off. Quotas to set: Place Details per day 3,000+ (free for us), per minute 300; Place Photos per day about 200, per minute 120.
+
 ### Notes from the build (Oct 2026)
 
 - Place Details with field mask `photos` only is the free "IDs only" tier; adding `googleMapsUri` makes it Pro. The handler asks for `photos` only.

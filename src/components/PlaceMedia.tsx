@@ -1,4 +1,4 @@
-import { useState } from "preact/hooks";
+import { useRef, useState } from "preact/hooks";
 import type { ComponentChildren } from "preact";
 import type { Place } from "../../shared/types";
 import { GeneratedCard } from "../cards/GeneratedCard";
@@ -60,8 +60,11 @@ function Slides({ photos, placeName }: { photos: PlacePhoto[]; placeName: string
  */
 export function PlaceMedia({ place, wide = false, artOnly = false, gallery = false, corner }: Props) {
   const [ref, near] = useNearViewport<HTMLDivElement>();
-  const photos = usePlacePhotos(place, gallery ? 4 : 1, gallery ? 960 : 480, near);
+  const { state: photos, refresh } = usePlacePhotos(place, gallery ? 4 : 1, gallery ? 960 : 480, near);
   const [failed, setFailed] = useState<string | null>(null);
+  const refreshed = useRef(false);
+  /** An image link that stopped working: ask once for a fresh one, otherwise fall back to the generated card. */
+  const broken = (uri: string) => (refreshed.current ? setFailed(uri) : ((refreshed.current = true), refresh()));
   const showPhotos = photos.status === "ready" && failed !== photos.photos[0]?.uri;
 
   return (
@@ -72,7 +75,7 @@ export function PlaceMedia({ place, wide = false, artOnly = false, gallery = fal
             <Slides photos={photos.photos} placeName={place.name} />
           ) : (
             <>
-              <img class="photo" src={photos.photos[0]!.uri} alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onError={() => setFailed(photos.photos[0]!.uri)} />
+              <img class="photo" src={photos.photos[0]!.uri} alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onError={() => broken(photos.photos[0]!.uri)} />
               <Credit photo={photos.photos[0]!} link={false} />
             </>
           )

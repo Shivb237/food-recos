@@ -8,11 +8,11 @@ export interface PlacePhoto {
   authorUri: string | null;
 }
 
-/** Fetching photos costs money per request, so: one request per (place, size) per visit, at most 4 in flight. */
+/** At most 6 photo requests in flight; the first cards on screen go first. */
 const cache = new Map<string, Promise<PlacePhoto[]>>();
 let active = 0;
 const waiting: (() => void)[] = [];
-const MAX_PARALLEL = 4;
+const MAX_PARALLEL = 6;
 
 function limited<T>(job: () => Promise<T>): Promise<T> {
   return new Promise((resolve, reject) => {
@@ -27,52 +27,79 @@ function limited<T>(job: () => Promise<T>): Promise<T> {
   });
 }
 
-export function loadPhotos(id: string, n: number, w: number): Promise<PlacePhoto[]> {
+/**
+ * One request per (place, size) per visit; only successes are remembered, so a failure can be retried later.
+ * If Google says "rate-limited" the server asks us to wait and ask again (twice at most).
+ * `fresh` skips the shared cache (used when an image link has gone stale).
+ */
+export function loadPhotos(id: string, n: number, w: number, fresh = false): Promise<PlacePhoto[]> {
   const key = `${id}:${n}:${w}`;
-  let p = cache.get(key);
-  if (!p) {
-    p = limited(async () => {
-      // Google limits photo requests per minute. If it says "rate-limited", wait a moment and ask again (twice at most).
-      for (let attempt = 0; attempt < 3; attempt++) {
-        try {
-          const res = await fetch(`/api/photo?id=${encodeURIComponent(id)}&n=${n}&w=${w}`);
-          if (!res.ok) return [];
-          const body = (await res.json()) as { photos?: PlacePhoto[]; reason?: string };
-          if (body.reason === "rate-limited" && attempt < 2) {
-            await new Promise((r) => setTimeout(r, 3500 + attempt * 3000));
-            continue;
-          }
-          return Array.isArray(body.photos) ? body.photos : [];
-        } catch {
-          return [];
+  const hit = !fresh && cache.get(key);
+  if (hit) return hit;
+  const p = limited(async () => {
+    for (let attempt = 0; attempt < 3; attempt++) {
+      try {
+        const res = await fetch(`/api/photo?id=${encodeURIComponent(id)}&n=${n}&w=${w}${fresh ? "&fresh=1" : ""}`);
+        if (!res.ok) return [];
+        const body = (await res.json()) as { photos?: PlacePhoto[]; reason?: string };
+        if (body.reason === "rate-limited" && attempt < 2) {
+          await new Promise((r) => setTimeout(r, 2500 + attempt * 2500));
+          continue;
         }
+        return Array.isArray(body.photos) ? body.photos : [];
+      } catch {
+        return [];
       }
-      return [];
-    });
-    cache.set(key, p);
-  }
+    }
+    return [];
+  });
+  cache.set(key, p);
+  p.then((photos) => { if (!photos.length && cache.get(key) === p) cache.delete(key); }); // don't remember failures
   return p;
 }
 
 export type PhotoState = { status: "none" } | { status: "loading" } | { status: "ready"; photos: PlacePhoto[] };
 
+/** Retry delays for a place whose photo could not be loaded (the generated card is shown meanwhile). */
+const RETRY_MS = [8000, 25000, 70000];
+/** After this long without an answer, stop showing the skeleton and show the generated card (the photo still swaps in when it arrives). */
+const SKELETON_MS = 4500;
+
+export interface PhotoResult { state: PhotoState; /** Ask again, skipping caches: the current image link stopped working. */ refresh: () => void }
+
 /** Owner photo if the place has one, else Google's (when it has a checked listing and `enabled`), else nothing. */
-export function usePlacePhotos(place: Place, n: number, w: number, enabled: boolean): PhotoState {
+export function usePlacePhotos(place: Place, n: number, w: number, enabled: boolean): PhotoResult {
   const initial = (): PhotoState =>
     place.photo ? { status: "ready", photos: [{ uri: place.photo, author: "", authorUri: null }] } : hasGoogleListing(place.id) ? { status: "loading" } : { status: "none" };
   const [state, setState] = useState<PhotoState>(initial);
+  const [bump, setBump] = useState(0);
+  const freshNext = useRef(false);
 
   useEffect(() => {
     setState(initial());
     if (place.photo || !hasGoogleListing(place.id) || !enabled) return;
     let live = true;
-    loadPhotos(place.id, n, w).then((photos) => live && setState(photos.length ? { status: "ready", photos } : { status: "none" }));
+    let retry: ReturnType<typeof setTimeout> | undefined;
+    const slow = setTimeout(() => live && setState((s) => (s.status === "loading" ? { status: "none" } : s)), SKELETON_MS);
+    const attempt = (i: number) => {
+      const fresh = freshNext.current;
+      freshNext.current = false;
+      loadPhotos(place.id, n, w, fresh).then((photos) => {
+        if (!live) return;
+        if (photos.length) return setState({ status: "ready", photos });
+        setState({ status: "none" });
+        if (i < RETRY_MS.length) retry = setTimeout(() => live && attempt(i + 1), RETRY_MS[i]);
+      });
+    };
+    attempt(0);
     return () => {
       live = false;
+      clearTimeout(slow);
+      clearTimeout(retry);
     };
-  }, [place.id, place.photo, n, w, enabled]);
+  }, [place.id, place.photo, n, w, enabled, bump]);
 
-  return state;
+  return { state, refresh: () => { freshNext.current = true; setBump((b) => b + 1); } };
 }
 
 /** True once the element is near the viewport (and stays true), so off-screen cards never trigger a photo request. */
@@ -82,7 +109,7 @@ export function useNearViewport<T extends Element>(): [preact.RefObject<T | null
   useEffect(() => {
     const el = ref.current;
     if (near || !el) return;
-    const io = new IntersectionObserver((entries) => entries.some((e) => e.isIntersecting) && (setNear(true), io.disconnect()), { rootMargin: "300px" });
+    const io = new IntersectionObserver((entries) => entries.some((e) => e.isIntersecting) && (setNear(true), io.disconnect()), { rootMargin: "600px" });
     io.observe(el);
     return () => io.disconnect();
   }, [near]);

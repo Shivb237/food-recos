@@ -44,7 +44,7 @@ describe("photo handler", () => {
     expect(body.photos).toHaveLength(2);
     expect(body.photos[0]).toMatchObject({ author: "Author 0", authorUri: "https://maps.google.com/contrib/0" });
     expect(body.photos[0].uri).toMatch(/^https:\/\/lh3\.googleusercontent\.com\//);
-    expect(res.headers.get("cache-control")).toContain("private");
+    expect(res.headers.get("cache-control")).toMatch(/s-maxage=43200/); // shared cache, so Google is asked once per place, not once per visit
   });
 
   it("asks Google for the free 'photos' field only, and clamps size and count", async () => {
@@ -155,5 +155,26 @@ describe("place lookup quota", () => {
     const f = vi.fn(async () => new Response("slow down", { status: 429 }));
     const body = await (await get(make({ fetchImpl: f as unknown as typeof fetch }), "id=rajthali")).json();
     expect(body).toEqual({ photos: [], reason: "rate-limited", step: "place-details" });
+  });
+});
+
+describe("shared cache", () => {
+  it("lets the CDN keep successes for the configured time, and never keeps failures", async () => {
+    const ok = await get(make({ cacheSeconds: 600 }), "id=rajthali");
+    expect(ok.headers.get("cache-control")).toBe("public, max-age=300, s-maxage=600, stale-while-revalidate=600");
+    const none = await get(make({ apiKey: undefined }), "id=rajthali");
+    expect(none.headers.get("cache-control")).toBe("no-store");
+    const bad = await get(make({ fetchImpl: fakeGoogle(3, { mediaStatus: 500 }) as unknown as typeof fetch }), "id=rajthali");
+    expect(bad.headers.get("cache-control")).toBe("no-store");
+  });
+
+  it("skips the shared cache when the app asks for a fresh link", async () => {
+    const res = await get(make({ cacheSeconds: 600 }), "id=rajthali&fresh=1");
+    expect(res.headers.get("cache-control")).toBe("private, max-age=300");
+  });
+
+  it("can be switched off with 0", async () => {
+    const res = await get(make({ cacheSeconds: 0 }), "id=rajthali");
+    expect(res.headers.get("cache-control")).toBe("private, max-age=300");
   });
 });
