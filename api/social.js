@@ -381,6 +381,15 @@ var place_ids_default = {
       status: "manual",
       approved: true,
       closedOnGoogle: false
+    },
+    "hoy-punjab": {
+      placeId: "ChIJ1R9qUymTyzsROc9aZ46Hq5g",
+      matchedName: "Hoy Punjab",
+      address: "First Floor, G Square building, police station, Madhura Nagar Colony, Gachibowli, Rai Durg, Hyderabad, Telangana 500104, India",
+      distanceKm: 2.2,
+      status: "manual",
+      approved: true,
+      closedOnGoogle: false
     }
   }
 };
@@ -1865,6 +1874,39 @@ var places_default = {
       priceBand: "budget",
       priceSource: "Items from \u20B999; no pizza menu prices found; about \u20B9150 per order",
       priceConfidence: "estimate"
+    },
+    {
+      id: "hoy-punjab",
+      name: "Hoy Punjab Restaurant",
+      searchName: "Hoy Punjab",
+      placesQuery: null,
+      section: "mid",
+      cuisine: "North Indian",
+      moods: [
+        "punjabi",
+        "thali",
+        "homestyle"
+      ],
+      veg: "both",
+      rating: {
+        value: 4.7,
+        count: "4,686",
+        source: "Google Maps"
+      },
+      price: null,
+      priceTier: 2,
+      mealPrice: 213,
+      priceBand: "mid",
+      priceSource: "Premere Veg Thali",
+      priceConfidence: "menu",
+      note: null,
+      flag: null,
+      closed: false,
+      googleMapsUrl: "https://maps.google.com/maps?cid=11001035560471678777",
+      swiggyUrl: null,
+      zomatoUrl: null,
+      photo: null,
+      triedByShivang: true
     }
   ]
 };
@@ -2073,6 +2115,12 @@ var photo_picks_default = {
     5,
     3,
     1
+  ],
+  "hoy-punjab": [
+    0,
+    2,
+    1,
+    5
   ]
 };
 

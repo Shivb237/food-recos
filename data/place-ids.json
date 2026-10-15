@@ -378,6 +378,15 @@
       "status": "manual",
       "approved": true,
       "closedOnGoogle": false
+    },
+    "hoy-punjab": {
+      "placeId": "ChIJ1R9qUymTyzsROc9aZ46Hq5g",
+      "matchedName": "Hoy Punjab",
+      "address": "First Floor, G Square building, police station, Madhura Nagar Colony, Gachibowli, Rai Durg, Hyderabad, Telangana 500104, India",
+      "distanceKm": 2.2,
+      "status": "manual",
+      "approved": true,
+      "closedOnGoogle": false
     }
   }
 }

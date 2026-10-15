@@ -1477,6 +1477,39 @@
       "priceBand": "budget",
       "priceSource": "Items from ₹99; no pizza menu prices found; about ₹150 per order",
       "priceConfidence": "estimate"
+    },
+    {
+      "id": "hoy-punjab",
+      "name": "Hoy Punjab Restaurant",
+      "searchName": "Hoy Punjab",
+      "placesQuery": null,
+      "section": "mid",
+      "cuisine": "North Indian",
+      "moods": [
+        "punjabi",
+        "thali",
+        "homestyle"
+      ],
+      "veg": "both",
+      "rating": {
+        "value": 4.7,
+        "count": "4,686",
+        "source": "Google Maps"
+      },
+      "price": null,
+      "priceTier": 2,
+      "mealPrice": 213,
+      "priceBand": "mid",
+      "priceSource": "Premere Veg Thali",
+      "priceConfidence": "menu",
+      "note": null,
+      "flag": null,
+      "closed": false,
+      "googleMapsUrl": "https://maps.google.com/maps?cid=11001035560471678777",
+      "swiggyUrl": null,
+      "zomatoUrl": null,
+      "photo": null,
+      "triedByShivang": true
     }
   ]
 }
