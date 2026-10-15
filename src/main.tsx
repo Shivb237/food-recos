@@ -7,24 +7,13 @@ import "./styles/tokens.css";
 const root = document.getElementById("app")!;
 const path = location.pathname.replace(/\/$/, "");
 
+// Dev-only tools (local server only, never in the production build). No analytics on these.
 if (import.meta.env.DEV && path === "/dev/cards") {
-  import("./dev/CardsPreview").then(({ CardsPreview }) => render(
-    <>
-      <CardsPreview />
-      <Analytics />
-      <SpeedInsights />
-    </>,
-    root
-  ));
+  import("./dev/CardsPreview").then(({ CardsPreview }) => render(<CardsPreview />, root));
+} else if (import.meta.env.DEV && path === "/dev/add") {
+  import("./dev/AddRestaurant").then(({ AddRestaurant }) => render(<AddRestaurant />, root));
 } else if (import.meta.env.DEV && path === "/dev/photos") {
-  import("./dev/PhotoPicker").then(({ PhotoPicker }) => render(
-    <>
-      <PhotoPicker />
-      <Analytics />
-      <SpeedInsights />
-    </>,
-    root
-  ));
+  import("./dev/PhotoPicker").then(({ PhotoPicker }) => render(<PhotoPicker />, root));
 } else {
   render(
     <>
@@ -32,6 +21,6 @@ if (import.meta.env.DEV && path === "/dev/cards") {
       <Analytics />
       <SpeedInsights />
     </>,
-    root
+    root,
   );
 }

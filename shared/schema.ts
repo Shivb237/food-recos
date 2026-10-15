@@ -45,7 +45,6 @@ export const placesFileSchema = z.object({
   places: z.array(placeSchema),
 });
 
-export const EXPECTED_PLACE_COUNT = 46;
 
 /** Cross-field checks that a plain schema can't express. Returns a list of problems (empty = OK). */
 export function crossCheck(file: z.infer<typeof placesFileSchema>): { errors: string[]; warnings: string[] } {
@@ -69,7 +68,6 @@ export function crossCheck(file: z.infer<typeof placesFileSchema>): { errors: st
     if ((p.section === "budget" || p.section === "mid" || p.section === "premium") && p.priceBand !== p.section)
       errors.push(`${p.id}: sits in the ${p.section} section but its price band is ${p.priceBand}`);
   }
-  if (file.places.length !== EXPECTED_PLACE_COUNT)
-    errors.push(`expected ${EXPECTED_PLACE_COUNT} places, found ${file.places.length}`);
+  if (!file.places.length) errors.push("no places");
   return { errors, warnings };
 }

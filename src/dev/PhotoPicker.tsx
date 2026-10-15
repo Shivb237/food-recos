@@ -22,7 +22,7 @@ interface Found { placeId: string; name: string; address: string; lat: number | 
 const MAX_PICKS = 4;
 const mapsLink = (placeId: string) => `https://www.google.com/maps/place/?q=place_id:${placeId}`;
 
-async function api<T>(path: string, body?: unknown): Promise<T> {
+export async function api<T>(path: string, body?: unknown): Promise<T> {
   const res = await fetch(path, body === undefined ? undefined : { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
   const data = await res.json().catch(() => ({}));
   if (!res.ok) throw new Error((data as { error?: string }).error ?? `HTTP ${res.status}`);
@@ -86,7 +86,11 @@ function MatchPanel({ place, query, onChosen }: { place: Place; query: string; o
   );
 }
 
-function PhotoGrid({ place, picks, onPicks, onUsage }: { place: Place; picks: number[]; onPicks: (p: number[]) => void; onUsage: (used: number, cap: number) => void }) {
+/**
+ * Photo choices for one place. `placeId` loads photos for a Google place that isn't in the site yet (the add page);
+ * `persist` false keeps the picks local until the page saves everything together.
+ */
+export function PhotoGrid({ place, picks, onPicks, onUsage, placeId, persist = true }: { place: { id: string; name: string }; picks: number[]; onPicks: (p: number[]) => void; onUsage: (used: number, cap: number) => void; placeId?: string; persist?: boolean }) {
   const [thumbs, setThumbs] = useState<Thumb[] | null>(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -99,7 +103,7 @@ function PhotoGrid({ place, picks, onPicks, onUsage }: { place: Place; picks: nu
     setBusy(true);
     setError(null);
     try {
-      const r = await api<PhotosResponse>(`/api/dev/photos?id=${place.id}&w=360${only ? `&only=${only.join(",")}` : ""}`);
+      const r = await api<PhotosResponse>(`/api/dev/photos?${placeId ? `placeId=${encodeURIComponent(placeId)}` : `id=${place.id}`}&w=360${only ? `&only=${only.join(",")}` : ""}`);
       setThumbs((prev) => [...(only ? (prev ?? []).filter((t) => !only.includes(t.index)) : []), ...r.photos].sort((a, b) => a.index - b.index));
       setFailed(r.failed);
       setTotal(r.total);
@@ -118,6 +122,7 @@ function PhotoGrid({ place, picks, onPicks, onUsage }: { place: Place; picks: nu
     else next = [...picks, index];
     setNote(null);
     onPicks(next);
+    if (!persist) return;
     try {
       await api("/api/dev/picks", { id: place.id, picks: next });
     } catch (e) {
@@ -163,8 +168,8 @@ function PhotoGrid({ place, picks, onPicks, onUsage }: { place: Place; picks: nu
         })}
       </ul>
       <p class="pp-hint">
-        {picks.length ? `Saved. First pick (${picks[0]! + 1}) is the card photo; picks lead the sheet gallery.` : "Click the food shots, best first. The first pick becomes the card photo."}
-        {picks.length > 0 && <button type="button" class="pp-link" onClick={() => { onPicks([]); void api("/api/dev/picks", { id: place.id, picks: [] }); }}>Clear picks</button>}
+        {picks.length ? `${persist ? "Saved. " : ""}First pick (${picks[0]! + 1}) is the card photo; picks lead the sheet gallery.` : "Click the food shots, best first. The first pick becomes the card photo."}
+        {picks.length > 0 && <button type="button" class="pp-link" onClick={() => { onPicks([]); if (persist) void api("/api/dev/picks", { id: place.id, picks: [] }); }}>Clear picks</button>}
       </p>
       {note && <p class="pp-error">{note}</p>}
       {error && <p class="pp-error">{error}</p>}

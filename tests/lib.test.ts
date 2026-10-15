@@ -14,7 +14,7 @@ const byId = (id: string) => file.places.find((p) => p.id === id)!;
 
 describe("search", () => {
   it("returns everything for an empty query", () => {
-    expect(find("")).toHaveLength(46);
+    expect(find("")).toHaveLength(file.places.length);
   });
   it("finds names without punctuation or case", () => {
     expect(find("HALDIRAMS")).toEqual(["haldirams"]);

@@ -6,6 +6,10 @@ import { existsSync, readFileSync, renameSync, writeFileSync } from "node:fs";
 import type { PlaceIdEntry, PlaceIdsFile } from "../shared/placeIds";
 import { memoryKV } from "./kv";
 import { createRoutes } from "./routes";
+import { placeSchema, crossCheck, placesFileSchema } from "../shared/schema";
+import { BAND_TIER, bandFor } from "../shared/price";
+import { slugify } from "../shared/slug";
+import type { Place, PlacesFile } from "../shared/types";
 
 type Route = (req: Request) => Promise<Response>;
 
@@ -36,6 +40,7 @@ const km = (lat: number, lng: number) => {
 
 /** Photos from Google's list for one place, with their positions. Each one is a billed request, so it has its own daily cap. */
 const devKv = memoryKV();
+const PLACE_ID = /^[A-Za-z0-9_-]{10,200}$/;
 const PHOTO_NAME = /^places\/[A-Za-z0-9_-]+\/photos\/[A-Za-z0-9_-]+$/;
 const IMAGE_HOST = /(^|\.)(googleusercontent\.com|ggpht\.com)$/;
 
@@ -83,8 +88,12 @@ const routes: Record<string, Route> = {
   "/api/dev/photos": async (req) => {
     const q = new URL(req.url).searchParams;
     const slug = q.get("id") ?? "";
-    const entry = readJson<PlaceIdsFile>(FILES.ids, { resolvedAt: "", places: {} }).places[slug];
-    if (!entry?.approved) return json({ error: "no approved match for this place" }, 404);
+    const direct = q.get("placeId");
+    // Either a place already on the site (by slug), or a Google place id for one about to be added.
+    const entry = direct
+      ? PLACE_ID.test(direct) ? { placeId: direct } : null
+      : readJson<PlaceIdsFile>(FILES.ids, { resolvedAt: "", places: {} }).places[slug];
+    if (!entry || ("approved" in entry && !entry.approved)) return json({ error: "no approved match for this place" }, 404);
     if (!KEY()) return json({ error: "no API key" }, 503);
     const w = Math.min(640, Math.max(160, Math.round(Number(q.get("w")) || 360)));
     const headers = { "X-Goog-Api-Key": KEY()! };
@@ -144,6 +153,87 @@ const routes: Record<string, Route> = {
     await devKv.incrBy(capKey, -failed.length, 172800); // failed ones were not billed
     photos.sort((x, y) => x.index - y.index);
     return json({ photos, failed, total: list.length, used: used - failed.length, cap });
+  },
+
+  // What Google knows about a place, to pre-fill the add form. One call per added place: negligible cost.
+  "/api/dev/add/details": async (req) => {
+    const placeId = new URL(req.url).searchParams.get("placeId") ?? "";
+    if (!PLACE_ID.test(placeId)) return json({ error: "bad placeId" }, 400);
+    if (!KEY()) return json({ error: "no API key" }, 503);
+    const res = await fetch(`https://places.googleapis.com/v1/places/${encodeURIComponent(placeId)}`, {
+      headers: { "X-Goog-Api-Key": KEY()!, "X-Goog-FieldMask": "displayName,formattedAddress,location,businessStatus,googleMapsUri,rating,userRatingCount,priceLevel,primaryTypeDisplayName,servesVegetarianFood" },
+      signal: AbortSignal.timeout(10000),
+    });
+    if (!res.ok) return json({ error: `Google ${res.status}` }, 502);
+    const g = (await res.json()) as {
+      displayName?: { text: string }; formattedAddress?: string; location?: { latitude: number; longitude: number }; businessStatus?: string;
+      googleMapsUri?: string; rating?: number; userRatingCount?: number; priceLevel?: string; primaryTypeDisplayName?: { text: string }; servesVegetarianFood?: boolean;
+    };
+    const cid = g.googleMapsUri?.match(/cid=(\d+)/)?.[1];
+    return json({
+      name: g.displayName?.text ?? "",
+      address: g.formattedAddress ?? "",
+      distanceKm: g.location ? km(g.location.latitude, g.location.longitude) : null,
+      closed: g.businessStatus === "CLOSED_PERMANENTLY",
+      googleMapsUrl: cid ? `https://maps.google.com/maps?cid=${cid}` : null,
+      rating: typeof g.rating === "number" ? { value: g.rating, count: new Intl.NumberFormat("en-IN").format(g.userRatingCount ?? 0), source: "Google Maps" } : null,
+      priceLevel: g.priceLevel ?? null,
+      type: g.primaryTypeDisplayName?.text ?? null,
+      servesVeg: g.servesVegetarianFood ?? null,
+    });
+  },
+
+  // Add a restaurant: validated against the same rules as the rest of the data, then written to all the data files.
+  "/api/dev/add/save": async (req) => {
+    if (req.method !== "POST") return json({ error: "POST only" }, 405);
+    const b = (await req.json().catch(() => null)) as null | { placeId?: string; googleName?: string; address?: string; lat?: number | null; lng?: number | null; closedOnGoogle?: boolean; picks?: number[]; place?: Partial<Place> };
+    if (!b?.place || !b.placeId || !PLACE_ID.test(b.placeId)) return json({ errors: ["missing place or Google place id"] }, 400);
+
+    const ids = readJson<PlaceIdsFile>(FILES.ids, { resolvedAt: "", places: {} });
+    if (Object.values(ids.places).some((e) => e.placeId === b.placeId)) return json({ errors: ["this Google place is already on the site"] }, 409);
+    const file = readJson<PlacesFile>(FILES.places, null as unknown as PlacesFile);
+
+    const p = b.place;
+    const base = slugify(String(p.searchName || p.name || ""));
+    if (!base) return json({ errors: ["a name is required"] }, 400);
+    let id = base;
+    for (let n = 2; file.places.some((x) => x.id === id); n++) id = `${base}-${n}`;
+
+    const mealPrice = typeof p.mealPrice === "number" && p.mealPrice > 0 ? Math.round(p.mealPrice) : null;
+    const priceBand = bandFor(mealPrice);
+    const candidate = {
+      id, name: String(p.name ?? "").trim(), searchName: String(p.searchName || p.name || "").trim(), placesQuery: null,
+      section: p.section, cuisine: p.cuisine?.trim() || null, moods: Array.isArray(p.moods) ? p.moods : [], veg: p.veg,
+      rating: p.rating ?? null, price: p.price?.trim() || null,
+      priceTier: priceBand ? BAND_TIER[priceBand] : null, mealPrice, priceBand,
+      priceSource: mealPrice ? p.priceSource?.trim() || null : null, priceConfidence: mealPrice ? p.priceConfidence ?? null : null,
+      note: p.note?.trim() || null, flag: p.flag?.trim() || null, closed: !!p.closed,
+      googleMapsUrl: p.googleMapsUrl || null, swiggyUrl: p.swiggyUrl?.trim() || null, zomatoUrl: p.zomatoUrl?.trim() || null,
+      photo: null, triedByShivang: !!p.triedByShivang,
+    };
+    const parsed = placeSchema.safeParse(candidate);
+    if (!parsed.success) return json({ errors: parsed.error.issues.map((i) => `${i.path.join(".")}: ${i.message}`) }, 400);
+
+    const next = { ...file, updated: new Date().toISOString().slice(0, 10), places: [...file.places, parsed.data] };
+    const whole = placesFileSchema.safeParse(next);
+    const problems = whole.success ? crossCheck(whole.data).errors : whole.error.issues.map((i) => i.message);
+    if (problems.length) return json({ errors: problems }, 400);
+
+    const picks = [...new Set((b.picks ?? []).filter((n) => Number.isInteger(n) && n >= 0 && n < 10))].slice(0, MAX_PICKS);
+    const overrides = readJson<Record<string, string | null>>(FILES.overrides, {});
+    const allPicks = readJson<Record<string, number[]>>(FILES.picks, {});
+    overrides[id] = b.placeId;
+    ids.places[id] = {
+      placeId: b.placeId, matchedName: String(b.googleName ?? "").slice(0, 120), address: String(b.address ?? "").slice(0, 200),
+      distanceKm: typeof b.lat === "number" && typeof b.lng === "number" ? km(b.lat, b.lng) : -1,
+      status: "manual", approved: true, closedOnGoogle: !!b.closedOnGoogle,
+    };
+    if (picks.length) allPicks[id] = picks;
+    writeJson(FILES.ids, ids);
+    writeJson(FILES.overrides, overrides);
+    writeJson(FILES.picks, allPicks);
+    writeJson(FILES.places, next); // last, so a failure above never leaves a place without its photo links
+    return json({ ok: true, id });
   },
 
   "/api/dev/picks": async (req) => {

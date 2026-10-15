@@ -44,3 +44,28 @@
 .pp-alert { background: #fff1d6; color: #6b3f00; border: 1.5px solid #e9a53b; border-radius: 12px; padding: 10px 14px; margin-bottom: 10px; font-size: 14px; }
 .pp-alert button { border: 0; background: #6b3f00; color: #fff; border-radius: 999px; padding: 6px 14px; font-weight: 800; cursor: pointer; margin-left: 4px; }
 .pp-warn { color: #b3261e; }
+
+/* Add restaurant page */
+.add-search { display: flex; gap: 8px; margin-bottom: 12px; }
+.add-search input { flex: 1; min-width: 0; font: inherit; padding: 11px 14px; border-radius: 12px; border: 1.5px solid var(--line); background: var(--bg); color: var(--fg); }
+.add-search button, .add-results li button, .add-actions .save { border: 0; background: var(--fg); color: var(--bg); border-radius: 999px; padding: 9px 18px; font-weight: 800; cursor: pointer; }
+.add-results { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.add-results li { display: grid; grid-template-columns: 1fr auto auto; gap: 10px; align-items: center; background: var(--soft); border-radius: 12px; padding: 10px 14px; }
+.add-results li small { display: block; color: var(--muted); }
+.add-results .pp-tag { margin-left: 8px; }
+.add-form fieldset { border: 1px solid var(--line); border-radius: 16px; padding: 12px 16px 14px; margin: 0 0 14px; display: grid; gap: 10px; }
+.add-form legend { font: 800 14px var(--display); padding: 0 8px; }
+.add-form label { display: grid; gap: 4px; font-size: 13px; font-weight: 700; color: var(--muted); }
+.add-form label.inline { display: flex; align-items: center; gap: 8px; color: var(--fg); }
+.add-form input:not([type="checkbox"]), .add-form select { font: inherit; font-weight: 500; color: var(--fg); padding: 9px 12px; border-radius: 10px; border: 1.5px solid var(--line); background: var(--bg); }
+.chipset { display: flex; flex-wrap: wrap; gap: 6px; }
+.add-form .chip { cursor: pointer; border: 1.5px solid transparent; background: var(--soft); border-radius: 999px; padding: 6px 12px; font-size: 13px; font-weight: 700; }
+.add-form .chip[aria-pressed="true"] { background: var(--fg); color: var(--bg); }
+.hint { margin: 0; font-size: 12.5px; color: var(--muted); }
+.hint code { background: var(--soft); padding: 1px 5px; border-radius: 5px; }
+.bandline { margin: 0; font-size: 14px; }
+.pband { display: inline-block; font-size: 12px; font-weight: 800; padding: 2px 9px; border-radius: 999px; background: var(--soft); }
+.pp-ok { background: #e3f4e8; color: #1b6b3a; border-radius: 12px; padding: 10px 14px; margin-bottom: 14px; }
+.pp-alert ul { margin: 6px 0 0; padding-left: 18px; }
+.add-actions { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.add-actions small { color: var(--muted); }
