@@ -1,0 +1,836 @@
+<title>Shivang's Manikonda Picks</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&display=swap">
+<style>
+/* Minimal warm theme: white / warm charcoal, saffron accent, food-tinted section colours.
+   Layout: app-like single column (max 560px). Home = greeting, search, mood circles, surprise button, swipeable rows per section.
+   Tap anything -> bottom sheet with details + order buttons. Mood/search/see-all -> focused list view with a back button. */
+:root{
+  --bg:#FFFFFF; --surface:#FFFFFF; --soft:#F6F3EF; --fg:#1F1A17; --muted:#6E655E; --faint:#A1978F; --line:#ECE6E0;
+  --accent:#F2631C; --accent-ink:#B4430A; --accent-soft:#FFEDE2; --on-accent:#FFFFFF;
+  --flag:#8F5300; --flag-soft:#FFF3E0;
+  --scrim:rgba(31,26,23,.38);
+  --c-best:#C06400; --s-best:#FFF0DC;
+  --c-premium:#A8274F; --s-premium:#FCE7EC;
+  --c-healthy:#1E7A45; --s-healthy:#E5F4E9;
+  --c-budget:#13708A; --s-budget:#E3F1F6;
+  --c-special:#8A5526; --s-special:#F8ECDF;
+  --c-new:#5D3FC4; --s-new:#EEE9FB;
+  --display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;
+  --body:"Figtree","Segoe UI",system-ui,-apple-system,sans-serif;
+  --shadow:0 1px 2px rgba(31,26,23,.05),0 10px 26px -18px rgba(31,26,23,.22);
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#151110; --surface:#1F1A17; --soft:#29221E; --fg:#F5EFE9; --muted:#B5A99F; --faint:#7E736A; --line:#352C26;
+  --accent:#FF7A33; --accent-ink:#FFA571; --accent-soft:#3A2519; --on-accent:#1C0C03;
+  --flag:#FFC273; --flag-soft:#33261A; --scrim:rgba(0,0,0,.6);
+  --c-best:#FFAE5C; --s-best:#30241A; --c-premium:#FF8FB1; --s-premium:#331F24;
+  --c-healthy:#6FD69A; --s-healthy:#1C2B21; --c-budget:#64CBE6; --s-budget:#182A30;
+  --c-special:#E2B07E; --s-special:#30251C; --c-new:#B3A1FF; --s-new:#251F38;
+  --shadow:none; color-scheme:dark }}
+:root[data-theme="dark"]{
+  --bg:#151110; --surface:#1F1A17; --soft:#29221E; --fg:#F5EFE9; --muted:#B5A99F; --faint:#7E736A; --line:#352C26;
+  --accent:#FF7A33; --accent-ink:#FFA571; --accent-soft:#3A2519; --on-accent:#1C0C03;
+  --flag:#FFC273; --flag-soft:#33261A; --scrim:rgba(0,0,0,.6);
+  --c-best:#FFAE5C; --s-best:#30241A; --c-premium:#FF8FB1; --s-premium:#331F24;
+  --c-healthy:#6FD69A; --s-healthy:#1C2B21; --c-budget:#64CBE6; --s-budget:#182A30;
+  --c-special:#E2B07E; --s-special:#30251C; --c-new:#B3A1FF; --s-new:#251F38;
+  --shadow:none; color-scheme:dark }
+*{box-sizing:border-box}
+html{-webkit-tap-highlight-color:transparent}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:15px;line-height:1.5}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2.5px solid var(--accent);outline-offset:2px}
+.wrap{max-width:560px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px));padding-block:0 72px}
+
+/* Top bar */
+.topbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);border-bottom:1px solid transparent;transition:border-color .2s}
+.topbar.scrolled{border-bottom-color:var(--line)}
+.topbar .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-block:12px}
+.brand{font-family:var(--display);font-weight:800;font-size:17px;letter-spacing:-.01em;display:flex;align-items:center;gap:8px;background:none;border:0;padding:4px 0;cursor:pointer}
+.brand i{width:26px;height:26px;border-radius:8px;background:var(--accent);display:grid;place-items:center;color:#fff;font-style:normal;font-size:14px}
+.vegswitch{display:flex;align-items:center;gap:8px;cursor:pointer;font-weight:700;font-size:13px;user-select:none}
+.vegswitch input{position:absolute;opacity:0;pointer-events:none}
+.track{width:40px;height:24px;border-radius:999px;background:var(--line);position:relative;transition:background .2s}
+.track::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.25);transition:transform .2s cubic-bezier(.3,1.4,.5,1)}
+.vegswitch input:checked+.track{background:#0F8A3C}
+.vegswitch input:checked+.track::after{transform:translateX(16px)}
+.vegswitch input:focus-visible+.track{outline:2.5px solid var(--accent);outline-offset:2px}
+
+/* Home hero */
+.hero{margin-top:14px;display:grid;gap:10px;position:relative;isolation:isolate;overflow:hidden;border-radius:28px;padding:26px 22px 24px;background:var(--soft)}
+.hero .glow{position:absolute;inset:0;z-index:-1;pointer-events:none}
+.hero .glow i{position:absolute;width:62%;aspect-ratio:1;border-radius:50%;filter:blur(38px);opacity:.9}
+.hero .glow i:nth-child(1){background:var(--s-best);left:-14%;top:-30%;animation:drift1 16s ease-in-out infinite alternate}
+.hero .glow i:nth-child(2){background:var(--s-premium);right:-18%;top:-10%;animation:drift2 19s ease-in-out infinite alternate}
+.hero .glow i:nth-child(3){background:var(--s-new);left:20%;bottom:-45%;animation:drift3 22s ease-in-out infinite alternate}
+@keyframes drift1{to{transform:translate(18%,22%) scale(1.15)}}
+@keyframes drift2{to{transform:translate(-20%,18%) scale(.9)}}
+@keyframes drift3{to{transform:translate(16%,-20%) scale(1.2)}}
+.hero .stamp{position:absolute;right:16px;top:16px;font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--accent-ink);border:2px solid currentColor;border-radius:999px;padding:4px 10px;rotate:6deg;opacity:.85}
+.hello{font-size:14px;color:var(--muted);font-weight:600}
+h1{font-family:var(--display);font-weight:800;font-size:clamp(36px,10vw,50px);line-height:1;margin:0;letter-spacing:-.03em;max-width:12ch}
+h1 span{color:var(--accent)}
+.hero-sticker{position:absolute;right:0;top:6px;width:78px;height:78px;border-radius:50%;background:var(--s-best);display:grid;place-items:center;rotate:8deg}
+.hero-sticker svg{width:56px;height:56px}
+.hellorow{display:flex;align-items:center;gap:10px}
+.hero-tag{border-color:var(--bg)!important;background:#5BD496;color:#05230F;font-family:var(--display);font-weight:800;font-size:12px;padding:4px 10px;border-radius:8px;border:2.5px solid var(--surface);rotate:-6deg;box-shadow:var(--shadow)}
+.float{animation:float 5s ease-in-out infinite}
+@keyframes float{0%,100%{translate:0 0}50%{translate:0 -5px}}
+
+.searchbtn{margin-top:24px;width:100%;display:flex;align-items:center;gap:10px;background:var(--soft);border:0;border-radius:16px;padding:15px 16px;color:var(--muted);font-size:15px;cursor:text;text-align:left}
+.mag{width:18px;height:18px;flex:none}
+
+/* Blocks */
+.block{margin-top:44px}
+.bhead{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:14px}
+.btitle{font-family:var(--display);font-weight:800;font-size:21px;letter-spacing:-.015em;margin:0;line-height:1.15}
+.bsub{margin:2px 0 0;color:var(--muted);font-size:13.5px}
+.seeall{background:none;border:0;color:var(--accent-ink);font-weight:700;font-size:14px;cursor:pointer;padding:6px 0;white-space:nowrap}
+
+/* Mood circles */
+.moods{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:16px 6px}
+.mood{background:none;border:0;cursor:pointer;display:grid;justify-items:center;gap:6px;padding:0;text-align:center}
+.mood .circ{width:min(62px,15vw);aspect-ratio:1;max-width:100%;border-radius:50%;background:var(--soft);display:grid;place-items:center;transition:transform .25s cubic-bezier(.3,1.6,.5,1)}
+.mood svg{width:64%;height:64%}
+.mood:hover .circ{transform:translateY(-3px) rotate(-6deg)}
+.mood:active .circ{transform:scale(.94)}
+.mood b{font-size:12px;font-weight:700;line-height:1.2}
+
+/* Surprise */
+.surprise{margin-top:30px;width:100%;display:flex;align-items:center;gap:14px;background:var(--accent-soft);color:var(--fg);border:0;border-radius:20px;padding:16px 18px;cursor:pointer;text-align:left;transition:transform .15s}
+.surprise:active{transform:scale(.98)}
+.surprise .die{width:44px;height:44px;border-radius:12px;background:var(--accent);color:#fff;display:grid;place-items:center;font-size:24px;flex:none;transition:transform .5s ease}
+.surprise:hover .die{transform:rotate(180deg)}
+.surprise strong{display:block;font-family:var(--display);font-size:18px;font-weight:800}
+.surprise small{color:var(--muted);font-size:13px}
+
+/* Rails */
+.rail{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding:4px 2px 14px;scrollbar-width:none;margin-inline:-2px}
+.rail::-webkit-scrollbar{display:none}
+.tile{flex:none;width:150px;scroll-snap-align:start;background:none;border:0;border-radius:18px;padding:0;cursor:pointer;text-align:left;display:grid;align-content:start;transition:transform .18s ease}
+.tile:hover{transform:translateY(-3px)}
+.tile:active{transform:scale(.97)}
+.tile .pic{height:112px;border-radius:18px;background:var(--s);display:grid;place-items:center;position:relative}
+.tile .pic svg{width:66px;height:66px;transition:transform .3s cubic-bezier(.3,1.6,.5,1)}
+.tile:hover .pic svg{transform:rotate(-8deg) scale(1.06)}
+.tile .pic .mark{position:absolute;top:8px;left:8px}
+.tile .info{padding:10px 2px 0;display:grid;gap:2px}
+.tile .nm{font-weight:700;font-size:14px;line-height:1.25;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:2.5em}
+.tile .cu{font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rt{font-size:12px;font-weight:700;display:inline-flex;align-items:center;gap:3px}
+.rt .st{background:#1F8A4C;color:#fff;border-radius:6px;padding:0 5px;font-size:11.5px}
+.rt.mid .st{background:#C98A12}
+.tile .nb{font-size:11px;font-weight:700;color:var(--flag);background:var(--flag-soft);border-radius:6px;padding:1px 6px;width:max-content;margin-top:2px}
+
+/* Rail arrows (mouse / trackpad only) */
+.railwrap{position:relative}
+.arrow{display:none;position:absolute;top:38px;width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:var(--surface);cursor:pointer;place-items:center;z-index:2;box-shadow:var(--shadow)}
+.arrow svg{width:16px;height:16px}
+.arrow.prev{left:-14px}.arrow.next{right:-14px}
+@media (hover:hover) and (pointer:fine){.railwrap:hover .arrow{display:grid}.arrow[disabled]{display:none!important}}
+.saved-dot{position:absolute;top:8px;right:8px;width:24px;height:24px;border-radius:50%;background:var(--surface);display:grid;place-items:center;color:var(--accent)}
+.saved-dot svg{width:13px;height:13px}
+.save{display:flex;align-items:center;justify-content:center;gap:8px;min-height:48px;border-radius:16px;border:1.5px solid var(--line);background:none;cursor:pointer;font-weight:800;font-size:15px}
+.save svg{width:18px;height:18px}
+.save[aria-pressed="true"]{border-color:var(--c-premium);color:var(--c-premium)}
+.save[aria-pressed="true"] svg{animation:beat .35s ease}
+@keyframes beat{50%{transform:scale(1.3)}}
+.clearlink{background:none;border:0;color:var(--muted);font-weight:600;font-size:13px;cursor:pointer;padding:6px 0}
+
+/* Restaurant pictures: owner photo, else a name card */
+.ph{width:100%;height:100%;object-fit:cover;display:block}
+.mg{font-family:var(--display);font-weight:800;color:var(--c);letter-spacing:-.04em;line-height:1;opacity:.9}
+.tile .pic{overflow:hidden}
+.tile .pic .mg{font-size:52px}
+.row .pic{overflow:hidden}
+.row .pic .mg{font-size:28px}
+.shero .mg{font-size:96px}
+.shero.hasph{height:220px}
+.shero.hasph .sec{z-index:1}
+.phtools{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.phbtn{border:1.5px solid var(--line);background:none;border-radius:999px;padding:7px 13px;font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.phbtn svg{width:15px;height:15px}
+.phbtn[disabled]{opacity:.5;cursor:default}
+.ownerhint{margin-top:30px;font-size:13px;color:var(--muted);background:var(--soft);border-radius:14px;padding:12px 14px}
+
+/* Motion: entrances (transform only, content always visible), taps, bumps */
+@keyframes rise{from{transform:translateY(16px) scale(.98)}to{transform:none}}
+@keyframes toastIn{from{transform:translateY(14px) scale(.9)}to{transform:none}}
+@keyframes bump{40%{transform:scale(1.18)}}
+@keyframes ring{from{box-shadow:0 0 0 0 var(--accent)}to{box-shadow:0 0 0 14px transparent}}
+@keyframes landed{0%{transform:scale(.6) rotate(-6deg)}60%{transform:scale(1.08) rotate(2deg)}100%{transform:none}}
+.intro .hero > :not(.glow):not(.stamp){animation:rise .7s cubic-bezier(.2,.9,.3,1.1) both;animation-delay:calc(var(--d,0) * 90ms)}
+.intro .mood{animation:rise .6s cubic-bezier(.2,.9,.3,1.3) both;animation-delay:calc(300ms + var(--d,0) * 45ms)}
+.tile.pop{animation:rise .55s cubic-bezier(.2,.9,.3,1.25) both;animation-delay:calc(var(--d,0) * 55ms)}
+.mood.tapped .circ{animation:ring .5s ease-out}
+.bump{display:inline-block;animation:bump .35s ease}
+.landing .mg,.landing .ph{animation:landed .6s cubic-bezier(.2,1.3,.4,1)}
+.landing .sname{animation:rise .5s cubic-bezier(.2,1,.3,1.2)}
+#fx{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:70}
+
+/* Social: likes & comments */
+.lk{position:absolute;right:8px;bottom:8px;background:var(--surface);color:var(--c-premium);font-size:11.5px;font-weight:800;border-radius:999px;padding:2px 8px;display:inline-flex;align-items:center;gap:3px;font-variant-numeric:tabular-nums}
+.lk svg{width:11px;height:11px}
+.sc{display:inline-flex;align-items:center;gap:3px;color:var(--muted);font-weight:700}
+.sc svg{width:12px;height:12px}
+.sc.lkc{color:var(--c-premium)}
+.social{display:flex;align-items:center;gap:4px;margin-top:12px}
+.ib{width:44px;height:44px;border-radius:12px;border:0;background:none;cursor:pointer;display:grid;place-items:center;color:var(--fg);transition:transform .12s}
+.ib svg{width:25px;height:25px}
+.ib:active{transform:scale(.88)}
+.ib.like[aria-pressed="true"]{color:#E53958}
+.ib.like[aria-pressed="true"] svg{animation:beat .4s ease}
+.ib[disabled]{opacity:.35;cursor:default}
+.ib.bm[aria-pressed="true"]{color:var(--accent)}
+.grow{flex:1}
+.likedby{font-size:14px;font-weight:700;margin:2px 0 0 10px;min-height:1.5em}
+.likedby span{font-weight:500;color:var(--muted)}
+.burst{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none;color:#fff;opacity:0}
+.burst svg{width:84px;height:84px;filter:drop-shadow(0 6px 18px rgba(229,57,88,.55))}
+.burst.go{animation:burst .8s ease forwards}
+@keyframes burst{0%{opacity:0;transform:scale(.3)}15%{opacity:1;transform:scale(1.15)}30%{transform:scale(.95)}45%{transform:scale(1)}80%{opacity:1}100%{opacity:0;transform:scale(1.05)}}
+.shero{cursor:default;user-select:none;-webkit-user-select:none}
+.cmts{margin-top:28px;border-top:1px solid var(--line);padding-top:18px}
+.cmts h3{margin:0 0 12px;font-family:var(--display);font-size:19px;font-weight:800;letter-spacing:-.01em}
+.cmts h3 span{color:var(--muted);font-weight:700;font-size:15px;margin-left:4px}
+.clist{list-style:none;margin:0;padding:0;display:grid;gap:16px}
+.cm{display:grid;grid-template-columns:34px minmax(0,1fr);gap:10px;align-items:start}
+.av{width:34px;height:34px;border-radius:50%;background:var(--soft);object-fit:cover;display:block}
+.cb{min-width:0}
+.ch{display:flex;gap:8px;align-items:baseline;font-size:13.5px}
+.ch b{font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ch span{color:var(--faint);font-size:12px;white-space:nowrap}
+.cb p{margin:2px 0 0;font-size:14.5px;overflow-wrap:anywhere;white-space:pre-wrap}
+.del{background:none;border:0;padding:4px 0 0;font-size:12px;font-weight:700;color:var(--faint);cursor:pointer}
+.del.sure{color:#E53958}
+.nocm{color:var(--muted);font-size:14px;margin:0}
+.composer{display:flex;gap:8px;align-items:center;margin-top:16px;position:sticky;bottom:calc(-20px - env(safe-area-inset-bottom,0px));background:var(--surface);padding-block:10px}
+.composer input{flex:1;min-width:0;font:inherit;font-size:16px;padding:12px 14px;border-radius:999px;border:1.5px solid transparent;background:var(--soft);color:var(--fg)}
+.composer input:focus{border-color:var(--accent);outline:none}
+.post{border:0;background:none;color:var(--accent-ink);font-weight:800;font-size:15px;cursor:pointer;padding:8px 6px}
+.post[disabled]{color:var(--faint);cursor:default}
+.cmnote{margin:14px 0 0;font-size:13px;color:var(--muted);background:var(--soft);border-radius:12px;padding:10px 12px}
+.feed{display:grid;gap:10px}
+.fi{width:100%;display:grid;grid-template-columns:34px minmax(0,1fr);gap:10px;text-align:left;background:var(--soft);border:0;border-radius:16px;padding:12px;cursor:pointer;transition:transform .12s}
+.fi:active{transform:scale(.985)}
+.fi .ch b{font-size:13.5px}
+.fi .on{font-size:12.5px;color:var(--muted)}
+.fi .on b{color:var(--fg);font-weight:700}
+.fi p{margin:3px 0 0;font-size:14px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.toast{animation:toastIn .35s cubic-bezier(.2,1.4,.4,1);position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));translate:-50% 0;z-index:60;background:var(--fg);color:var(--bg);font-size:14px;font-weight:600;padding:10px 16px;border-radius:999px;max-width:calc(100% - 32px);text-align:center;box-shadow:0 10px 30px -10px rgba(0,0,0,.4)}
+
+/* List view */
+.listhead{position:sticky;top:calc(env(safe-area-inset-top,0px) + 62px);z-index:15;background:var(--bg);padding-block:6px 12px;display:grid;gap:12px}
+.backrow{display:flex;align-items:center;gap:10px}
+.back{width:40px;height:40px;border-radius:12px;border:0;background:var(--soft);cursor:pointer;display:grid;place-items:center;flex:none}
+.back svg{width:18px;height:18px}
+.ltitle{font-family:var(--display);font-weight:800;font-size:24px;margin:0;letter-spacing:-.015em;line-height:1.1}
+.lsub{font-size:13px;color:var(--muted);margin:0}
+.searchin{width:100%;font:inherit;font-size:16px;padding:13px 14px;border-radius:14px;border:1.5px solid transparent;background:var(--soft);color:var(--fg)}
+.chips{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;border:1.5px solid transparent;background:var(--soft);border-radius:999px;padding:7px 13px;font-size:13px;font-weight:700;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.rows{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.row{width:100%;display:grid;grid-template-columns:60px minmax(0,1fr) auto;gap:14px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:10px 14px 10px 10px;cursor:pointer;text-align:left;transition:transform .15s,border-color .15s}
+.row:hover{border-color:var(--faint)}
+.row:active{transform:scale(.985)}
+.row .pic{width:60px;height:60px;border-radius:14px;background:var(--s);display:grid;place-items:center}
+.row .pic svg{width:44px;height:44px}
+.row .txt{display:grid;gap:2px;min-width:0}
+.row .nm{font-weight:700;font-size:15px;line-height:1.25;display:flex;align-items:center;gap:7px;min-width:0}
+.row .nm span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.row .cu{font-size:12.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.row .meta{display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:12px;color:var(--muted)}
+.chev{width:16px;height:16px;color:var(--faint)}
+.group{margin-top:22px;margin-bottom:10px;font-size:12px;letter-spacing:.12em;text-transform:uppercase;font-weight:800;color:var(--c)}
+.empty{text-align:center;padding:48px 10px;color:var(--muted)}
+.empty b{display:block;font-family:var(--display);font-size:20px;color:var(--fg);margin-bottom:4px}
+
+/* Veg marks (as on Indian food packs) */
+.mark{flex:none;width:14px;height:14px;border:1.6px solid;border-radius:2px;display:grid;place-items:center;background:#fff}
+.mark.veg{border-color:#0F8A3C}.mark.veg::after{content:"";width:6px;height:6px;border-radius:50%;background:#0F8A3C}
+.mark.nv{border-color:#8B3A12}.mark.nv::after{content:"";width:0;height:0;border-left:4px solid transparent;border-right:4px solid transparent;border-bottom:7px solid #8B3A12}
+
+/* Bottom sheet */
+.scrim{position:fixed;inset:0;background:var(--scrim);z-index:40;opacity:0;transition:opacity .25s}
+.scrim.on{opacity:1}
+.sheet{position:fixed;left:0;right:0;bottom:0;z-index:50;margin:0 auto;max-width:560px;background:var(--surface);border-radius:26px 26px 0 0;padding:10px max(20px,env(safe-area-inset-right,0px)) calc(20px + env(safe-area-inset-bottom,0px)) max(20px,env(safe-area-inset-left,0px));max-height:88vh;overflow-y:auto;transform:translateY(100%);transition:transform .32s cubic-bezier(.2,.9,.25,1);box-shadow:0 -20px 50px -20px rgba(0,0,0,.35)}
+.sheet.on{transform:translateY(0)}
+.grab{width:42px;height:5px;border-radius:999px;background:var(--line);margin:0 auto 14px}
+.sclose{position:absolute;top:12px;right:max(14px,env(safe-area-inset-right,0px));width:36px;height:36px;border-radius:50%;border:0;background:var(--soft);cursor:pointer;display:grid;place-items:center}
+.sclose svg{width:16px;height:16px}
+.shero{height:170px;overflow:hidden;border-radius:20px;background:var(--s);display:grid;place-items:center;position:relative;overflow:hidden}
+.shero svg{width:104px;height:104px}
+.shero.rolling .mg,.shero.rolling .ph{animation:wiggle .16s linear infinite}
+@keyframes wiggle{0%,100%{rotate:-7deg}50%{rotate:7deg}}
+.shero .sec{position:absolute;left:12px;top:12px;background:var(--surface);color:var(--c);font-weight:800;font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;padding:4px 10px;border-radius:999px}
+.slabel{margin-top:16px;font-size:12px;letter-spacing:.12em;text-transform:uppercase;font-weight:800;color:var(--accent-ink)}
+.sname{font-family:var(--display);font-weight:800;font-size:clamp(26px,7vw,32px);line-height:1.05;letter-spacing:-.02em;margin:4px 0 6px}
+.sline{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;font-size:13.5px;color:var(--muted)}
+.sline .vg{display:inline-flex;align-items:center;gap:6px;font-weight:700;color:var(--fg)}
+.facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:16px}
+.fact{background:var(--soft);border-radius:14px;padding:10px 12px}
+.fact span{display:block;font-size:11.5px;color:var(--muted);font-weight:600}
+.fact b{font-size:15px}
+.snote{margin:14px 0 0;color:var(--fg);font-size:14.5px}
+.sflag{margin:12px 0 0;background:var(--flag-soft);color:var(--flag);border-radius:14px;padding:10px 12px;font-size:13.5px}
+.sflag b{display:block;font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.actions{display:grid;gap:10px;margin-top:20px}
+.cta{display:flex;align-items:center;justify-content:center;gap:8px;min-height:52px;border-radius:16px;font-weight:800;font-size:16px;text-decoration:none;transition:transform .12s}
+.cta:active{transform:scale(.98)}
+.cta.sw{background:#FC8019;color:#fff}
+.cta.zo{background:#CB202D;color:#fff}
+.cta.again{background:var(--soft);color:var(--fg);border:0;cursor:pointer}
+.maplink{text-align:center;font-size:14px;font-weight:700;color:var(--accent-ink);text-decoration:none;padding:6px}
+
+footer{margin-top:56px;font-size:12.5px;color:var(--faint);display:grid;gap:6px;text-align:center}
+footer b{font-family:var(--display);color:var(--muted);font-size:14px}
+
+/* steam on chai */
+.steam path{animation:steam 2.4s ease-in-out infinite}
+.steam path:nth-child(2){animation-delay:-.8s}.steam path:nth-child(3){animation-delay:-1.6s}
+@keyframes steam{0%,100%{opacity:.25}50%{opacity:.95}}
+
+@media (prefers-reduced-motion: reduce){
+  .hero .glow i,.intro .hero > *,.intro .mood,.tile.pop,.mood.tapped .circ,.bump,.landing .mg,.landing .ph,.landing .sname,.toast,
+  .float,.steam path,.shero.rolling svg,.ib.like[aria-pressed="true"] svg,.burst.go{animation:none}
+  .sheet,.scrim,.mood .circ,.tile,.tile .pic svg,.track::after{transition:none}
+}
+</style>
+
+<header class="topbar"><div class="wrap">
+  <button class="brand" id="home" type="button" aria-label="Back to home"><i aria-hidden="true">S</i>Shivang's picks</button>
+  <label class="vegswitch"><input type="checkbox" id="vegonly"><span class="track" aria-hidden="true"></span>Pure veg</label>
+</div></header>
+
+<div class="wrap">
+  <main id="app"></main>
+  <footer>
+    <b>Curated by Shivang · Manikonda, Hyderabad</b>
+    <div>Ratings are from Google Maps unless marked Swiggy. Prices from Google, Swiggy or EazyDiner, October 2026.</div>
+    <div>The green veg mark appears only where pure veg is confirmed.</div>
+  </footer>
+</div>
+
+<canvas id="fx" aria-hidden="true"></canvas>
+<input type="file" id="phFile" accept="image/jpeg,image/png,image/webp" hidden>
+<div class="toast" id="toast" role="status" hidden></div>
+<div class="scrim" id="scrim" hidden></div>
+<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sname" hidden></div>
+
+<script>
+const L='#2B2F45';
+const ILL={
+ biryani:`<svg viewBox="0 0 64 64" aria-hidden="true"><ellipse cx="32" cy="24" rx="20" ry="7" fill="#F6E7B8" stroke="${L}" stroke-width="2.5"/><circle cx="25" cy="22" r="1.8" fill="#F28C1B"/><circle cx="35" cy="25" r="1.8" fill="#F28C1B"/><circle cx="40" cy="21" r="1.6" fill="#E85D3A"/><path d="M30 20l2-3" stroke="#3E8E41" stroke-width="2.2" stroke-linecap="round"/><path d="M12 25c0 18 8 27 20 27s20-9 20-27" fill="#B8642E" stroke="${L}" stroke-width="2.5"/><path d="M14 33h36" stroke="#8A4A20" stroke-width="2.5"/><rect x="8" y="22" width="5" height="6" rx="2" fill="#B8642E" stroke="${L}" stroke-width="2"/><rect x="51" y="22" width="5" height="6" rx="2" fill="#B8642E" stroke="${L}" stroke-width="2"/></svg>`,
+ thali:`<svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="26" fill="#D9DEE6" stroke="${L}" stroke-width="2.5"/><circle cx="32" cy="32" r="21" fill="#EEF1F5"/><circle cx="22" cy="23" r="7" fill="#F2C230" stroke="${L}" stroke-width="2"/><circle cx="40" cy="21" r="6.5" fill="#E05A2B" stroke="${L}" stroke-width="2"/><circle cx="43" cy="38" r="6.5" fill="#FFFFFF" stroke="${L}" stroke-width="2"/><ellipse cx="25" cy="41" rx="10" ry="7" fill="#E9C27A" stroke="${L}" stroke-width="2"/><circle cx="23" cy="40" r="1.3" fill="#A5672A"/><circle cx="28" cy="43" r="1.3" fill="#A5672A"/></svg>`,
+ dosa:`<svg viewBox="0 0 64 64" aria-hidden="true"><ellipse cx="32" cy="50" rx="26" ry="7" fill="#D9DEE6" stroke="${L}" stroke-width="2.5"/><path d="M8 46L30 10l26 36z" fill="#E9A53B" stroke="${L}" stroke-width="2.5" stroke-linejoin="round"/><path d="M20 38l6-3M30 30l5 4M36 40l6-2" stroke="#B5741F" stroke-width="2" stroke-linecap="round"/><circle cx="14" cy="52" r="4" fill="#FFFFFF" stroke="${L}" stroke-width="2"/><circle cx="50" cy="52" r="4" fill="#E05A2B" stroke="${L}" stroke-width="2"/></svg>`,
+ bread:`<svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="33" r="24" fill="#EDBE6A" stroke="${L}" stroke-width="2.5"/><circle cx="24" cy="26" r="3.2" fill="#B9762A"/><circle cx="38" cy="24" r="2.4" fill="#B9762A"/><circle cx="41" cy="38" r="3.4" fill="#B9762A"/><circle cx="26" cy="41" r="2.2" fill="#B9762A"/><circle cx="33" cy="33" r="1.6" fill="#B9762A"/><path d="M44 16c4 2 7 6 8 10" stroke="#FFF6DD" stroke-width="2.5" stroke-linecap="round" fill="none"/><path d="M27 20l1.5-3M35 44l1.5-3" stroke="#3E8E41" stroke-width="2" stroke-linecap="round"/></svg>`,
+ chai:`<svg viewBox="0 0 64 64" aria-hidden="true"><g class="steam" fill="none" stroke="#9AA0BE" stroke-width="2.4" stroke-linecap="round"><path d="M24 14c-2-3 2-5 0-8"/><path d="M32 14c-2-3 2-5 0-8"/><path d="M40 14c-2-3 2-5 0-8"/></g><path d="M16 20h32l-4 34H20z" fill="#F4F6FA" stroke="${L}" stroke-width="2.5" stroke-linejoin="round"/><path d="M18 28h28l-3 25H21z" fill="#C98A4B"/><path d="M19 36h26" stroke="#B07438" stroke-width="2"/></svg>`,
+ salad:`<svg viewBox="0 0 64 64" aria-hidden="true"><path d="M12 22c4-8 10-6 12-2 2-6 10-8 13-2 4-5 12-2 13 4" fill="#5DBB63" stroke="${L}" stroke-width="2.5" stroke-linejoin="round"/><circle cx="26" cy="24" r="4" fill="#E64B3C" stroke="${L}" stroke-width="2"/><circle cx="40" cy="25" r="3.5" fill="#F2C230" stroke="${L}" stroke-width="2"/><path d="M8 28h48c0 14-10 24-24 24S8 42 8 28z" fill="#F4F6FA" stroke="${L}" stroke-width="2.5"/><path d="M14 36h36" stroke="#5DBB63" stroke-width="3" stroke-linecap="round"/></svg>`,
+ roll:`<svg viewBox="0 0 64 64" aria-hidden="true"><g transform="rotate(-35 32 32)"><rect x="10" y="22" width="44" height="20" rx="10" fill="#EDCB8A" stroke="${L}" stroke-width="2.5"/><ellipse cx="50" cy="32" rx="5" ry="9" fill="#F7E3B5" stroke="${L}" stroke-width="2.5"/><circle cx="49" cy="29" r="2" fill="#E05A2B"/><circle cx="51" cy="35" r="2" fill="#5DBB63"/><path d="M18 26v12M26 26v12" stroke="#C9A05A" stroke-width="2"/><rect x="10" y="22" width="14" height="20" rx="6" fill="#F4F6FA" stroke="${L}" stroke-width="2.5"/></g></svg>`,
+ sweet:`<svg viewBox="0 0 64 64" aria-hidden="true"><ellipse cx="32" cy="52" rx="24" ry="6" fill="#D9DEE6" stroke="${L}" stroke-width="2.5"/><circle cx="20" cy="40" r="10" fill="#F5A623" stroke="${L}" stroke-width="2.5"/><circle cx="44" cy="40" r="10" fill="#F5A623" stroke="${L}" stroke-width="2.5"/><circle cx="32" cy="24" r="10" fill="#F5A623" stroke="${L}" stroke-width="2.5"/><g fill="#C76A00"><circle cx="17" cy="37" r="1.3"/><circle cx="23" cy="43" r="1.3"/><circle cx="41" cy="38" r="1.3"/><circle cx="47" cy="42" r="1.3"/><circle cx="29" cy="21" r="1.3"/><circle cx="35" cy="27" r="1.3"/></g><path d="M30 13l2-3 2 3" stroke="#3E8E41" stroke-width="2" fill="none" stroke-linecap="round"/></svg>`,
+ pizza:`<svg viewBox="0 0 64 64" aria-hidden="true"><path d="M10 14c14-6 30-6 44 0L32 56z" fill="#F7D46B" stroke="${L}" stroke-width="2.5" stroke-linejoin="round"/><path d="M10 14c14-6 30-6 44 0l-3 6c-12-5-26-5-38 0z" fill="#D9963A" stroke="${L}" stroke-width="2.5" stroke-linejoin="round"/><circle cx="26" cy="26" r="4" fill="#E64B3C"/><circle cx="38" cy="28" r="3.6" fill="#E64B3C"/><circle cx="32" cy="38" r="3.2" fill="#E64B3C"/><path d="M30 24l3 2M37 36l2-3" stroke="#3E8E41" stroke-width="2.2" stroke-linecap="round"/></svg>`,
+ bowl:`<svg viewBox="0 0 64 64" aria-hidden="true"><path d="M14 26c4-7 14-9 18-3 4-6 14-4 18 3" fill="#FFFFFF" stroke="${L}" stroke-width="2.5"/><path d="M33 22c4-5 12-3 16 4H33z" fill="#E28A2A" stroke="${L}" stroke-width="2"/><path d="M8 28h48c0 14-10 24-24 24S8 42 8 28z" fill="#3C4C8C" stroke="${L}" stroke-width="2.5"/><path d="M16 36h32" stroke="#6E7FC4" stroke-width="2.5" stroke-linecap="round"/></svg>`
+};
+const iconFor=c=>{c=(c||"").toLowerCase();
+ if(/biryani/.test(c))return"biryani";
+ if(/salad|keto|healthy|protein|khichdi/.test(c))return"salad";
+ if(/thali|meals|home-style|bihari/.test(c))return"thali";
+ if(/dosa|idli|south|tiffin|millet/.test(c))return"dosa";
+ if(/kulcha|paratha|punjabi|roti|north indian|dhaba/.test(c))return"bread";
+ if(/chai/.test(c))return"chai";
+ if(/salad|keto|healthy|protein|khichdi/.test(c))return"salad";
+ if(/roll|wrap|burrito|mexican/.test(c))return"roll";
+ if(/sweet|mithai/.test(c))return"sweet";
+ if(/pizza/.test(c))return"pizza";
+ return"bowl";
+};
+
+const SECTIONS=[
+ {id:"best",title:"Best offers & taste",sub:"Shivang's go-tos. Usually a good deal running."},
+ {id:"new",title:"New to try",sub:"Well-rated nearby. Not tried by Shivang yet."},
+ {id:"premium",title:"Premium",sub:"For when you want a proper meal."},
+ {id:"healthy",title:"Healthy",sub:"Light days, clean plates."},
+ {id:"budget",title:"Budget",sub:"Cheap, filling, reliable."},
+ {id:"special",title:"Special mentions",sub:"Not full meals, but you should know these."}
+];
+const MOODS=[
+ {id:"cheap",t:"Budget",long:"Easy on the wallet",i:"bowl"},
+ {id:"treat",t:"Treat",long:"Treat yourself",i:"thali"},
+ {id:"punjabi",t:"Punjabi",long:"Punjabi feast",i:"bread"},
+ {id:"biryani",t:"Biryani",long:"Biryani craving",i:"biryani"},
+ {id:"south",t:"Dosa & idli",long:"Dosa & idli",i:"dosa"},
+ {id:"homestyle",t:"Home-style",long:"Ghar ka khana",i:"thali"},
+ {id:"clean",t:"Healthy",long:"Eat clean",i:"salad"},
+ {id:"snack",t:"Snacks",long:"Chai & snacks",i:"chai"},
+ {id:"sweets",t:"Sweet",long:"Something sweet",i:"sweet"},
+ {id:"pizza",t:"Pizza & more",long:"Pizza, rolls & burritos",i:"pizza"}
+];
+const M="https://maps.google.com/maps?cid=";
+const D=[
+ ["best","Bihari Bowl","Bihari home-style",["homestyle"]],
+ ["best","Rajthali","Rajasthani & Gujarati thali",["thali","treat"],{veg:1,r:"4.0",n:"2,878",cost:"₹400–600 per person",note:"Unlimited thali, Jubilee Hills.",flag:"Priced like a premium place, more than the rest of this section.",map:"8471537223578018234"}],
+ ["best","Chai Chakhna Company","Chai & snacks",["snack"]],
+ ["best","Meal O Clock Pure Veg","North Indian meals",["homestyle","cheap"],{veg:1,r:"4.8",n:"290",cost:"Under ₹200 per person",note:"Homely veg meals and tiffin. Kondapur kitchen.",map:"2856031976382512107"}],
+ ["best","Pikadili","",[]],
+ ["best","Millet Express","Millet dosas & idlis",["clean","south","cheap"],{r:"4.1",n:"5.2K",src:"Swiggy",cost:"₹200 for two",note:"Also has a few egg and chicken items.",flag:"Budget-priced and healthy, so it fits Budget and Healthy too."}],
+ ["best","The Kulcha Kulture","Amritsari kulchas",["punjabi"],{veg:1,r:"4.5",n:"88",cost:"₹200–400 per person",note:"Reviewers love how crisp and well-stuffed the kulchas are. Kokapet outlet.",map:"14876424202851919566"}],
+ ["best","Haldiram's","Snacks, chaat, sweets, thalis",["snack","sweets","thali"],{veg:1,cost:"₹200–1,000 per person",note:"Other Hyderabad outlets are rated 4.6–4.7."}],
+ ["best","Tadka Treats","",[]],
+ ["best","Mealful Rolls","Rolls & wraps",["snack"]],
+ ["best","Raju Gari Biryani","Andhra-style biryani",["biryani"],{nv:1,r:"3.5",n:"611",cost:"₹200–400 per person",note:"Has a paneer-mushroom biryani.",flag:"Reviews say quality varies between orders.",map:"14956577767460150749"}],
+ ["best","1881 Dum House: Lucknow's Legacy","Lucknowi dum biryani",["biryani"],{nv:1,r:"4.6",n:"1.1K",src:"Swiggy",note:"19 veg items, including a tandoori paneer dum biryani."}],
+ ["best","Biryani By Kilo","Handi biryani",["biryani","treat"],{nv:1,r:"4.0",n:"1.1K",src:"Swiggy",cost:"₹700 for two",note:"Cooked per order in clay handis. Has a paneer biryani.",flag:"Pricier than the rest of this section."}],
+ ["premium","Salt","North Indian",["treat","punjabi"],{r:"4.0",n:"209",cost:"₹600–1,800 per person",note:"Gachibowli, near Nanakramguda.",map:"7042709438882512844"}],
+ ["premium","Amritsari Aangan","Punjabi",["punjabi","treat"],{veg:1,r:"4.5",n:"682",cost:"₹400–1,200 per person",note:"Kondapur branch. The closer Narsingi branch is 4.1 from 1,599 reviews.",map:"17778547782668608581"}],
+ ["premium","The Punjabis Swag","Punjabi dhaba-style",["punjabi","treat"],{nv:1,r:"4.2",n:"4,130",cost:"₹400–600 per person",note:"Big veg menu. Gachibowli.",map:"15317680942296326160"}],
+ ["premium","Punjabi Affair","Punjabi & multicuisine",["punjabi","treat"],{nv:1,cost:"₹800 for two",note:"Only 4 reviews on EazyDiner, too few to judge."}],
+ ["premium","Norfest – The Dhaba","North Indian dhaba",["punjabi"],{warn:"check app",flag:"Google lists the Manikonda dine-in outlet as permanently closed. If it still shows on Swiggy or Zomato, it's delivering from another kitchen.",map:"16471435626461803643"}],
+ ["premium","ITC Aashirvaad Soul Creations","Home-style meals & snacks",["homestyle","snack","sweets"],{veg:1,r:"4.4",n:"6.5K",src:"Swiggy",cost:"₹500 for two",note:"Pav bhaji and khichdi run about ₹280–300.",flag:"Mid-range by price, cheaper than the rest of Premium."}],
+ ["healthy","Greens & More","Salads & bowls",["clean"]],
+ ["healthy","ATH – All Things Healthy","Healthy bowls & meals",["clean"]],
+ ["healthy","Harvest Salad Co","Salads & bowls",["clean","treat"],{r:"4.6",n:"3.1K",src:"Swiggy",cost:"₹700 for two",note:"Salads and bowls cost ₹329–399.",flag:"Pricier than the rest of this section."}],
+ ["healthy","Lo! Low Carb and Keto Foods","Keto & low-carb",["clean"],{r:"4.1",n:"1.0K",src:"Swiggy",cost:"₹500 for two"}],
+ ["healthy","California Burrito","Mexican burritos & bowls",["clean"],{flag:"Not healthy by default. Pick a bowl or salad."}],
+ ["healthy","Great Indian Khichdi by EatFit","Khichdi",["clean","homestyle"],{veg:1}],
+ ["healthy","Home Plate by EatFit","Home-style meals",["clean","homestyle"]],
+ ["budget","Sai Bihari Dhaba","Bihari & North Indian",["cheap","homestyle"]],
+ ["budget","Bihari Dhaba","Bihari & North Indian",["cheap","homestyle"]],
+ ["budget","Udupis Upahar","South Indian",["cheap","south"],{veg:1,r:"3.9",n:"3,945",cost:"Under ₹200 per person",note:"Manikonda outlet. Dosas, meals, chole bhature.",map:"8036158332151832943"}],
+ ["budget","JDM Punjabi Dhaba","Parathas & rajma-chawal",["cheap","punjabi","homestyle"],{veg:1,r:"4.2",n:"474",cost:"Under ₹200 per person",note:"Financial District.",map:"2560055139824488062"}],
+ ["budget","Punjabi Paratha Junction","Parathas",["cheap","punjabi"]],
+ ["budget","Balle Balle Punjabi","Punjabi",["cheap","punjabi"]],
+ ["budget","Box8","Meal bowls",["cheap"]],
+ ["budget","Rolls Mania","Rolls",["cheap","snack"]],
+ ["special","Vellanki Foods","Telugu sweets & snacks",["sweets"],{r:"4.5",n:"429",note:"Get the dry fruit pootharekulu. Madeenaguda branch.",map:"14222097016001694018"}],
+ ["special","Manakamana Kitchen","Rotis",["cheap","homestyle"],{note:"Cheap rotis. Order these when you have sabzi at home or are making some."}],
+ ["new","Amrutham Pure Vegetarian","Satvik thali",["thali","homestyle","south","cheap"],{veg:1,r:"4.7",n:"1,195",cost:"Under ₹200 per person",note:"No onion or garlic. Reviewers say the unlimited thali feels light. Puppalguda.",map:"6517507397336915590"}],
+ ["new","Suruchi Tiffin Room (STR)","South Indian tiffins",["south","cheap"],{veg:1,r:"4.8",n:"111",cost:"Under ₹200 per person",note:"Ghee pongal gets special mention. Alkapur Township.",map:"10080069798141402735"}],
+ ["new","Sai Deeksha Tiffins and Snacks","South Indian tiffins",["south","cheap"],{veg:1,r:"4.8",n:"282",cost:"Under ₹200 per person",note:"Poori curry is the standout.",map:"8935702478757523142"}],
+ ["new","Taara Kitchen","South Indian & quick bites",["south","cheap"],{veg:1,r:"4.3",n:"2,161",cost:"Under ₹200 per person",note:"Ghee karam dosa in the morning, paneer kulcha naan later.",map:"14260220838842432950"}],
+ ["new","Vaishnavi Tiffin Centre","South Indian tiffins",["south","cheap"],{veg:1,r:"4.2",n:"2,869",cost:"Under ₹200 per person",note:"Butter dosa and Mysore bonda. Manikonda Road.",map:"7717209219865728972"}],
+ ["new","Varalakshmi Tiffins","South Indian tiffins",["south"],{veg:1,r:"4.1",n:"1,298",cost:"Under ₹200 per person",note:"Ghee dosa and a chutney people rave about. Slightly pricier than nearby tiffin spots.",map:"789457810313219373"}],
+ ["new","Vedham Pure Vegetarian","South Indian & thalis",["south","thali","treat"],{veg:1,r:"4.5",n:"2,445",cost:"₹200–600 per person",note:"A nicer sit-down place. Gachibowli.",map:"13425063907160355249"}],
+ ["new","Oye Punjabi","Punjabi dhaba",["punjabi","cheap"],{veg:1,r:"4.3",n:"224",cost:"Under ₹200 per person",note:"Aloo paratha and chole bhature. Gachibowli.",map:"5513013590496256984"}],
+ ["new","Protein Ka Tadka","High-protein healthy meals",["clean"],{r:"4.8",n:"60",cost:"₹200–400 per person",note:"Cooked fresh in ghee and olive oil. Puppalguda.",map:"16586997260201648789"}],
+ ["new","MOJO Pizza – 2X Toppings","Pizza",["treat","snack"],{r:"4.8",n:"400",note:"Veg pizzas with double toppings. Alkapur Township.",map:"14295179704239537203"}]
+];
+const items=D.map(([s,name,cuisine,moods,o={}],idx)=>{
+  const it={id:idx,s,name,cuisine,moods:[...moods],icon:iconFor(cuisine||name),...o};
+  if(/pizza|roll|burrito/i.test(cuisine))it.moods.push("pizza");
+  return it;
+});
+const secOf=Object.fromEntries(SECTIONS.map(s=>[s.id,s]));
+
+/* ---------- State ---------- */
+let saved=[],recent=[];try{saved=JSON.parse(localStorage.getItem("saved")||"[]");recent=JSON.parse(localStorage.getItem("recent")||"[]")}catch(e){}
+const store=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
+const byName=n=>items.find(i=>i.name===n);
+const BOOK=f=>`<svg viewBox="0 0 24 24" fill="${f?"currentColor":"none"}" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M6 3h12v18l-6-4.5L6 21z"/></svg>`;
+const BUBBLE=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M20 12a8 8 0 0 1-11.6 7.1L4 20l1-4.2A8 8 0 1 1 20 12z"/></svg>`;
+const HEART=f=>`<svg viewBox="0 0 24 24" fill="${f?"currentColor":"none"}" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg>`;
+let vegOnly=false,view={type:"home"},homeScroll=0,lastFocus=null,lastPick=null,rolling=false;
+try{if(localStorage.getItem("vegOnly")==="1")vegOnly=true}catch(e){}
+const $=id=>document.getElementById(id);
+$("vegonly").checked=vegOnly;
+const esc=t=>String(t).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const base=n=>n.replace(/\s*[–:(].*$/,"");
+const swiggy=n=>`https://www.swiggy.com/search?query=${encodeURIComponent(base(n))}`;
+const zomato=n=>`https://www.google.com/search?q=${encodeURIComponent(base(n)+" Hyderabad site:zomato.com")}`;
+const reduce=()=>matchMedia("(prefers-reduced-motion: reduce)").matches;
+const mark=i=>i.veg?'<i class="mark veg" aria-label="Pure veg"></i>':i.nv?'<i class="mark nv" aria-label="Serves non-veg"></i>':"";
+const vis=list=>list.filter(i=>!vegOnly||i.veg);
+const rating=i=>i.r?`<span class="rt ${parseFloat(i.r)<4?"mid":""}"><span class="st">${i.r} ★</span></span>`:"";
+const MAG=`<svg class="mag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>`;
+const BACK=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>`;
+const CHEV=`<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>`;
+const X=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>`;
+
+/* ---------- Celebrations: confetti & hearts (canvas, no library) ---------- */
+const FX={parts:[],run:false,cv:null,cx:null};
+const PAL=["#FF7A1A","#FFC14D","#E53958","#6F4FE0","#1FA463","#2BB3D9"];
+function fxCanvas(){if(!FX.cv){FX.cv=$("fx");FX.cx=FX.cv.getContext&&FX.cv.getContext("2d")}const d=devicePixelRatio||1;if(FX.cv.width!==innerWidth*d){FX.cv.width=innerWidth*d;FX.cv.height=innerHeight*d}return FX.cx}
+function burstFx(x,y,{n=70,spread=1,hearts=false,up=1}={}){
+  if(reduce())return;const cx=fxCanvas();if(!cx)return;
+  for(let k=0;k<n;k++){const a=-Math.PI/2+(Math.random()-.5)*Math.PI*spread,v=(hearts?4:6)+Math.random()*(hearts?4:7);
+    FX.parts.push({x,y,vx:Math.cos(a)*v,vy:Math.sin(a)*v*up,r:Math.random()*Math.PI,vr:(Math.random()-.5)*.3,s:hearts?8+Math.random()*7:5+Math.random()*5,c:hearts?(Math.random()<.7?"#E53958":"#FF8FB1"):PAL[k%PAL.length],h:hearts,life:0,max:70+Math.random()*40,sh:Math.random()<.5})}
+  if(!FX.run){FX.run=true;requestAnimationFrame(fxTick)}
+}
+function heartPath(cx,s){cx.beginPath();cx.moveTo(0,s*.3);cx.bezierCurveTo(-s,-s*.4,-s*.4,-s,0,-s*.35);cx.bezierCurveTo(s*.4,-s,s,-s*.4,0,s*.3);cx.fill()}
+function fxTick(){
+  const cx=FX.cx,d=devicePixelRatio||1;cx.setTransform(1,0,0,1,0,0);cx.clearRect(0,0,FX.cv.width,FX.cv.height);cx.scale(d,d);
+  FX.parts=FX.parts.filter(p=>p.life<p.max&&p.y<innerHeight+40);
+  FX.parts.forEach(p=>{p.life++;p.vy+=p.h?.12:.22;p.vx*=.985;p.vy*=.985;p.x+=p.vx;p.y+=p.vy;p.r+=p.vr;
+    cx.save();cx.globalAlpha=Math.max(0,1-p.life/p.max);cx.translate(p.x,p.y);cx.rotate(p.h?p.vx*.05:p.r);cx.fillStyle=p.c;
+    if(p.h)heartPath(cx,p.s);else if(p.sh)cx.fillRect(-p.s/2,-p.s/4,p.s,p.s/2);else{cx.beginPath();cx.arc(0,0,p.s/2.4,0,7);cx.fill()}cx.restore()});
+  if(FX.parts.length)requestAnimationFrame(fxTick);else{FX.run=false;cx.setTransform(1,0,0,1,0,0);cx.clearRect(0,0,FX.cv.width,FX.cv.height)}
+}
+const at=el=>{if(!el)return[innerWidth/2,innerHeight/2];const r=el.getBoundingClientRect();return[r.left+r.width/2,r.top+r.height/2]};
+// reveal tiles as rows scroll into view (transform only; tiles are visible at rest)
+const seen=new WeakSet();
+const io="IntersectionObserver" in window?new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){const r=e.target;io.unobserve(r);if(reduce())return;[...r.querySelectorAll(".tile")].slice(0,4).forEach((tl,k)=>{tl.style.setProperty("--d",k);tl.classList.add("pop")})}}),{threshold:.25}):null;
+function watchRails(){if(!io)return;document.querySelectorAll("#app .rail").forEach(r=>{if(!seen.has(r)){seen.add(r);io.observe(r)}})}
+
+/* ---------- Pictures ---------- */
+const initial=i=>(i.name.replace(/^The\s+/i,"").trim()[0]||"?").toUpperCase();
+const validId=x=>typeof x==="string"&&/^[A-Za-z0-9_-]{8,80}$/.test(x);
+function pic(i){const id=S.photos[i.name];return validId(id)?`<img class="ph" src="/_blob/${id}" alt="${esc(i.name)}" loading="lazy" data-letter="${esc(initial(i))}">`:`<span class="mg" aria-hidden="true">${esc(initial(i))}</span>`}
+document.addEventListener("error",e=>{const el=e.target;if(el&&el.classList&&el.classList.contains("ph")){const s=document.createElement("span");s.className="mg";s.textContent=el.dataset.letter||"";el.replaceWith(s)}},true);
+const CAM=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>`;
+function heroHTML(i){
+  const has=validId(S.photos[i.name]);
+  return `<div class="shero ${has?"hasph":""}" id="dhero" data-name="${esc(i.name)}" style="--s:var(--s-${i.s});--c:var(--c-${i.s})"><span class="sec">${esc(secOf[i.s].title)}</span>${pic(i)}<div class="burst" id="burst" aria-hidden="true">${HEART(1)}</div></div>`;
+}
+function photoToolsHTML(i){
+  if(!S.assets)return "";
+  const has=validId(S.photos[i.name]);
+  return `<div class="phtools"><button class="phbtn" type="button" id="phAdd" data-name="${esc(i.name)}">${CAM}${has?"Change photo":"Add your photo"}</button>${has?`<button class="phbtn" type="button" id="phDel" data-name="${esc(i.name)}">Remove photo</button>`:""}</div>`;
+}
+async function shrink(file){
+  try{const bmp=await createImageBitmap(file);const k=Math.min(1,1400/Math.max(bmp.width,bmp.height));
+    const c=document.createElement("canvas");c.width=Math.round(bmp.width*k);c.height=Math.round(bmp.height*k);c.getContext("2d").drawImage(bmp,0,0,c.width,c.height);
+    const b=await new Promise(r=>c.toBlob(r,"image/jpeg",.86));return b||file}catch(e){return file}
+}
+let phTarget=null;
+async function uploadPhoto(file){
+  const name=phTarget;if(!file||!name||!S.assets)return;
+  const btn=$("phAdd");if(btn)btn.disabled=true;toast("Uploading photo…");
+  try{
+    const blob=await shrink(file);
+    const r=await S.assets.upload(blob,{type:blob.type||"image/jpeg"});
+    const old=S.photos[name];
+    S.photos={...S.photos,[name]:r.id};writeDoc("photos/all",{map:S.photos});repaintPics();toast("Photo added");{const[x,y]=at($("dhero"));burstFx(x,y,{n:60})}
+    if(validId(old))S.assets.delete(old).catch(()=>{});
+  }catch(e){const c=e&&e.code;
+    toast(c==="too_large"?"That photo is too big. Try a smaller one.":c==="unsupported_type"?"Use a JPG, PNG or WebP photo.":c==="quota_or_state"?"Photo storage is full.":c==="rate_limited"?"Too many uploads. Wait a moment.":"Couldn't upload the photo. Try again.");
+    if(btn)btn.disabled=false}
+}
+function removePhoto(name){
+  const old=S.photos[name];if(!old)return;
+  const n={...S.photos};delete n[name];S.photos=n;writeDoc("photos/all",{map:n});repaintPics();toast("Photo removed");
+  if(validId(old)&&S.assets)S.assets.delete(old).catch(()=>{});
+}
+let picSig="{}";
+function repaintPics(){
+  const sig=JSON.stringify(S.photos);if(sig===picSig)return;picSig=sig;
+  if(view.type==="home"){const y=scrollY;renderHome();scrollTo(0,y)}
+  else if(view.type==="search"&&$("searchin")){renderList()}else{const y=scrollY;renderList();scrollTo(0,y)}
+  if(S.open&&!$("sheet").hidden&&$("dhero")){const i=items.find(x=>x.name===S.open);if(i){$("dhero").outerHTML=heroHTML(i);const pt=$("phTools");if(pt)pt.innerHTML=photoToolsHTML(i)}}
+}
+
+/* ---------- Social: likes & comments (shared db) ---------- */
+const S={photos:{},assets:null,mode:"loading",db:null,user:null,uid:null,owner:false,open:null,
+  likeDocs:new Map(),myLikes:{},commentDocs:new Map(),myComments:{},ready:{likes:false,comments:false},sig:""};
+const PIXEL="data:image/gif;base64,R0lGODlhAQABAAAAACw=";
+const canWrite=()=>S.mode==="write"&&S.ready.likes&&S.ready.comments;
+function likeCount(n){let c=S.myLikes[n]?1:0;S.likeDocs.forEach((pl,u)=>{if(u!==S.uid&&pl[n])c++});return c}
+function allComments(){const out=[];S.commentDocs.forEach((it,u)=>{if(u===S.uid)return;for(const[cid,c]of Object.entries(it||{}))if(c&&typeof c.text==="string")out.push({uid:u,cid,place:String(c.place||""),text:c.text.slice(0,500),t:+c.t||0})});
+  if(S.uid)for(const[cid,c]of Object.entries(S.myComments))out.push({uid:S.uid,cid,...c});return out}
+const commentsFor=n=>allComments().filter(c=>c.place===n).sort((a,b)=>a.t-b.t);
+function ago(t){const s=(Date.now()-t)/1000;if(s<60)return"just now";if(s<3600)return Math.floor(s/60)+"m";if(s<86400)return Math.floor(s/3600)+"h";if(s<604800)return Math.floor(s/86400)+"d";return new Date(t).toLocaleDateString(undefined,{day:"numeric",month:"short"})}
+let toastT;function toast(m){const el=$("toast");el.textContent=m;el.hidden=false;clearTimeout(toastT);toastT=setTimeout(()=>el.hidden=true,2400)}
+
+function socialBarHTML(i){
+  if(S.mode==="off")return `<div class="social"><span class="grow"></span><button class="ib bm" type="button" id="save" data-name="${esc(i.name)}" aria-pressed="${saved.includes(i.name)}" aria-label="${saved.includes(i.name)?"Saved":"Save for later"}">${BOOK(saved.includes(i.name))}</button></div>`;
+  const liked=!!S.myLikes[i.name],n=likeCount(i.name),cc=commentsFor(i.name).length,w=canWrite();
+  const lb=S.mode==="loading"?"":n?`${n} ${n===1?"like":"likes"}${liked?` <span>· including you</span>`:""}`:(w?`<span>Be the first to like this</span>`:`<span>No likes yet</span>`);
+  return `<div class="social">
+    <button class="ib like" type="button" id="likeBtn" data-name="${esc(i.name)}" aria-pressed="${liked}" aria-label="${liked?"Unlike":"Like"}" ${w?"":"disabled"}>${HEART(liked)}</button>
+    <button class="ib" type="button" id="cmtBtn" aria-label="Comments${cc?` (${cc})`:""}">${BUBBLE}</button>
+    <span class="grow"></span>
+    <button class="ib bm" type="button" id="save" data-name="${esc(i.name)}" aria-pressed="${saved.includes(i.name)}" aria-label="${saved.includes(i.name)?"Saved":"Save for later"}">${BOOK(saved.includes(i.name))}</button>
+  </div><div class="likedby">${lb}</div>`;
+}
+function commentItem(c,showPlace){
+  const mine=c.uid===S.uid,canDel=S.mode==="write"&&(mine||S.owner);
+  return `<li class="cm"><img class="av" alt="" src="${PIXEL}" data-av="${esc(c.uid)}"><div class="cb"><div class="ch"><b data-nm="${esc(c.uid)}">${mine?"You":"Someone"}</b><span>${ago(c.t)}</span></div><p>${esc(c.text)}</p>${canDel?`<button class="del" type="button" data-del="${esc(c.cid)}" data-author="${esc(c.uid)}">Delete</button>`:""}</div></li>`;
+}
+function commentListHTML(i){
+  if(S.mode==="loading")return `<h3>Comments</h3><p class="nocm">Loading…</p>`;
+  const cs=commentsFor(i.name);
+  return `<h3>Comments${cs.length?`<span>${cs.length}</span>`:""}</h3>${cs.length?`<ul class="clist">${cs.map(c=>commentItem(c)).join("")}</ul>`:`<p class="nocm">${canWrite()?"No comments yet. Tell people what to order here.":"No comments yet."}</p>`}`;
+}
+function composerHTML(i){
+  if(S.mode==="loading")return "";
+  if(!canWrite())return `<p class="cmnote">You can read likes and comments. Adding them is open to the people Shivang has invited to edit.</p>`;
+  return `<div class="composer"><input id="cmtInput" type="text" maxlength="280" placeholder="Add a comment…" aria-label="Add a comment" autocomplete="off" data-name="${esc(i.name)}"><button class="post" id="postBtn" type="button" disabled>Post</button></div>`;
+}
+function socialRows(){
+  if(S.mode==="off"||S.mode==="loading")return "";
+  let h="";
+  const loved=vis(items).map(i=>[i,likeCount(i.name)]).filter(x=>x[1]>0).sort((a,b)=>b[1]-a[1]).slice(0,10).map(x=>x[0]);
+  if(loved.length)h+=`<section class="block"><div class="bhead"><div><h2 class="btitle">Most loved</h2><p class="bsub">What people here are liking.</p></div></div>${rail(loved)}</section>`;
+  const latest=allComments().filter(c=>{const it=items.find(x=>x.name===c.place);return it&&(!vegOnly||it.veg)}).sort((a,b)=>b.t-a.t).slice(0,4);
+  if(latest.length)h+=`<section class="block"><div class="bhead"><div><h2 class="btitle">What people are saying</h2></div></div><div class="feed">${latest.map(c=>{const it=items.find(x=>x.name===c.place);return `<button class="fi" type="button" data-id="${it.id}"><img class="av" alt="" src="${PIXEL}" data-av="${esc(c.uid)}"><span class="cb"><span class="ch"><b data-nm="${esc(c.uid)}">${c.uid===S.uid?"You":"Someone"}</b><span>${ago(c.t)}</span></span><span class="on">on <b>${esc(c.place)}</b></span><p>${esc(c.text)}</p></span></button>`}).join("")}</div></section>`;
+  return h;
+}
+function socialSig(){return JSON.stringify([vis(items).map(i=>likeCount(i.name)),allComments().length,S.mode,vegOnly])}
+async function fillNames(root){
+  root=root||document;const els=[...root.querySelectorAll("[data-nm],[data-av]")];if(!els.length||!S.user)return;
+  const ids=[...new Set(els.map(e=>e.dataset.nm||e.dataset.av))];
+  let ps={};try{ps=await S.user.profiles(ids)}catch(e){return}
+  els.forEach(e=>{const id=e.dataset.nm||e.dataset.av,p=ps[id];if(!p)return;
+    if(e.dataset.nm)e.textContent=id===S.uid?"You":(p.name||"Someone");else if(p.avatarUrl)e.src=p.avatarUrl});
+}
+function patchCounts(){
+  document.querySelectorAll("[data-lc]").forEach(e=>{const n=likeCount(e.dataset.lc);e.hidden=!(n>0&&S.mode!=="off");if(n)e.innerHTML=`${HEART(1)}${n}`});
+  document.querySelectorAll("[data-cc]").forEach(e=>{const n=commentsFor(e.dataset.cc).length;e.hidden=!(n>0&&S.mode!=="off");if(n)e.innerHTML=`${BUBBLE}${n}`});
+}
+function afterPaint(){S.sig=socialSig();patchCounts();fillNames($("app"));watchRails()}
+function refreshSocial(){
+  patchCounts();
+  if(view.type==="home"&&$("socialSlot")){const sig=socialSig();if(sig!==S.sig){S.sig=sig;$("socialSlot").innerHTML=socialRows();$("socialSlot").querySelectorAll(".rail").forEach(r=>r.addEventListener("scroll",syncArrows,{passive:true}));requestAnimationFrame(syncArrows);patchCounts();fillNames($("socialSlot"));watchRails()}}
+  if(S.open&&!$("sheet").hidden&&$("socialBar")){const i=items.find(x=>x.name===S.open);if(!i)return;
+    $("socialBar").innerHTML=socialBarHTML(i);$("clistWrap").innerHTML=commentListHTML(i);
+    $("cmts").hidden=S.mode==="off";
+    if(!$("cmtInput")||!canWrite())$("composerWrap").innerHTML=composerHTML(i);
+    fillNames($("sheet"))}
+}
+// one write at a time per document
+const chains={};
+function writeDoc(path,body){
+  chains[path]=(chains[path]||Promise.resolve()).then(()=>S.db.doc(path).set(body)).catch(e=>{
+    const c=e&&e.code;
+    if(c==="invalid_argument"&&path.endsWith("/"+S.uid)){S.mode="read";refreshSocial();toast("Likes and comments are read-only for you.")}
+    else if(c==="quota_exceeded")toast("The comment space is full. Shivang needs to clear some old ones.");
+    else if(c==="resource_exhausted")toast("Slow down a little and try again.");
+    else toast("Couldn't save that. Check your connection and try again.");
+  });
+}
+function setLike(n,on){
+  if(!canWrite())return;
+  const next={...S.myLikes};if(on)next[n]=true;else delete next[n];
+  S.myLikes=next;writeDoc("likes/"+S.uid,{places:next});refreshSocial();
+  if(on){const[x,y]=at($("likeBtn"));burstFx(x,y,{n:16,hearts:true,spread:.9,up:.9});const lb=$("socialBar")&&$("socialBar").querySelector(".likedby");if(lb)lb.classList.add("bump")}
+}
+function toggleLike(n){setLike(n,!S.myLikes[n])}
+function likeOnly(n){
+  if(!canWrite()){if(S.mode==="read")toast("Liking is open to people Shivang has invited to edit.");return}
+  const b=$("burst");if(b&&!reduce()){b.classList.remove("go");void b.offsetWidth;b.classList.add("go")}
+  if(!S.myLikes[n])setLike(n,true);
+  const[x,y]=at($("dhero"));burstFx(x,y,{n:22,hearts:true,spread:1.6,up:.7});
+}
+function postComment(){
+  const inp=$("cmtInput");if(!inp||!canWrite())return;
+  const text=inp.value.trim().slice(0,280);if(!text)return;
+  const cid=Date.now().toString(36)+Math.random().toString(36).slice(2,7);
+  S.myComments={...S.myComments,[cid]:{place:inp.dataset.name,text,t:Date.now()}};
+  writeDoc("comments/"+S.uid,{items:S.myComments});
+  inp.value="";$("postBtn").disabled=true;refreshSocial();
+  {const[x,y]=at(inp);burstFx(x,y,{n:45,spread:.9});}toast("Comment posted");
+  const list=$("clistWrap");if(list){const last=list.querySelector(".cm:last-child");last&&last.scrollIntoView({block:"nearest",behavior:reduce()?"auto":"smooth"})}
+}
+function deleteComment(author,cid){
+  if(S.mode!=="write")return;
+  if(author===S.uid){const n={...S.myComments};delete n[cid];S.myComments=n;writeDoc("comments/"+S.uid,{items:n})}
+  else if(S.owner){const n={...(S.commentDocs.get(author)||{})};delete n[cid];S.commentDocs.set(author,n);writeDoc("comments/"+author,{items:n})}
+  refreshSocial();toast("Comment deleted");
+}
+async function initSocial(){
+  const use=window.claude&&window.claude.use;
+  if(!use){S.mode="off";return refreshSocial()}
+  let db=null,user=null;
+  try{[db,user]=await Promise.all([window.claude.use("db"),window.claude.use("user")])}catch(e){}
+  if(!db){S.mode="off";return refreshSocial()}
+  S.db=db;S.user=user;
+  try{S.assets=await window.claude.use("assets")}catch(e){S.assets=null}
+  if(S.assets)picSig="";
+  db.doc("photos/all").onSnapshot(d=>{const m=(d.exists&&(d.data()||{}).map)||{};const clean={};for(const[k,v]of Object.entries(m))if(validId(v))clean[k]=v;S.photos=clean;repaintPics()},()=>{});
+  S.uid=user?await user.id():null;S.owner=user?await user.isOwner():false;
+  const cw=user?await user.can("data.write"):null;
+  S.mode=S.uid&&cw!==false?"write":"read";
+  const done=k=>{if(!S.ready[k]){S.ready[k]=true}};
+  db.collection("likes").onSnapshot(snap=>{
+    const m=new Map();snap.docs.forEach(d=>{const pl=(d.data()||{}).places;if(pl&&typeof pl==="object")m.set(d.id,pl)});
+    S.likeDocs=m;if(S.uid)S.myLikes={...(m.get(S.uid)||{})};done("likes");refreshSocial();
+  },e=>{if(e.code==="revoked"){S.mode="off";refreshSocial()}});
+  db.collection("comments").onSnapshot(snap=>{
+    const m=new Map();snap.docs.forEach(d=>{const it=(d.data()||{}).items;if(it&&typeof it==="object")m.set(d.id,it)});
+    S.commentDocs=m;if(S.uid)S.myComments={...(m.get(S.uid)||{})};done("comments");refreshSocial();
+  },e=>{if(e.code==="revoked"){S.mode="off";refreshSocial()}});
+}
+
+/* ---------- Home ---------- */
+function greeting(){const h=new Date().getHours();return h<11?"Good morning":h<16?"Good afternoon":h<22?"Good evening":"Late-night cravings?"}
+function tile(i){
+  return `<button class="tile" type="button" data-id="${i.id}" style="--s:var(--s-${i.s});--c:var(--c-${i.s})"><div class="pic">${mark(i)}${saved.includes(i.name)?`<span class="saved-dot">${BOOK(1)}</span>`:""}${pic(i)}<span class="lk" data-lc="${esc(i.name)}" hidden></span></div><div class="info"><div class="nm">${esc(i.name)}</div><div class="cu">${esc(i.cuisine||"Delivery favourite")}</div>${rating(i)}${i.flag?`<span class="nb">Good to know</span>`:""}</div></button>`;
+}
+const ARR=d=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="${d<0?"M15 5l-7 7 7 7":"M9 5l7 7-7 7"}"/></svg>`;
+function rail(l){return `<div class="railwrap"><button class="arrow prev" type="button" aria-label="Scroll left" data-dir="-1" disabled>${ARR(-1)}</button><div class="rail">${l.map(tile).join("")}</div><button class="arrow next" type="button" aria-label="Scroll right" data-dir="1">${ARR(1)}</button></div>`}
+function personalRows(){
+  let h="";
+  const sv=vis(saved.map(byName).filter(Boolean));
+  if(sv.length)h+=`<section class="block"><div class="bhead"><div><h2 class="btitle">Saved by you</h2><p class="bsub">Your shortlist, on this device.</p></div></div>${rail(sv)}</section>`;
+  const rc=vis(recent.map(byName).filter(Boolean)).filter(i=>!saved.includes(i.name)).slice(0,8);
+  if(rc.length)h+=`<section class="block"><div class="bhead"><div><h2 class="btitle">Recently viewed</h2></div><button class="clearlink" type="button" id="clearRecent">Clear</button></div>${rail(rc)}</section>`;
+  return h;
+}
+function syncArrows(){document.querySelectorAll(".railwrap").forEach(w=>{const r=w.querySelector(".rail"),p=w.querySelector(".prev"),n=w.querySelector(".next");if(!r)return;p.disabled=r.scrollLeft<8;n.disabled=r.scrollLeft+r.clientWidth>=r.scrollWidth-8})}
+function renderHome(){
+  let h=`<section class="hero">
+    <div class="glow" aria-hidden="true"><i></i><i></i><i></i></div>
+    <div class="stamp" aria-hidden="true">Est. Manikonda</div>
+    <div class="hellorow" style="--d:0"><span class="hello">${greeting()}</span></div>
+    <h1 style="--d:1">What should you <span>order today?</span></h1>
+    <p class="bsub" style="font-size:15px;max-width:40ch;--d:2">Places Shivang actually orders from around Manikonda, with ratings, prices and links to order.</p>
+  </section>
+  <button class="searchbtn" type="button" id="openSearch">${MAG}Search a restaurant or cuisine</button>
+
+  <section class="block">
+    <div class="bhead"><div><h2 class="btitle">What's the mood?</h2></div></div>
+    <div class="moods">${MOODS.map((m,k)=>`<button class="mood" type="button" data-mood="${m.id}" style="--d:${k}"><span class="circ">${ILL[m.i]}</span><b>${m.t}</b></button>`).join("")}</div>
+    <button class="surprise" type="button" id="surprise"><span class="die" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/></svg></span><span><strong>Can't decide?</strong><small>Get one random pick from the list</small></span></button>
+  </section>${S.assets&&!Object.keys(S.photos).length?`<p class="ownerhint">Only people who can edit this page see this: open any place and tap <b>Add your photo</b> to replace its letter card with a real picture of the food.</p>`:""}<div id="socialSlot">${socialRows()}</div>`+personalRows();
+  SECTIONS.forEach(s=>{
+    const l=vis(items.filter(i=>i.s===s.id));
+    if(!l.length)return;
+    h+=`<section class="block"><div class="bhead"><div><h2 class="btitle">${s.title}</h2><p class="bsub">${s.sub}</p></div>${l.length>2?`<button class="seeall" type="button" data-sec="${s.id}">See all ${l.length}</button>`:""}</div>${rail(l)}</section>`;
+  });
+  $("app").innerHTML=h;
+  afterPaint();
+  $("app").querySelectorAll(".rail").forEach(r=>r.addEventListener("scroll",syncArrows,{passive:true}));
+  requestAnimationFrame(syncArrows);
+}
+
+/* ---------- List view ---------- */
+function rowHTML(i){
+  const meta=[rating(i),i.cost?`<span>${esc(i.cost)}</span>`:"",`<span class="sc lkc" data-lc="${esc(i.name)}" hidden></span>`,`<span class="sc" data-cc="${esc(i.name)}" hidden></span>`].filter(Boolean).join("");
+  return `<li><button class="row" type="button" data-id="${i.id}" style="--s:var(--s-${i.s});--c:var(--c-${i.s})"><span class="pic">${pic(i)}</span><span class="txt"><span class="nm">${mark(i)}<span>${esc(i.name)}</span></span><span class="cu">${esc(i.cuisine||"Delivery favourite")}</span>${meta?`<span class="meta">${meta}</span>`:""}</span>${CHEV}</button></li>`;
+}
+function renderList(){
+  const v=view;let title,sub,list,grouped=true,searchBox="",chips="";
+  if(v.type==="mood"){const m=MOODS.find(x=>x.id===v.id);title=m.long;list=items.filter(i=>i.moods.includes(v.id));}
+  else if(v.type==="section"){const s=secOf[v.id];title=s.title;sub=s.sub;list=items.filter(i=>i.s===v.id);grouped=false;}
+  else{title="Search";const q=(v.q||"").trim().toLowerCase();list=q?items.filter(i=>(i.name+" "+i.cuisine).toLowerCase().includes(q)):items;
+    searchBox=`<input class="searchin" id="searchin" type="search" placeholder="Restaurant or cuisine, e.g. dosa" value="${esc(v.q||"")}" aria-label="Search restaurants" autocomplete="off">`;}
+  if(v.type==="mood"){
+    chips=`<div class="chips" role="group" aria-label="Other moods">${MOODS.map(m=>`<button class="chip" type="button" data-mood="${m.id}" aria-pressed="${m.id===v.id}">${m.t}</button>`).join("")}</div>`;
+  }
+  list=vis(list);
+  const count=`${list.length} place${list.length===1?"":"s"}${vegOnly?" · pure veg":""}`;
+  let body="";
+  if(!list.length){body=`<div class="empty"><b>Nothing here yet</b>${vegOnly?"Try turning off Pure veg at the top.":"Try a different search."}</div>`}
+  else if(grouped){SECTIONS.forEach(s=>{const l=list.filter(i=>i.s===s.id);if(l.length)body+=`<div class="group" style="--c:var(--c-${s.id})">${s.title}</div><ul class="rows">${l.map(rowHTML).join("")}</ul>`})}
+  else body=`<ul class="rows">${list.map(rowHTML).join("")}</ul>`;
+  const headHTML=`<div class="listhead"><div class="backrow"><button class="back" type="button" id="back" aria-label="Back">${BACK}</button><div><h2 class="ltitle">${esc(title)}</h2><p class="lsub" id="lcount">${sub?esc(sub)+" · ":""}${count}</p></div></div>${searchBox}${chips}</div>`;
+  if(v.type==="search"&&$("searchin")){ $("lbody").innerHTML=body; $("lcount").textContent=count; afterPaint(); return; }
+  $("app").innerHTML=headHTML+`<div id="lbody">${body}</div>`;
+  afterPaint();
+}
+
+function render(){view.type==="home"?renderHome():renderList()}
+function go(next){
+  if(view.type==="home")homeScroll=scrollY;
+  view=next;render();
+  if(next.type==="home"){scrollTo(0,homeScroll)}else{scrollTo(0,0)}
+  if(next.type==="search")setTimeout(()=>$("searchin")&&$("searchin").focus(),30);
+}
+
+/* ---------- Sheet ---------- */
+function openSheet(html){
+  lastFocus=document.activeElement;
+  const sh=$("sheet"),sc=$("scrim");
+  sh.innerHTML=`<div class="grab" aria-hidden="true"></div><button class="sclose" type="button" id="sclose" aria-label="Close">${X}</button>`+html;
+  sh.hidden=false;sc.hidden=false;document.body.style.overflow="hidden";
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{sh.classList.add("on");sc.classList.add("on")}));
+  sh.scrollTop=0;
+  setTimeout(()=>$("sclose")&&$("sclose").focus({preventScroll:true}),50);
+}
+function closeSheet(){
+  const sh=$("sheet"),sc=$("scrim");if(sh.hidden)return;
+  sh.classList.remove("on");sc.classList.remove("on");document.body.style.overflow="";
+  setTimeout(()=>{sh.hidden=true;sc.hidden=true},reduce()?0:300);
+  rolling=false;S.open=null;
+  if(view.type==="home"){const y=scrollY;const key=lastFocus&&lastFocus.dataset?lastFocus.dataset.id:null;render();scrollTo(0,y);lastFocus=key!=null?document.querySelector(`#app [data-id="${key}"]`):null}
+  if(lastFocus&&document.contains(lastFocus))lastFocus.focus({preventScroll:true});
+}
+function detailHTML(i,label){
+  recent=[i.name,...recent.filter(n=>n!==i.name)].slice(0,12);store("recent",recent);
+  const s=secOf[i.s];
+  const vg=i.veg?`<span class="vg">${mark(i)}Pure veg</span>`:i.nv?`<span class="vg">${mark(i)}Veg + non-veg</span>`:"";
+  const facts=[];
+  if(i.r)facts.push(`<div class="fact"><span>Rating · ${i.src||"Google"}</span><b>${i.r} ★</b> <small style="color:var(--muted)">(${i.n})</small></div>`);
+  if(i.cost)facts.push(`<div class="fact"><span>Price</span><b>${esc(i.cost)}</b></div>`);
+  S.open=i.name;
+  return `${heroHTML(i)}<div id="phTools">${photoToolsHTML(i)}</div>
+   ${label?`<div class="slabel">${label}</div>`:""}
+   <h2 class="sname" id="sname">${esc(i.name)}</h2>
+   <div class="sline">${vg}${i.cuisine?`<span>${esc(i.cuisine)}</span>`:""}</div>
+   <div id="socialBar">${socialBarHTML(i)}</div>
+   ${facts.length?`<div class="facts">${facts.join("")}</div>`:""}
+   ${i.note?`<p class="snote">${esc(i.note)}</p>`:""}
+   ${i.flag?`<div class="sflag"><b>Good to know</b>${esc(i.flag)}</div>`:""}
+   <div class="actions">
+     <a class="cta sw" href="${swiggy(i.name)}" target="_blank" rel="noopener">Order on Swiggy</a>
+     <a class="cta zo" href="${zomato(i.name)}" target="_blank" rel="noopener">Order on Zomato</a>
+     ${label?`<button class="cta again" type="button" id="again">Pick another</button>`:""}
+     ${i.map?`<a class="maplink" href="${M}${i.map}" target="_blank" rel="noopener">See it on Google Maps</a>`:""}
+   </div>
+   <section class="cmts" id="cmts" ${S.mode==="off"?"hidden":""}><div id="clistWrap">${commentListHTML(i)}</div><div id="composerWrap">${composerHTML(i)}</div></section>`;
+}
+function surprise(){
+  if(rolling)return;
+  const pool0=vis(items);if(!pool0.length)return;
+  const pool=pool0.length>1?pool0.filter(i=>i!==lastPick):pool0;
+  const win=pool[Math.floor(Math.random()*pool.length)];lastPick=win;
+  const sheetOpen=!$("sheet").hidden;
+  const shuffleHTML=`<div class="shero rolling" id="rollPic" style="--s:var(--accent-soft)"></div><div class="slabel">Picking for you…</div><h2 class="sname" id="sname">&nbsp;</h2>`;
+  if(sheetOpen){$("sheet").querySelectorAll(":scope > :not(.grab):not(.sclose)").forEach(n=>n.remove());$("sheet").insertAdjacentHTML("beforeend",shuffleHTML)}
+  else openSheet(shuffleHTML);
+  if(reduce()){$("sheet").querySelectorAll(":scope > :not(.grab):not(.sclose)").forEach(n=>n.remove());$("sheet").insertAdjacentHTML("beforeend",detailHTML(win,"Tonight, try"));return}
+  rolling=true;let k=0;
+  (function tick(){
+    if(!rolling)return;
+    if(k<16){const r=pool0[Math.floor(Math.random()*pool0.length)];const p=$("rollPic"),n=$("sname");if(p){p.style.setProperty("--s",`var(--s-${r.s})`);p.style.setProperty("--c",`var(--c-${r.s})`);p.innerHTML=pic(r)}if(n)n.textContent=r.name;k++;setTimeout(tick,40+k*12)}
+    else{rolling=false;const sh=$("sheet");sh.querySelectorAll(":scope > :not(.grab):not(.sclose)").forEach(n=>n.remove());sh.insertAdjacentHTML("beforeend",detailHTML(win,"Tonight, try"));sh.classList.add("landing");setTimeout(()=>sh.classList.remove("landing"),800);fillNames(sh);const[x,y]=at($("dhero"));burstFx(x,y,{n:110,spread:1.3});setTimeout(()=>burstFx(innerWidth*.2,y+40,{n:40,spread:.7}),140);setTimeout(()=>burstFx(innerWidth*.8,y+40,{n:40,spread:.7}),220)}
+  })();
+}
+
+/* ---------- Events ---------- */
+document.addEventListener("click",e=>{
+  const t=e.target.closest("button,[data-id]");if(!t)return;
+  if(t.id==="sclose")return closeSheet();
+  if(t.dataset.dir){const r=t.parentElement.querySelector(".rail");r.scrollBy({left:+t.dataset.dir*r.clientWidth*.8,behavior:reduce()?"auto":"smooth"});return}
+  if(t.id==="clearRecent"){recent=[];store("recent",recent);return render()}
+  if(t.id==="save"){const n=t.dataset.name,on=!saved.includes(n);saved=on?[n,...saved]:saved.filter(x=>x!==n);store("saved",saved);t.setAttribute("aria-pressed",on);t.setAttribute("aria-label",on?"Saved":"Save for later");t.innerHTML=BOOK(on);toast(on?"Saved to your list":"Removed from your list");if(on){const[x,y]=at(t);burstFx(x,y,{n:18,spread:.8})}return}
+  if(t.id==="likeBtn")return toggleLike(t.dataset.name);
+  if(t.id==="cmtBtn"){const inp=$("cmtInput");if(inp){inp.scrollIntoView({block:"center",behavior:reduce()?"auto":"smooth"});inp.focus({preventScroll:true})}else $("cmts")&&$("cmts").scrollIntoView({block:"start",behavior:reduce()?"auto":"smooth"});return}
+  if(t.id==="postBtn")return postComment();
+  if(t.id==="phAdd"){phTarget=t.dataset.name;$("phFile").value="";$("phFile").click();return}
+  if(t.id==="phDel"){ if(!t.classList.contains("sure")){t.classList.add("sure");t.textContent="Tap again to remove";setTimeout(()=>{if(document.contains(t)){t.classList.remove("sure");t.textContent="Remove photo"}},3000);return} return removePhoto(t.dataset.name)}
+  if(t.dataset.del){ if(!t.classList.contains("sure")){t.classList.add("sure");t.textContent="Tap again to delete";setTimeout(()=>{if(document.contains(t)){t.classList.remove("sure");t.textContent="Delete"}},3000);return} return deleteComment(t.dataset.author,t.dataset.del)}
+  if(t.id==="again")return surprise();
+  if(t.id==="surprise")return surprise();
+  if(t.id==="openSearch")return go({type:"search",q:""});
+  if(t.id==="back"||t.id==="home"){closeSheet();return go({type:"home"})}
+  if(t.dataset.mood&&t.classList.contains("mood")){t.classList.add("tapped")}
+  if(t.dataset.mood){ if(view.type==="mood"){view={type:"mood",id:t.dataset.mood};render();scrollTo(0,0)} else go({type:"mood",id:t.dataset.mood}); return }
+  if(t.dataset.sec)return go({type:"section",id:t.dataset.sec});
+  if(t.dataset.id!==undefined&&t.closest("#app")){const i=items[+t.dataset.id];openSheet(detailHTML(i))}
+});
+$("scrim").addEventListener("click",closeSheet);
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeSheet();if(e.key==="Enter"&&e.target.id==="cmtInput"){e.preventDefault();postComment()}});
+document.addEventListener("input",e=>{if(e.target.id==="searchin"){view.q=e.target.value;renderList()}if(e.target.id==="cmtInput"){const b=$("postBtn");if(b)b.disabled=!e.target.value.trim()}});
+// double-tap the picture to like
+let lastTap=0;
+$("sheet").addEventListener("dblclick",e=>{const h=e.target.closest("#dhero");if(h)likeOnly(h.dataset.name)});
+$("sheet").addEventListener("touchend",e=>{const h=e.target.closest("#dhero");if(!h)return;const n=Date.now();if(n-lastTap<320){e.preventDefault();likeOnly(h.dataset.name);lastTap=0}else lastTap=n});
+$("vegonly").addEventListener("change",e=>{vegOnly=e.target.checked;try{localStorage.setItem("vegOnly",vegOnly?"1":"0")}catch(err){}
+  const sb=$("searchin"),hadFocus=sb&&document.activeElement===sb;
+  if(view.type==="search"&&sb){renderList()}else render();
+});
+window.addEventListener("scroll",()=>document.querySelector(".topbar").classList.toggle("scrolled",scrollY>8),{passive:true});
+(function(){const sh=$("sheet");let y0=null,dy=0;
+  sh.addEventListener("touchstart",e=>{if(sh.scrollTop>0||e.target.closest("input,button,a"))return;y0=e.touches[0].clientY;dy=0;sh.style.transition="none"},{passive:true});
+  sh.addEventListener("touchmove",e=>{if(y0===null)return;dy=Math.max(0,e.touches[0].clientY-y0);if(dy>0)sh.style.transform=`translateY(${dy}px)`},{passive:true});
+  sh.addEventListener("touchend",()=>{if(y0===null)return;sh.style.transition="";sh.style.transform="";y0=null;if(dy>110)closeSheet()});
+})();
+document.documentElement.classList.add("intro");setTimeout(()=>document.documentElement.classList.remove("intro"),2200);
+render();
+$("phFile").addEventListener("change",e=>{const f=e.target.files&&e.target.files[0];if(f)uploadPhoto(f)});
+initSocial();
+</script>

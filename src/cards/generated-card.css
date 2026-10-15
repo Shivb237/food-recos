@@ -1,0 +1,39 @@
+.gc { position: relative; width: 100%; height: 100%; container-type: inline-size; color: #fff; overflow: hidden;
+  background: linear-gradient(var(--angle), var(--c1), var(--c2)); isolation: isolate; }
+.gc-art { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; }
+.gc-scrim { position: absolute; left: 0; right: 0; height: 66%; z-index: 1; pointer-events: none; }
+.gc-scrim.bottom { bottom: 0; background: linear-gradient(to top, rgb(0 0 0 / 0.42) 30%, transparent); }
+.gc-scrim.top { top: 0; background: linear-gradient(to bottom, rgb(0 0 0 / 0.42) 30%, transparent); }
+
+.gc-text { position: absolute; z-index: 2; display: grid; gap: clamp(2px, 1.2cqw, 6px); padding: clamp(10px, 6cqw, 22px); width: 80%; align-content: end; text-align: left; }
+.gc-text.bottom-left { left: 0; bottom: 0; }
+.gc-text.bottom-right { right: 0; bottom: 0; text-align: right; justify-items: end; }
+.gc-text.bottom-center { left: 12%; bottom: 0; text-align: center; justify-items: center; }
+.gc-text.top-left { left: 0; top: 0; align-content: start; }
+.gc-text.top-right { right: 0; top: 0; align-content: start; text-align: right; justify-items: end; }
+.gc-text.center { left: 12%; top: 50%; translate: 0 -34%; text-align: center; justify-items: center; align-content: center; padding-block: 0; }
+/* Leave room for the veg badge / rating chip that the frame draws in the top corners. */
+.gc-text.top-left, .gc-text.top-right { padding-top: clamp(34px, 17cqw, 44px); }
+
+.gc-section { font-size: clamp(8.5px, 3.3cqw, 11px); font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.92; }
+.gc-name { font-family: var(--display); font-weight: 800; line-height: 1; letter-spacing: -0.025em; text-wrap: balance; overflow-wrap: break-word; text-shadow: 0 1px 10px rgb(0 0 0 / 0.25);
+  display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.gc-cuisine { font-size: clamp(10.5px, 4.4cqw, 15px); font-weight: 600; opacity: 0.95; line-height: 1.2; }
+.gc-facts { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; margin-top: 2px; }
+.gc-text.bottom-right .gc-facts, .gc-text.top-right .gc-facts { justify-content: flex-end; }
+.gc-text.bottom-center .gc-facts, .gc-text.center .gc-facts { justify-content: center; }
+.gc-price { font-size: clamp(11px, 4.2cqw, 14px); font-weight: 800; letter-spacing: 0.04em; background: rgb(0 0 0 / 0.28); border-radius: 999px; padding: 2px 8px; }
+.gc-price span { opacity: 0.38; }
+.gc-price span.on { opacity: 1; }
+.gc-warn { font-size: clamp(9px, 3.4cqw, 11.5px); font-weight: 800; background: #ffd35a; color: #3b2a00; border-radius: 999px; padding: 2px 8px; text-transform: uppercase; letter-spacing: 0.04em; }
+
+/* Narrow frames (under ~190px): drop the section label and tighten, so name + cuisine + price stay clear of the chips. */
+@container (max-width: 190px) {
+  .gc-section { display: none; }
+  .gc-name { -webkit-line-clamp: 2; }
+  .gc-cuisine { display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
+  .gc-text { padding: 9px; }
+  .gc-text.top-left, .gc-text.top-right { padding-top: 36px; }
+}
+
+.gc.art-only .gc-art { transform: scale(1.12); transform-origin: 50% 50%; }

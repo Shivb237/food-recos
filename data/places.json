@@ -1,0 +1,1293 @@
+{
+  "updated": "2026-10-15",
+  "area": "Manikonda, Hyderabad",
+  "sections": [
+    {
+      "id": "best",
+      "title": "Best offers & taste",
+      "sub": "Shivang's go-tos. Usually a good deal running."
+    },
+    {
+      "id": "new",
+      "title": "New to try",
+      "sub": "Well-rated nearby. Not tried by Shivang yet."
+    },
+    {
+      "id": "premium",
+      "title": "Premium",
+      "sub": "For when you want a proper meal."
+    },
+    {
+      "id": "healthy",
+      "title": "Healthy",
+      "sub": "Light days, clean plates."
+    },
+    {
+      "id": "budget",
+      "title": "Budget",
+      "sub": "Cheap, filling, reliable."
+    },
+    {
+      "id": "special",
+      "title": "Special mentions",
+      "sub": "Not full meals, but you should know these."
+    }
+  ],
+  "moods": [
+    {
+      "id": "cheap",
+      "short": "Budget",
+      "label": "Easy on the wallet"
+    },
+    {
+      "id": "treat",
+      "short": "Treat",
+      "label": "Treat yourself"
+    },
+    {
+      "id": "punjabi",
+      "short": "Punjabi",
+      "label": "Punjabi feast"
+    },
+    {
+      "id": "biryani",
+      "short": "Biryani",
+      "label": "Biryani craving"
+    },
+    {
+      "id": "south",
+      "short": "Dosa & idli",
+      "label": "Dosa & idli"
+    },
+    {
+      "id": "thali",
+      "short": "Thali",
+      "label": "Thali time"
+    },
+    {
+      "id": "homestyle",
+      "short": "Home-style",
+      "label": "Ghar ka khana"
+    },
+    {
+      "id": "clean",
+      "short": "Healthy",
+      "label": "Eat clean"
+    },
+    {
+      "id": "snack",
+      "short": "Snacks",
+      "label": "Chai & snacks"
+    },
+    {
+      "id": "sweets",
+      "short": "Sweet",
+      "label": "Something sweet"
+    },
+    {
+      "id": "pizza",
+      "short": "Pizza & more",
+      "label": "Pizza, rolls & burritos"
+    }
+  ],
+  "places": [
+    {
+      "id": "bihari-bowl",
+      "name": "Bihari Bowl",
+      "searchName": "Bihari Bowl",
+      "placesQuery": null,
+      "section": "best",
+      "cuisine": "Bihari home-style",
+      "moods": [
+        "homestyle"
+      ],
+      "veg": "options",
+      "rating": null,
+      "price": null,
+      "priceTier": null,
+      "note": null,
+      "flag": null,
+      "closed": false,
+      "googleMapsUrl": null,
+      "swiggyUrl": null,
+      "zomatoUrl": "https://www.zomato.com/hyderabad/bihari-bowl-jubilee-hills",
+      "photo": null,
+      "triedByShivang": true
+    },
+    {
+      "id": "rajthali",
+      "name": "Rajthali",
+      "searchName": "Rajthali",
+      "placesQuery": null,
+      "section": "best",
+      "cuisine": "Rajasthani & Gujarati thali",
+      "moods": [
+        "thali",
+        "treat"
+      ],
+      "veg": "pure",
+      "rating": {
+        "value": 4,
+        "count": "2,878",
+        "source": "Google Maps"
+      },
+      "price": "₹400–600 per person",
+      "priceTier": 2,
+      "note": "Unlimited thali, Jubilee Hills.",
+      "flag": "Priced like a premium place, more than the rest of this section.",
+      "closed": false,
+      "googleMapsUrl": "https://maps.google.com/maps?cid=8471537223578018234",
+      "swiggyUrl": null,
+      "zomatoUrl": "https://www.zomato.com/hyderabad/rajthali-jubilee-hills",
+      "photo": null,
+      "triedByShivang": true
+    },
+    {
+      "id": "chai-chakhna-company",
+      "name": "Chai Chakhna Company",
+      "searchName": "Chai Chakhna Company",
+      "placesQuery": null,
+      "section": "best",
+      "cuisine": "Chai & snacks",
+      "moods": [
+        "snack"
+      ],
+      "veg": "options",
+      "rating": null,
+      "price": null,
+      "priceTier": null,
+      "note": null,
+      "flag": null,
+      "closed": false,
+      "googleMapsUrl": null,
+      "swiggyUrl": null,
+      "zomatoUrl": null,
+      "photo": null,
+      "triedByShivang": true
+    },
+    {
+      "id": "meal-o-clock-pure-veg",
+      "name": "Meal O Clock Pure Veg",
+      "searchName": "Meal O Clock Pure Veg",
+      "placesQuery": null,
+      "section": "best",
+      "cuisine": "North Indian meals",
+      "moods": [
+        "homestyle",
+        "cheap"
+      ],
+      "veg": "pure",
+      "rating": {
+        "value": 4.8,
+        "count": "290",
+        "source": "Google Maps"
+      },
+      "price": "Under ₹200 per person",
+      "priceTier": 1,
+      "note": "Homely veg meals and tiffin. Kondapur kitchen.",
+      "flag": null,
+      "closed": false,
+      "googleMapsUrl": "https://maps.google.com/maps?cid=2856031976382512107",
+      "swiggyUrl": null,
+      "zomatoUrl": "https://www.zomato.com/hyderabad/meal-o-clock-pure-veg-hitech-city",
+      "photo": null,
+      "triedByShivang": true
+    },
+    {
+      "id": "pikadili",
+      "name": "Pikadili",
+      "searchName": "Pikadili",
+      "placesQuery": null,
+      "section": "best",
+      "cuisine": null,
+      "moods": [],
+      "veg": "options",
+      "rating": null,
+      "price": null,
+      "priceTier": null,
+      "note": null,
+      "flag": null,
+      "closed": false,
+      "googleMapsUrl": null,
+      "swiggyUrl": null,
+      "zomatoUrl": "https://www.zomato.com/hyderabad/pikadilli-4-manikonda",
+      "photo": null,
+      "triedByShivang": true
+    },
+    {
+      "id": "millet-express",
+      "name": "Millet Express",
+      "searchName": "Millet Express",
+      "placesQuery": null,
+      "section": "best",
+      "cuisine": "Millet dosas & idlis",
+      "moods": [
+        "clean",
+        "south",
+        "cheap"
+      ],
+      "veg": "options",
+      "rating": {
+        "value": 4.1,
+        "count": "5.2K",
+        "source": "Swiggy"
+      },
+      "price": "₹200 for two",
+      "priceTier": 1,
+      "note": "Also has a few egg and chicken items.",
+      "flag": "Budget-priced and healthy, so it fits Budget and Healthy too.",
+      "closed": false,
+      "googleMapsUrl": null,
+      "swiggyUrl": null,
+      "zomatoUrl": null,
+      "photo": null,
+      "triedByShivang": true
+    },
+    {
+      "id": "the-kulcha-kulture",
+      "name": "The Kulcha Kulture",
+      "searchName": "The Kulcha Kulture",
+      "placesQuery": null,
+      "section": "best",
+      "cuisine": "Amritsari kulchas",
+      "moods": [
+        "punjabi"
+      ],
+      "veg": "pure",
+      "rating": {
+        "value": 4.5,
+        "count": "88",
+        "source": "Google Maps"
+      },
+      "price": "₹200–400 per person",
+      "priceTier": 2,
+      "note": "Reviewers love how crisp and well-stuffed the kulchas are. Kokapet outlet.",
+      "flag": null,
+      "closed": false,
+      "googleMapsUrl": "https://maps.google.com/maps?cid=14876424202851919566",
+      "swiggyUrl": null,
+      "zomatoUrl": "https://www.zomato.com/hyderabad/the-kulcha-kulture-gandipet",
+      "photo": null,
+      "triedByShivang": true
+    },
+    {
+      "id": "haldirams",
+      "name": "Haldiram's",
+      "searchName": "Haldiram's",
+      "placesQuery": null,
+      "section": "best",
+      "cuisine": "Snacks, chaat, sweets, thalis",
+      "moods": [
+        "snack",
+        "sweets",
+        "thali"
+      ],
+      "veg": "pure",
+      "rating": null,
+      "price": "₹200–1,000 per person",
+      "priceTier": 2,
+      "note": "Other Hyderabad outlets are rated 4.6–4.7.",
+      "flag": null,
+      "closed": false,
+      "googleMapsUrl": null,
+      "swiggyUrl": "https://www.swiggy.com/restaurants/haldirams-restaurant-gachibowli-forest-dept-colony-hyderabad-311437",
+      "zomatoUrl": "https://www.zomato.com/hyderabad/haldirams-gachibowli",
+      "photo": null,
+      "triedByShivang": true
+    },
+    {
+      "id": "tadka-treats",
+      "name": "Tadka Treats",
+      "searchName": "Tadka Treats",
+      "placesQuery": null,
+      "section": "best",
+      "cuisine": null,
+      "moods": [],
+      "veg": "options",
+      "rating": null,
+      "price": null,
+      "priceTier": null,
+      "note": null,
+      "flag": null,
+      "closed": false,
+      "googleMapsUrl": null,
+      "swiggyUrl": null,
+      "zomatoUrl": null,
+      "photo": null,
+      "triedByShivang": true
+    },
+    {
+      "id": "mealful-rolls",
+      "name": "Mealful Rolls",
+      "searchName": "Mealful Rolls",
+      "placesQuery": null,
+      "section": "best",
+      "cuisine": "Rolls & wraps",
+      "moods": [
+        "snack",
+        "pizza"
+      ],
+      "veg": "options",
+      "rating": null,
+      "price": null,
+      "priceTier": null,
+      "note": null,
+      "flag": null,
+      "closed": false,
+      "googleMapsUrl": null,
+      "swiggyUrl": null,
+      "zomatoUrl": null,
+      "photo": null,
+      "triedByShivang": true
+    },
+    {
+      "id": "raju-gari-biryani",
+      "name": "Raju Gari Biryani",
+      "searchName": "Raju Gari Biryani",
+      "placesQuery": null,
+      "section": "best",
+      "cuisine": "Andhra-style biryani",
+      "moods": [
+        "biryani"
+      ],
+      "veg": "both",
+      "rating": {
+        "value": 3.5,
+        "count": "611",
+        "source": "Google Maps"
+      },
+      "price": "₹200–400 per person",
+      "priceTier": 2,
+      "note": "Has a paneer-mushroom biryani.",
+      "flag": "Reviews say quality varies between orders.",
+      "closed": false,
+      "googleMapsUrl": "https://maps.google.com/maps?cid=14956577767460150749",
+      "swiggyUrl": null,
+      "zomatoUrl": "https://www.zomato.com/hyderabad/raju-gari-biryani-manikonda",
+      "photo": null,
+      "triedByShivang": true
+    },
+    {
+      "id": "1881-dum-house",
+      "name": "1881 Dum House: Lucknow's Legacy",
+      "searchName": "1881 Dum House",
+      "placesQuery": null,
+      "section": "best",
+      "cuisine": "Lucknowi dum biryani",
+      "moods": [
+        "biryani"
+      ],
+      "veg": "both",
+      "rating": {
+        "value": 4.6,
+        "count": "1.1K",
+        "source": "Swiggy"
+      },
+      "price": null,
+      "priceTier": null,
+      "note": "19 veg items, including a tandoori paneer dum biryani.",
+      "flag": null,
+      "closed": false,
+      "googleMapsUrl": null,
+      "swiggyUrl": null,
+      "zomatoUrl": "https://www.zomato.com/hyderabad/1881-dum-house-lucknows-legacy-manikonda",
+      "photo": null,
+      "triedByShivang": true
+    },
+    {
+      "id": "biryani-by-kilo",
+      "name": "Biryani By Kilo",
+      "searchName": "Biryani By Kilo",
+      "placesQuery": null,
+      "section": "best",
+      "cuisine": "Handi biryani",
+      "moods": [
+        "biryani",
+        "treat"
+      ],
+      "veg": "both",
+      "rating": {
+        "value": 4,
+        "count": "1.1K",
+        "source": "Swiggy"
+      },
+      "price": "₹700 for two",
+      "priceTier": 2,
+      "note": "Cooked per order in clay handis. Has a paneer biryani.",
+      "flag": "Pricier than the rest of this section.",
+      "closed": false,
+      "googleMapsUrl": null,
+      "swiggyUrl": "https://www.swiggy.com/city/hyderabad/biryani-by-kilo-sri-krishna-sanjay-commercial-gachibowli-rest594950",
+      "zomatoUrl": "https://www.zomato.com/hyderabad/biryani-by-kilo-gachibowli",
+      "photo": null,
+      "triedByShivang": true
+    },
+    {
+      "id": "salt",
+      "name": "Salt",
+      "searchName": "Salt",
+      "placesQuery": null,
+      "section": "premium",
+      "cuisine": "North Indian",
+      "moods": [
+        "treat",
+        "punjabi"
+      ],
+      "veg": "options",
+      "rating": {
+        "value": 4,
+        "count": "209",
+        "source": "Google Maps"
+      },
+      "price": "₹600–1,800 per person",
+      "priceTier": 3,
+      "note": "Gachibowli, near Nanakramguda.",
+      "flag": null,
+      "closed": false,
+      "googleMapsUrl": "https://maps.google.com/maps?cid=7042709438882512844",
+      "swiggyUrl": null,
+      "zomatoUrl": "https://www.zomato.com/hyderabad/salt-indian-restaurant-nanakramguda",
+      "photo": null,
+      "triedByShivang": true
+    },
+    {
+      "id": "amritsari-aangan",
+      "name": "Amritsari Aangan",
+      "searchName": "Amritsari Aangan",
+      "placesQuery": null,
+      "section": "premium",
+      "cuisine": "Punjabi",
+      "moods": [
+        "punjabi",
+        "treat"
+      ],
+      "veg": "pure",
+      "rating": {
+        "value": 4.5,
+        "count": "682",
+        "source": "Google Maps"
+      },
+      "price": "₹400–1,200 per person",
+      "priceTier": 3,
+      "note": "Kondapur branch. The closer Narsingi branch is 4.1 from 1,599 reviews.",
+      "flag": null,
+      "closed": false,
+      "googleMapsUrl": "https://maps.google.com/maps?cid=17778547782668608581",
+      "swiggyUrl": null,
+      "zomatoUrl": "https://www.zomato.com/hyderabad/amritsari-aangan-kondapur",
+      "photo": null,
+      "triedByShivang": true
+    },
+    {
+      "id": "the-punjabis-swag",
+      "name": "The Punjabis Swag",
+      "searchName": "The Punjabis Swag",
+      "placesQuery": null,
+      "section": "premium",
+      "cuisine": "Punjabi dhaba-style",
+      "moods": [
+        "punjabi",
+        "treat"
+      ],
+      "veg": "both",
+      "rating": {
+        "value": 4.2,
+        "count": "4,130",
+        "source": "Google Maps"
+      },
+      "price": "₹400–600 per person",
+      "priceTier": 2,
+      "note": "Big veg menu. Gachibowli.",
+      "flag": null,
+      "closed": false,
+      "googleMapsUrl": "https://maps.google.com/maps?cid=15317680942296326160",
+      "swiggyUrl": null,
+      "zomatoUrl": "https://www.zomato.com/hyderabad/the-punjabis-swag-gachibowli",
+      "photo": null,
+      "triedByShivang": true
+    },
+    {
+      "id": "punjabi-affair",
+      "name": "Punjabi Affair",
+      "searchName": "Punjabi Affair",
+      "placesQuery": null,
+      "section": "premium",
+      "cuisine": "Punjabi & multicuisine",
+      "moods": [
+        "punjabi",
+        "treat"
+      ],
+      "veg": "both",
+      "rating": null,
+      "price": "₹800 for two",
+      "priceTier": 2,
+      "note": "Only 4 reviews on EazyDiner, too few to judge.",
+      "flag": null,
+      "closed": false,
+      "googleMapsUrl": null,
+      "swiggyUrl": null,
+      "zomatoUrl": "https://www.zomato.com/hyderabad/punjabi-affair-kondapur",
+      "photo": null,
+      "triedByShivang": true
+    },
+    {
+      "id": "norfest-the-dhaba",
+      "name": "Norfest – The Dhaba",
+      "searchName": "Norfest The Dhaba",
+      "placesQuery": null,
+      "section": "premium",
+      "cuisine": "North Indian dhaba",
+      "moods": [
+        "punjabi"
+      ],
+      "veg": "options",
+      "rating": null,
+      "price": null,
+      "priceTier": null,
+      "note": null,
+      "flag": "Google lists the Manikonda dine-in outlet as permanently closed. If it still shows on Swiggy or Zomato, it's delivering from another kitchen.",
+      "closed": true,
+      "googleMapsUrl": "https://maps.google.com/maps?cid=16471435626461803643",
+      "swiggyUrl": null,
+      "zomatoUrl": "https://www.zomato.com/hyderabad/norfest-the-dhaba-manikonda",
+      "photo": null,
+      "triedByShivang": true
+    },
+    {
+      "id": "itc-aashirvaad-soul-creations",
+      "name": "ITC Aashirvaad Soul Creations",
+      "searchName": "ITC Aashirvaad Soul Creations",
+      "placesQuery": null,
+      "section": "premium",
+      "cuisine": "Home-style meals & snacks",
+      "moods": [
+        "homestyle",
+        "snack",
+        "sweets"
+      ],
+      "veg": "pure",
+      "rating": {
+        "value": 4.4,
+        "count": "6.5K",
+        "source": "Swiggy"
+      },
+      "price": "₹500 for two",
+      "priceTier": 2,
+      "note": "Pav bhaji and khichdi run about ₹280–300.",
+      "flag": "Mid-range by price, cheaper than the rest of Premium.",
+      "closed": false,
+      "googleMapsUrl": null,
+      "swiggyUrl": null,
+      "zomatoUrl": "https://www.zomato.com/hyderabad/itc-aashirvaad-soul-creations-gachibowli",
+      "photo": null,
+      "triedByShivang": true
+    },
+    {
+      "id": "greens-and-more",
+      "name": "Greens & More",
+      "searchName": "Greens & More",
+      "placesQuery": null,
+      "section": "healthy",
+      "cuisine": "Salads & bowls",
+      "moods": [
+        "clean"
+      ],
+      "veg": "options",
+      "rating": null,
+      "price": null,
+      "priceTier": null,
+      "note": null,
+      "flag": null,
+      "closed": false,
+      "googleMapsUrl": null,
+      "swiggyUrl": null,
+      "zomatoUrl": "https://www.zomato.com/hyderabad/greens-more-gachibowli",
+      "photo": null,
+      "triedByShivang": true
+    },
+    {
+      "id": "ath-all-things-healthy",
+      "name": "ATH – All Things Healthy",
+      "searchName": "ATH All Things Healthy",
+      "placesQuery": null,
+      "section": "healthy",
+      "cuisine": "Healthy bowls & meals",
+      "moods": [
+        "clean"
+      ],
+      "veg": "options",
+      "rating": null,
+      "price": null,
+      "priceTier": null,
+      "note": null,
+      "flag": null,
+      "closed": false,
+      "googleMapsUrl": null,
+      "swiggyUrl": null,
+      "zomatoUrl": "https://www.zomato.com/hyderabad/ath-all-things-healthy-manikonda",
+      "photo": null,
+      "triedByShivang": true
+    },
+    {
+      "id": "harvest-salad-co",
+      "name": "Harvest Salad Co",
+      "searchName": "Harvest Salad Co",
+      "placesQuery": null,
+      "section": "healthy",
+      "cuisine": "Salads & bowls",
+      "moods": [
+        "clean",
+        "treat"
+      ],
+      "veg": "options",
+      "rating": {
+        "value": 4.6,
+        "count": "3.1K",
+        "source": "Swiggy"
+      },
+      "price": "₹700 for two",
+      "priceTier": 2,
+      "note": "Salads and bowls cost ₹329–399.",
+      "flag": "Pricier than the rest of this section.",
+      "closed": false,
+      "googleMapsUrl": null,
+      "swiggyUrl": null,
+      "zomatoUrl": "https://www.zomato.com/hyderabad/harvest-salad-co-manikonda",
+      "photo": null,
+      "triedByShivang": true
+    },
+    {
+      "id": "lo-low-carb-and-keto-foods",
+      "name": "Lo! Low Carb and Keto Foods",
+      "searchName": "Lo! Low Carb and Keto Foods",
+      "placesQuery": null,
+      "section": "healthy",
+      "cuisine": "Keto & low-carb",
+      "moods": [
+        "clean"
+      ],
+      "veg": "options",
+      "rating": {
+        "value": 4.1,
+        "count": "1.0K",
+        "source": "Swiggy"
+      },
+      "price": "₹500 for two",
+      "priceTier": 2,
+      "note": null,
+      "flag": null,
+      "closed": false,
+      "googleMapsUrl": null,
+      "swiggyUrl": null,
+      "zomatoUrl": "https://www.zomato.com/hyderabad/lo-low-carb-and-keto-foods-manikonda",
+      "photo": null,
+      "triedByShivang": true
+    },
+    {
+      "id": "california-burrito",
+      "name": "California Burrito",
+      "searchName": "California Burrito",
+      "placesQuery": null,
+      "section": "healthy",
+      "cuisine": "Mexican burritos & bowls",
+      "moods": [
+        "clean",
+        "pizza"
+      ],
+      "veg": "options",
+      "rating": null,
+      "price": null,
+      "priceTier": null,
+      "note": null,
+      "flag": "Not healthy by default. Pick a bowl or salad.",
+      "closed": false,
+      "googleMapsUrl": null,
+      "swiggyUrl": null,
+      "zomatoUrl": "https://www.zomato.com/hyderabad/california-burrito-manikonda",
+      "photo": null,
+      "triedByShivang": true
+    },
+    {
+      "id": "great-indian-khichdi-by-eatfit",
+      "name": "Great Indian Khichdi by EatFit",
+      "searchName": "Great Indian Khichdi by EatFit",
+      "placesQuery": null,
+      "section": "healthy",
+      "cuisine": "Khichdi",
+      "moods": [
+        "clean",
+        "homestyle"
+      ],
+      "veg": "pure",
+      "rating": null,
+      "price": null,
+      "priceTier": null,
+      "note": null,
+      "flag": null,
+      "closed": false,
+      "googleMapsUrl": null,
+      "swiggyUrl": null,
+      "zomatoUrl": "https://www.zomato.com/hyderabad/great-indian-khichdi-by-eatfit-gachibowli",
+      "photo": null,
+      "triedByShivang": true
+    },
+    {
+      "id": "home-plate-by-eatfit",
+      "name": "Home Plate by EatFit",
+      "searchName": "Home Plate by EatFit",
+      "placesQuery": null,
+      "section": "healthy",
+      "cuisine": "Home-style meals",
+      "moods": [
+        "clean",
+        "homestyle"
+      ],
+      "veg": "options",
+      "rating": null,
+      "price": null,
+      "priceTier": null,
+      "note": null,
+      "flag": null,
+      "closed": false,
+      "googleMapsUrl": null,
+      "swiggyUrl": null,
+      "zomatoUrl": "https://www.zomato.com/hyderabad/home-plate-by-eatfit-gachibowli",
+      "photo": null,
+      "triedByShivang": true
+    },
+    {
+      "id": "sai-bihari-dhaba",
+      "name": "Sai Bihari Dhaba",
+      "searchName": "Sai Bihari Dhaba",
+      "placesQuery": null,
+      "section": "budget",
+      "cuisine": "Bihari & North Indian",
+      "moods": [
+        "cheap",
+        "homestyle"
+      ],
+      "veg": "options",
+      "rating": null,
+      "price": null,
+      "priceTier": null,
+      "note": null,
+      "flag": null,
+      "closed": false,
+      "googleMapsUrl": null,
+      "swiggyUrl": null,
+      "zomatoUrl": null,
+      "photo": null,
+      "triedByShivang": true
+    },
+    {
+      "id": "bihari-dhaba",
+      "name": "Bihari Dhaba",
+      "searchName": "Bihari Dhaba",
+      "placesQuery": null,
+      "section": "budget",
+      "cuisine": "Bihari & North Indian",
+      "moods": [
+        "cheap",
+        "homestyle"
+      ],
+      "veg": "options",
+      "rating": null,
+      "price": null,
+      "priceTier": null,
+      "note": null,
+      "flag": null,
+      "closed": false,
+      "googleMapsUrl": null,
+      "swiggyUrl": null,
+      "zomatoUrl": "https://www.zomato.com/hyderabad/bihari-dhaba-gachibowli",
+      "photo": null,
+      "triedByShivang": true
+    },
+    {
+      "id": "udupis-upahar",
+      "name": "Udupis Upahar",
+      "searchName": "Udupis Upahar",
+      "placesQuery": null,
+      "section": "budget",
+      "cuisine": "South Indian",
+      "moods": [
+        "cheap",
+        "south"
+      ],
+      "veg": "pure",
+      "rating": {
+        "value": 3.9,
+        "count": "3,945",
+        "source": "Google Maps"
+      },
+      "price": "Under ₹200 per person",
+      "priceTier": 1,
+      "note": "Manikonda outlet. Dosas, meals, chole bhature.",
+      "flag": null,
+      "closed": false,
+      "googleMapsUrl": "https://maps.google.com/maps?cid=8036158332151832943",
+      "swiggyUrl": null,
+      "zomatoUrl": "https://www.zomato.com/hyderabad/udipis-upahar-manikonda",
+      "photo": null,
+      "triedByShivang": true
+    },
+    {
+      "id": "jdm-punjabi-dhaba",
+      "name": "JDM Punjabi Dhaba",
+      "searchName": "JDM Punjabi Dhaba",
+      "placesQuery": null,
+      "section": "budget",
+      "cuisine": "Parathas & rajma-chawal",
+      "moods": [
+        "cheap",
+        "punjabi",
+        "homestyle"
+      ],
+      "veg": "pure",
+      "rating": {
+        "value": 4.2,
+        "count": "474",
+        "source": "Google Maps"
+      },
+      "price": "Under ₹200 per person",
+      "priceTier": 1,
+      "note": "Financial District.",
+      "flag": null,
+      "closed": false,
+      "googleMapsUrl": "https://maps.google.com/maps?cid=2560055139824488062",
+      "swiggyUrl": null,
+      "zomatoUrl": "https://www.zomato.com/hyderabad/jdm-punjabi-dhaba-gachibowli",
+      "photo": null,
+      "triedByShivang": true
+    },
+    {
+      "id": "punjabi-paratha-junction",
+      "name": "Punjabi Paratha Junction",
+      "searchName": "Punjabi Paratha Junction",
+      "placesQuery": null,
+      "section": "budget",
+      "cuisine": "Parathas",
+      "moods": [
+        "cheap",
+        "punjabi"
+      ],
+      "veg": "options",
+      "rating": null,
+      "price": null,
+      "priceTier": null,
+      "note": null,
+      "flag": null,
+      "closed": false,
+      "googleMapsUrl": null,
+      "swiggyUrl": null,
+      "zomatoUrl": "https://www.zomato.com/hyderabad/punjabi-paratha-junction-manikonda",
+      "photo": null,
+      "triedByShivang": true
+    },
+    {
+      "id": "balle-balle-punjabi",
+      "name": "Balle Balle Punjabi",
+      "searchName": "Balle Balle Punjabi",
+      "placesQuery": null,
+      "section": "budget",
+      "cuisine": "Punjabi",
+      "moods": [
+        "cheap",
+        "punjabi"
+      ],
+      "veg": "options",
+      "rating": null,
+      "price": null,
+      "priceTier": null,
+      "note": null,
+      "flag": null,
+      "closed": false,
+      "googleMapsUrl": null,
+      "swiggyUrl": null,
+      "zomatoUrl": "https://www.zomato.com/hyderabad/balle-balle-punjabi-manikonda",
+      "photo": null,
+      "triedByShivang": true
+    },
+    {
+      "id": "box8",
+      "name": "Box8",
+      "searchName": "Box8",
+      "placesQuery": null,
+      "section": "budget",
+      "cuisine": "Meal bowls",
+      "moods": [
+        "cheap"
+      ],
+      "veg": "options",
+      "rating": null,
+      "price": null,
+      "priceTier": null,
+      "note": null,
+      "flag": null,
+      "closed": false,
+      "googleMapsUrl": null,
+      "swiggyUrl": null,
+      "zomatoUrl": "https://www.zomato.com/hyderabad/box8-desi-meals-manikonda",
+      "photo": null,
+      "triedByShivang": true
+    },
+    {
+      "id": "rolls-mania",
+      "name": "Rolls Mania",
+      "searchName": "Rolls Mania",
+      "placesQuery": null,
+      "section": "budget",
+      "cuisine": "Rolls",
+      "moods": [
+        "cheap",
+        "snack",
+        "pizza"
+      ],
+      "veg": "options",
+      "rating": null,
+      "price": null,
+      "priceTier": null,
+      "note": null,
+      "flag": null,
+      "closed": false,
+      "googleMapsUrl": null,
+      "swiggyUrl": null,
+      "zomatoUrl": "https://www.zomato.com/hyderabad/rolls-mania-gachibowli",
+      "photo": null,
+      "triedByShivang": true
+    },
+    {
+      "id": "vellanki-foods",
+      "name": "Vellanki Foods",
+      "searchName": "Vellanki Foods",
+      "placesQuery": null,
+      "section": "special",
+      "cuisine": "Telugu sweets & snacks",
+      "moods": [
+        "sweets"
+      ],
+      "veg": "options",
+      "rating": {
+        "value": 4.5,
+        "count": "429",
+        "source": "Google Maps"
+      },
+      "price": null,
+      "priceTier": null,
+      "note": "Get the dry fruit pootharekulu. Madeenaguda branch.",
+      "flag": null,
+      "closed": false,
+      "googleMapsUrl": "https://maps.google.com/maps?cid=14222097016001694018",
+      "swiggyUrl": null,
+      "zomatoUrl": "https://www.zomato.com/hyderabad/vellanki-foods-madhapur",
+      "photo": null,
+      "triedByShivang": true
+    },
+    {
+      "id": "manakamana-kitchen",
+      "name": "Manakamana Kitchen",
+      "searchName": "Manakamana Kitchen",
+      "placesQuery": null,
+      "section": "special",
+      "cuisine": "Rotis",
+      "moods": [
+        "cheap",
+        "homestyle"
+      ],
+      "veg": "options",
+      "rating": null,
+      "price": null,
+      "priceTier": null,
+      "note": "Cheap rotis. Order these when you have sabzi at home or are making some.",
+      "flag": null,
+      "closed": false,
+      "googleMapsUrl": null,
+      "swiggyUrl": null,
+      "zomatoUrl": null,
+      "photo": null,
+      "triedByShivang": true
+    },
+    {
+      "id": "amrutham-pure-vegetarian",
+      "name": "Amrutham Pure Vegetarian",
+      "searchName": "Amrutham Pure Vegetarian",
+      "placesQuery": null,
+      "section": "new",
+      "cuisine": "Satvik thali",
+      "moods": [
+        "thali",
+        "homestyle",
+        "south",
+        "cheap"
+      ],
+      "veg": "pure",
+      "rating": {
+        "value": 4.7,
+        "count": "1,195",
+        "source": "Google Maps"
+      },
+      "price": "Under ₹200 per person",
+      "priceTier": 1,
+      "note": "No onion or garlic. Reviewers say the unlimited thali feels light. Puppalguda.",
+      "flag": null,
+      "closed": false,
+      "googleMapsUrl": "https://maps.google.com/maps?cid=6517507397336915590",
+      "swiggyUrl": null,
+      "zomatoUrl": null,
+      "photo": null,
+      "triedByShivang": false
+    },
+    {
+      "id": "suruchi-tiffin-room",
+      "name": "Suruchi Tiffin Room (STR)",
+      "searchName": "Suruchi Tiffin Room",
+      "placesQuery": null,
+      "section": "new",
+      "cuisine": "South Indian tiffins",
+      "moods": [
+        "south",
+        "cheap"
+      ],
+      "veg": "pure",
+      "rating": {
+        "value": 4.8,
+        "count": "111",
+        "source": "Google Maps"
+      },
+      "price": "Under ₹200 per person",
+      "priceTier": 1,
+      "note": "Ghee pongal gets special mention. Alkapur Township.",
+      "flag": null,
+      "closed": false,
+      "googleMapsUrl": "https://maps.google.com/maps?cid=10080069798141402735",
+      "swiggyUrl": null,
+      "zomatoUrl": null,
+      "photo": null,
+      "triedByShivang": false
+    },
+    {
+      "id": "sai-deeksha-tiffins-and-snacks",
+      "name": "Sai Deeksha Tiffins and Snacks",
+      "searchName": "Sai Deeksha Tiffins and Snacks",
+      "placesQuery": null,
+      "section": "new",
+      "cuisine": "South Indian tiffins",
+      "moods": [
+        "south",
+        "cheap"
+      ],
+      "veg": "pure",
+      "rating": {
+        "value": 4.8,
+        "count": "282",
+        "source": "Google Maps"
+      },
+      "price": "Under ₹200 per person",
+      "priceTier": 1,
+      "note": "Poori curry is the standout.",
+      "flag": null,
+      "closed": false,
+      "googleMapsUrl": "https://maps.google.com/maps?cid=8935702478757523142",
+      "swiggyUrl": null,
+      "zomatoUrl": null,
+      "photo": null,
+      "triedByShivang": false
+    },
+    {
+      "id": "taara-kitchen",
+      "name": "Taara Kitchen",
+      "searchName": "Taara Kitchen",
+      "placesQuery": null,
+      "section": "new",
+      "cuisine": "South Indian & quick bites",
+      "moods": [
+        "south",
+        "cheap"
+      ],
+      "veg": "pure",
+      "rating": {
+        "value": 4.3,
+        "count": "2,161",
+        "source": "Google Maps"
+      },
+      "price": "Under ₹200 per person",
+      "priceTier": 1,
+      "note": "Ghee karam dosa in the morning, paneer kulcha naan later.",
+      "flag": null,
+      "closed": false,
+      "googleMapsUrl": "https://maps.google.com/maps?cid=14260220838842432950",
+      "swiggyUrl": null,
+      "zomatoUrl": null,
+      "photo": null,
+      "triedByShivang": false
+    },
+    {
+      "id": "vaishnavi-tiffin-centre",
+      "name": "Vaishnavi Tiffin Centre",
+      "searchName": "Vaishnavi Tiffin Centre",
+      "placesQuery": null,
+      "section": "new",
+      "cuisine": "South Indian tiffins",
+      "moods": [
+        "south",
+        "cheap"
+      ],
+      "veg": "pure",
+      "rating": {
+        "value": 4.2,
+        "count": "2,869",
+        "source": "Google Maps"
+      },
+      "price": "Under ₹200 per person",
+      "priceTier": 1,
+      "note": "Butter dosa and Mysore bonda. Manikonda Road.",
+      "flag": null,
+      "closed": false,
+      "googleMapsUrl": "https://maps.google.com/maps?cid=7717209219865728972",
+      "swiggyUrl": null,
+      "zomatoUrl": null,
+      "photo": null,
+      "triedByShivang": false
+    },
+    {
+      "id": "varalakshmi-tiffins",
+      "name": "Varalakshmi Tiffins",
+      "searchName": "Varalakshmi Tiffins",
+      "placesQuery": null,
+      "section": "new",
+      "cuisine": "South Indian tiffins",
+      "moods": [
+        "south"
+      ],
+      "veg": "pure",
+      "rating": {
+        "value": 4.1,
+        "count": "1,298",
+        "source": "Google Maps"
+      },
+      "price": "Under ₹200 per person",
+      "priceTier": 1,
+      "note": "Ghee dosa and a chutney people rave about. Slightly pricier than nearby tiffin spots.",
+      "flag": null,
+      "closed": false,
+      "googleMapsUrl": "https://maps.google.com/maps?cid=789457810313219373",
+      "swiggyUrl": null,
+      "zomatoUrl": null,
+      "photo": null,
+      "triedByShivang": false
+    },
+    {
+      "id": "vedham-pure-vegetarian",
+      "name": "Vedham Pure Vegetarian",
+      "searchName": "Vedham Pure Vegetarian",
+      "placesQuery": null,
+      "section": "new",
+      "cuisine": "South Indian & thalis",
+      "moods": [
+        "south",
+        "thali",
+        "treat"
+      ],
+      "veg": "pure",
+      "rating": {
+        "value": 4.5,
+        "count": "2,445",
+        "source": "Google Maps"
+      },
+      "price": "₹200–600 per person",
+      "priceTier": 2,
+      "note": "A nicer sit-down place. Gachibowli.",
+      "flag": null,
+      "closed": false,
+      "googleMapsUrl": "https://maps.google.com/maps?cid=13425063907160355249",
+      "swiggyUrl": null,
+      "zomatoUrl": null,
+      "photo": null,
+      "triedByShivang": false
+    },
+    {
+      "id": "oye-punjabi",
+      "name": "Oye Punjabi",
+      "searchName": "Oye Punjabi",
+      "placesQuery": null,
+      "section": "new",
+      "cuisine": "Punjabi dhaba",
+      "moods": [
+        "punjabi",
+        "cheap"
+      ],
+      "veg": "pure",
+      "rating": {
+        "value": 4.3,
+        "count": "224",
+        "source": "Google Maps"
+      },
+      "price": "Under ₹200 per person",
+      "priceTier": 1,
+      "note": "Aloo paratha and chole bhature. Gachibowli.",
+      "flag": null,
+      "closed": false,
+      "googleMapsUrl": "https://maps.google.com/maps?cid=5513013590496256984",
+      "swiggyUrl": null,
+      "zomatoUrl": "https://www.zomato.com/hyderabad/oye-punjabi-gachibowli",
+      "photo": null,
+      "triedByShivang": false
+    },
+    {
+      "id": "protein-ka-tadka",
+      "name": "Protein Ka Tadka",
+      "searchName": "Protein Ka Tadka",
+      "placesQuery": null,
+      "section": "new",
+      "cuisine": "High-protein healthy meals",
+      "moods": [
+        "clean"
+      ],
+      "veg": "options",
+      "rating": {
+        "value": 4.8,
+        "count": "60",
+        "source": "Google Maps"
+      },
+      "price": "₹200–400 per person",
+      "priceTier": 2,
+      "note": "Cooked fresh in ghee and olive oil. Puppalguda.",
+      "flag": null,
+      "closed": false,
+      "googleMapsUrl": "https://maps.google.com/maps?cid=16586997260201648789",
+      "swiggyUrl": null,
+      "zomatoUrl": "https://www.zomato.com/hyderabad/protein-ka-tadka-manikonda",
+      "photo": null,
+      "triedByShivang": false
+    },
+    {
+      "id": "mojo-pizza",
+      "name": "MOJO Pizza – 2X Toppings",
+      "searchName": "MOJO Pizza",
+      "placesQuery": null,
+      "section": "new",
+      "cuisine": "Pizza",
+      "moods": [
+        "treat",
+        "snack",
+        "pizza"
+      ],
+      "veg": "options",
+      "rating": {
+        "value": 4.8,
+        "count": "400",
+        "source": "Google Maps"
+      },
+      "price": null,
+      "priceTier": null,
+      "note": "Veg pizzas with double toppings. Alkapur Township.",
+      "flag": null,
+      "closed": false,
+      "googleMapsUrl": "https://maps.google.com/maps?cid=14295179704239537203",
+      "swiggyUrl": null,
+      "zomatoUrl": "https://www.zomato.com/hyderabad/mojo-pizza-2x-toppings-manikonda",
+      "photo": null,
+      "triedByShivang": false
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+.pv { min-height: 100vh; background: var(--bg); color: var(--fg); padding: 24px max(20px, 4vw) 80px; }
+.pv[data-theme="dark"] { --bg: #151110; --surface: #1f1a17; --soft: #29221e; --fg: #f5efe9; --muted: #b5a99f; --line: #352c26; color-scheme: dark; }
+.pv-head h1 { font-family: var(--display); font-size: 32px; letter-spacing: -0.02em; margin: 0 0 6px; }
+.pv-head h1 small, .pv-section h2 small { font: 600 13px var(--body); color: var(--muted); margin-left: 8px; letter-spacing: 0; }
+.pv-head p { margin: 0 0 16px; color: var(--muted); max-width: 70ch; }
+.pv-head p b { color: var(--fg); }
+.pv-controls { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; position: sticky; top: 0; z-index: 10; background: var(--bg); padding: 10px 0; }
+.seg { display: inline-flex; background: var(--soft); border-radius: 999px; padding: 3px; }
+.seg button, .tog { border: 0; background: none; padding: 7px 13px; border-radius: 999px; font-size: 13px; font-weight: 700; cursor: pointer; }
+.tog { background: var(--soft); }
+.seg button[aria-pressed="true"], .tog[aria-pressed="true"] { background: var(--fg); color: var(--bg); }
+.pv-section { margin-top: 32px; }
+.pv-section h2 { font-family: var(--display); font-size: 22px; margin: 0 0 12px; letter-spacing: -0.01em; }
+.pv-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(var(--w), var(--w))); gap: 18px 14px; }
+.pv-grid figure { margin: 0; }
+.pv-grid figcaption { font-size: 11px; color: var(--muted); margin-top: 6px; font-family: ui-monospace, monospace; }
+.pv-stickers { display: flex; flex-wrap: wrap; gap: 14px; }
+.pv-stickers figure { margin: 0; text-align: center; font-size: 12px; color: var(--muted); }

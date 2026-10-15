@@ -1,0 +1,383 @@
+{
+  "resolvedAt": "2026-10-15",
+  "places": {
+    "rajthali": {
+      "placeId": "ChIJ2ajIAdSRyzsRuuHdgDjykHU",
+      "matchedName": "Rajthali Restaurant",
+      "address": "First floor, 1096, zonahs's Neptune, 8-2-293/82/a, Road No. 36, adjacent to peddama temple, Kamman, Jubilee Hills, Hyderabad, Telangana 500033, India",
+      "distanceKm": 3.7,
+      "status": "verified",
+      "approved": true,
+      "closedOnGoogle": false
+    },
+    "chai-chakhna-company": {
+      "placeId": "ChIJ4T0I81GRyzsRsxetEcna4D4",
+      "matchedName": "Chai Chakhna Company",
+      "address": "Ground Floor, Lane Opposite to Pillar No 1619 , Plot No 1260 Touch Stone Towers , Corner Building 1st Lane, Jubilee Hills Check Post Rd, opposite HDFC Bank, Jubilee Hills, Hyderabad, Telangana 500033, India",
+      "distanceKm": 3.9,
+      "status": "good",
+      "approved": true,
+      "closedOnGoogle": false
+    },
+    "meal-o-clock-pure-veg": {
+      "placeId": "ChIJN6tTCYuTyzsR67tvW_Opoic",
+      "matchedName": "Meal O'Clock",
+      "address": "3rd Floor, Plot No, 2-17, Satya Towers, Gachibowli - Miyapur Rd, Kondapur, Laxmi Cyber City, Whitefields, HITEC City, Hyderabad, Telangana 500084, India",
+      "distanceKm": 6.3,
+      "status": "verified",
+      "approved": true,
+      "closedOnGoogle": false
+    },
+    "millet-express": {
+      "placeId": "ChIJX-mGvjCRyzsRXQ5uItNvf0g",
+      "matchedName": "Millet Express",
+      "address": "Western Hills, Addagutta Society, Western Hills, Jal Vayu Vihar, Kukatpally, Hyderabad, Telangana 500085, India",
+      "distanceKm": 10.6,
+      "status": "good",
+      "approved": true,
+      "closedOnGoogle": false
+    },
+    "the-kulcha-kulture": {
+      "placeId": "ChIJT7RSfnWVyzsRziYDa_6sc84",
+      "matchedName": "The Kulcha Kulture",
+      "address": "Shop No 14, Ground Floor, Raichandani Business Bay, Gandipet Main Rd, opposite Rajapushpa Regalia, Kokapet, Narsingi, Hyderabad, Telangana 500075, India",
+      "distanceKm": 5.2,
+      "status": "verified",
+      "approved": true,
+      "closedOnGoogle": false
+    },
+    "haldirams": {
+      "placeId": "ChIJezB8IJORyzsRFsG7RD1c6SE",
+      "matchedName": "Haldiram's",
+      "address": "Unit DK 2B Food Court Level Four, Inorbit Mall, APIIC Software Layout, Mindspace, Madhapur, Hyderabad, Telangana 500081, India",
+      "distanceKm": 3.3,
+      "status": "good",
+      "approved": true,
+      "closedOnGoogle": false
+    },
+    "mealful-rolls": {
+      "placeId": "ChIJMSJAedSTyzsRdPQjSPYOoX8",
+      "matchedName": "Mealful Rolls - Meals In A Roll",
+      "address": "C8JM+F8M, Goldcrest School Rd, Gachibowli, Hyderabad, Telangana 500046, India",
+      "distanceKm": 6.4,
+      "status": "good",
+      "approved": true,
+      "closedOnGoogle": true
+    },
+    "raju-gari-biryani": {
+      "placeId": "ChIJxVoKP-mXyzsR3Z33dDxwkM8",
+      "matchedName": "Raju Gari Biryani | Manikonda |",
+      "address": "Plot No: 389, Manikonda Rd, OU Colony, Shaikpet, Hyderabad, Telangana 500104, India",
+      "distanceKm": 0.5,
+      "status": "verified",
+      "approved": true,
+      "closedOnGoogle": false
+    },
+    "biryani-by-kilo": {
+      "placeId": "ChIJC2nPkMGTyzsRMAqFG0C39Bs",
+      "matchedName": "Biryani By Kilo- Gachibowli",
+      "address": "Sri krishna Sanjay commercial, House No-2-60, Rajiv gandhi Nagar, Gachibowli, Hyderabad, Telangana 500032, India",
+      "distanceKm": 4.6,
+      "status": "good",
+      "approved": true,
+      "closedOnGoogle": false
+    },
+    "salt": {
+      "placeId": "ChIJdULg9W-TyzsRzP_huOu6vGE",
+      "matchedName": "Salt - Indian Restaurant Gachibowli",
+      "address": "Ground Floor, VSD Tech Park, Nanakramguda Rd, Madhava Reddy Colony, Gachibowli, Hyderabad, Nanakramguda, Telangana 500032, India",
+      "distanceKm": 4.7,
+      "status": "manual",
+      "approved": true,
+      "closedOnGoogle": false
+    },
+    "amritsari-aangan": {
+      "placeId": "ChIJ-zPaVQyVyzsRmSyZcSGZCWs",
+      "matchedName": "Amritsari Aangan - Narsingi",
+      "address": "Amritsari Aangan, 5th floor, Balaji Grand Bazaar, Gandipet Main Road, beside Morine Bakery, Narsingi, Hyderabad, Telangana 500089, India",
+      "distanceKm": 3.7,
+      "status": "good",
+      "approved": true,
+      "closedOnGoogle": false
+    },
+    "the-punjabis-swag": {
+      "placeId": "ChIJdwY7oXyTyzsREOBXFKlVk9Q",
+      "matchedName": "THE PUNJABIS SWAG GACHIBOWLI",
+      "address": "8 and 9, Plot No: 25, Cyberhills Colony, P Janardhan Reddy Nagar, Gachibowli, Hyderabad, Telangana 500032, India",
+      "distanceKm": 4.2,
+      "status": "verified",
+      "approved": true,
+      "closedOnGoogle": false
+    },
+    "punjabi-affair": {
+      "placeId": "ChIJJRxsWF6RyzsRgQvCLJSw1sc",
+      "matchedName": "PUNJABI AFFAIR",
+      "address": "oyster uptown building, metro pillar number 1749 Durgam cheruvu metro, station, Opp: Krishe Sapphire 1-10/4, 1-10/4/B, 1-10/4/A, Sri Sai Nagar, HITEC City, Hyderabad, Telangana 500081, India",
+      "distanceKm": 4.2,
+      "status": "good",
+      "approved": true,
+      "closedOnGoogle": false
+    },
+    "norfest-the-dhaba": {
+      "placeId": "ChIJpfDfC8eTyzsR3cLsibEUPPw",
+      "matchedName": "Norfest The Dhaba",
+      "address": "2nd Floor, SLN Terminus, Gachibowli - Miyapur Rd, near Botanical Gardens, Jayabheri Enclave, Gachibowli, Hyderabad, Telangana 500032, India",
+      "distanceKm": 5.8,
+      "status": "manual",
+      "approved": true,
+      "closedOnGoogle": false
+    },
+    "greens-and-more": {
+      "placeId": "ChIJfRVPvfOTyzsRGVvAM82TyRg",
+      "matchedName": "Greens & More",
+      "address": "Gate No. 3, Sattva Knowledge Park, Durgam Cheruvu Rd, Silpa Gram Craft Village, Rai Durg, Hyderabad, Telangana 500032, India",
+      "distanceKm": 2.9,
+      "status": "good",
+      "approved": true,
+      "closedOnGoogle": false
+    },
+    "ath-all-things-healthy": {
+      "placeId": "ChIJ9bJ5EACTyzsRtNMEDVsK6pc",
+      "matchedName": "ATH All Thing Healthy",
+      "address": "Sy.No.282,Level Up Drive In, situated opp.to Vajram Aster Homes, Gopanapally Village, Osman Nagar, Serilingampalle (M), Hyderabad, Telangana 502034, India",
+      "distanceKm": 10.8,
+      "status": "good",
+      "approved": true,
+      "closedOnGoogle": true
+    },
+    "harvest-salad-co": {
+      "placeId": "ChIJ3ZO6tLGVyzsR8XdPHksGBC8",
+      "matchedName": "Harvest Salad Co | Manikonda",
+      "address": "G2, Ground floor, 5- 438, Golden Temple Rd, KPR Colony, Manikonda, Hyderabad, Telangana 500089, India",
+      "distanceKm": 0.9,
+      "status": "good",
+      "approved": true,
+      "closedOnGoogle": false
+    },
+    "lo-low-carb-and-keto-foods": {
+      "placeId": "ChIJRcqwSiuRyzsRSc7ehvq-8GE",
+      "matchedName": "Lo! - Low Carb and Keto Foods",
+      "address": "60 ఫీట్ రోడ్డు, Ayyappa Society, Mega Hills, Madhapur, Hyderabad, Telangana 500081, India",
+      "distanceKm": 4.9,
+      "status": "good",
+      "approved": true,
+      "closedOnGoogle": false
+    },
+    "california-burrito": {
+      "placeId": "ChIJ0fGcxLCVyzsREOsoB6xIMds",
+      "matchedName": "California Burrito Mexican Kitchen",
+      "address": "Divyasree Techridge, Lanco Hills Rd, Hyderabad, Khajaguda, Telangana 500089, India",
+      "distanceKm": 2.2,
+      "status": "manual",
+      "approved": true,
+      "closedOnGoogle": false
+    },
+    "great-indian-khichdi-by-eatfit": {
+      "placeId": "ChIJG1PdAxUZDTkRJOfxe64rgEE",
+      "matchedName": "Great Indian Khichdi by EatFit",
+      "address": "C3QQ+92Q, IILM Institute, Sarswati Kunj II, Wazirabad, Sector 52, Gurugram, Haryana 122011, India",
+      "distanceKm": 1233.5,
+      "status": "manual",
+      "approved": true,
+      "closedOnGoogle": false
+    },
+    "sai-bihari-dhaba": {
+      "placeId": "ChIJxXGwIJWTyzsRIJLJNCPk-NU",
+      "matchedName": "Bihari Dhaba",
+      "address": "Door No.2-21/4, Guru Kripa Complex, Indira Nagar, Gachibowli, Old Mumbai Hwy, Rajiv gandhi Nagar, Gachibowli, Hyderabad, Telangana 500032, India",
+      "distanceKm": 4.9,
+      "status": "manual",
+      "approved": true,
+      "closedOnGoogle": false
+    },
+    "bihari-dhaba": {
+      "placeId": "ChIJVetgNqiRyzsRKdPzT_-m0gk",
+      "matchedName": "Bihari Dhaba and Mayur pan house",
+      "address": "Rd number 36, 1713, Hitech City Rd, opp. Metro Pillar Number C1713, opp. Metro pillar no. C, Sri Rama Colony, Kavuri Hills, Madhapur, Hyderabad, Telangana 500033, India",
+      "distanceKm": 4,
+      "status": "good",
+      "approved": true,
+      "closedOnGoogle": false
+    },
+    "udupis-upahar": {
+      "placeId": "ChIJkSp1q56VyzsRb6G0-mwrhm8",
+      "matchedName": "Udipi's Upahar Manikonda",
+      "address": "2-3-3/2, Sri Krishna Heights, Harivillu Rd, Shivapuri Colony, Muppas Panchavati Colony, Manikonda, Hyderabad, Telangana 500089, India",
+      "distanceKm": 0.6,
+      "status": "verified",
+      "approved": true,
+      "closedOnGoogle": false
+    },
+    "jdm-punjabi-dhaba": {
+      "placeId": "ChIJTaeBO5WTyzsRfs6m_pUkhyM",
+      "matchedName": "JDM PUNJABI DHABA",
+      "address": "2-58/4/3/A, Nanakramguda, gate no 5, oppsite amazon, Eat St, Financial District, Gachibowli, Hyderabad, Nanakramguda, Telangana 500032, India",
+      "distanceKm": 4.5,
+      "status": "verified",
+      "approved": true,
+      "closedOnGoogle": false
+    },
+    "punjabi-paratha-junction": {
+      "placeId": "ChIJ8wvALQCVyzsRNdV4eNKSRJE",
+      "matchedName": "Punjabi Junction",
+      "address": "Punjabi Junction, Alkapoor Rd, Kyettaian Gouda Nilayam, Alkapoor, Puppalguda, Hyderabad, Telangana 500089, India",
+      "distanceKm": 1.8,
+      "status": "manual",
+      "approved": true,
+      "closedOnGoogle": false
+    },
+    "box8": {
+      "placeId": "ChIJx1Y2sKyVyzsR_DsBr2moZ7c",
+      "matchedName": "BOX8 - India's Largest Desi Meals Brand",
+      "address": "2-3/4/5, First Floor, Survey No 31/E, Manikonda Jagir Village &, Gram Panchayat West Zone, Hyderabad, Telangana 500089, India",
+      "distanceKm": 1.1,
+      "status": "good",
+      "approved": true,
+      "closedOnGoogle": false
+    },
+    "rolls-mania": {
+      "placeId": "ChIJ4QBUT7-TyzsRkD2BCgKGVzk",
+      "matchedName": "Rolls Mania",
+      "address": "Plot No.125, Municipal No. 1-3-37/1/125, Shop No.2, Vinayak Nagar, Indira Nagar, Gachibowli, Hyderabad, Telangana 500032, India",
+      "distanceKm": 5,
+      "status": "good",
+      "approved": true,
+      "closedOnGoogle": false
+    },
+    "vellanki-foods": {
+      "placeId": "ChIJkU-QnESRyzsROYn6ZAQyfJA",
+      "matchedName": "Vellanki Foods (Madhapur)",
+      "address": "location_onNear Vellanki Foods, Guttala_Begumpet, Sri Rama Colony, Jubilee Hills, Vellanki Foods, Sri Rama Colony, Guttala_Begumpet, Kavuri Hills, Madhapur, Hyderabad, Telangana 500033, India",
+      "distanceKm": 4.1,
+      "status": "good",
+      "approved": true,
+      "closedOnGoogle": false
+    },
+    "manakamana-kitchen": {
+      "placeId": "ChIJa8zWDiKUyzsRH_RiyJg1JcY",
+      "matchedName": "MANAKAMANA North Indian Paratha House",
+      "address": "Unnamed Road, Kyettaian Gouda Nilayam, Secretariat Employees Colony, Puppalguda, Manikonda, Hyderabad, Telangana 500089, India",
+      "distanceKm": 1.8,
+      "status": "manual",
+      "approved": true,
+      "closedOnGoogle": false
+    },
+    "amrutham-pure-vegetarian": {
+      "placeId": "ChIJT3mG4o-VyzsRhl4_V3LWclo",
+      "matchedName": "Amrutham Pure Vegetarian",
+      "address": "Plot no 126, Road No. 1, next to Hyderabad Grammar School, Kyettaian Gouda Nilayam, Scetor II, Puppalguda, Manikonda, Hyderabad, Telangana 500089, India",
+      "distanceKm": 1.6,
+      "status": "verified",
+      "approved": true,
+      "closedOnGoogle": false
+    },
+    "suruchi-tiffin-room": {
+      "placeId": "ChIJ39oYZACVyzsRb55cLROa44s",
+      "matchedName": "Suruchi Tiffin Room (STR)",
+      "address": "Aurum Vajra Apartments, Rd Number 3, Alkapur Township, Huda, Alkapur Twp, Puppalguda, Manikonda, Hyderabad, Telangana 500089, India",
+      "distanceKm": 1.8,
+      "status": "verified",
+      "approved": true,
+      "closedOnGoogle": false
+    },
+    "sai-deeksha-tiffins-and-snacks": {
+      "placeId": "ChIJi5-dewCVyzsRxm7roA_-AXw",
+      "matchedName": "Sai DEEKSHA Tiffins and Snacks",
+      "address": "BRC SRI HEMADURGA SIVAHILLS, Narsingi - Puppalaguda Main Rd, opposite Anupama Homes, Alkapur Twp, Puppalguda, Hyderabad, Telangana 500089, India",
+      "distanceKm": 2.1,
+      "status": "verified",
+      "approved": true,
+      "closedOnGoogle": false
+    },
+    "taara-kitchen": {
+      "placeId": "ChIJP_30mH6VyzsRtn3TjUx75sU",
+      "matchedName": "Taara kitchen",
+      "address": "Road No. 5, Sri Laxmi Nagar Colony, Manikonda, Hyderabad, Telangana 500089, India",
+      "distanceKm": 1.3,
+      "status": "verified",
+      "approved": true,
+      "closedOnGoogle": false
+    },
+    "vaishnavi-tiffin-centre": {
+      "placeId": "ChIJ63NshaaWyzsRzFd33-UIGWs",
+      "matchedName": "Vaishnavi Tiffin Centre",
+      "address": "Manikonda Rd, Lanco Hills Rd, near Marrichettu, Hyderabad, Telangana 500089, India",
+      "distanceKm": 1.2,
+      "status": "verified",
+      "approved": true,
+      "closedOnGoogle": false
+    },
+    "varalakshmi-tiffins": {
+      "placeId": "ChIJH2TuE16VyzsRLY3gHLK39Ao",
+      "matchedName": "Varalakshmi Tiffins",
+      "address": "Plot no : 96, Caterpillar Rd, Narsingi, Manikonda, Hyderabad, Telangana 500089, India",
+      "distanceKm": 3,
+      "status": "verified",
+      "approved": true,
+      "closedOnGoogle": false
+    },
+    "vedham-pure-vegetarian": {
+      "placeId": "ChIJCdUIk7OTyzsRsfE1mX5oT7o",
+      "matchedName": "Vedham Pure Vegetarian Restaurant",
+      "address": "Survey No; 50, Plot No: 79, Gachibowli Rd, Diamond Hills, Lumbini Avenue, Gachibowli, Hyderabad, Telangana 500032, India",
+      "distanceKm": 3.9,
+      "status": "verified",
+      "approved": true,
+      "closedOnGoogle": false
+    },
+    "oye-punjabi": {
+      "placeId": "ChIJy_JhO6STyzsR2CNuv6Yogkw",
+      "matchedName": "Oye PUNJABI",
+      "address": "PT-7 1-72/3, below flyover, near HP Petrol pump, Cyberhills Colony, P Janardhan Reddy Nagar, Gachibowli, Hyderabad, Telangana 500032, India",
+      "distanceKm": 4.3,
+      "status": "verified",
+      "approved": true,
+      "closedOnGoogle": false
+    },
+    "protein-ka-tadka": {
+      "placeId": "ChIJA0B8weCXyzsRlWKyYCDaMOY",
+      "matchedName": "Protein Ka Tadka",
+      "address": "MN Mansion, Ground Floor, Shop-1, opposite Kakatiya High School, Friends Colony, Puppalguda, Manikonda, Hyderabad, Telangana 500089, India",
+      "distanceKm": 0.7,
+      "status": "verified",
+      "approved": true,
+      "closedOnGoogle": false
+    },
+    "mojo-pizza": {
+      "placeId": "ChIJo3aSNkKVyzsRMzySrzOuYsY",
+      "matchedName": "MOJO Pizza - 2X Toppings",
+      "address": "G6 Ground Floor, Central park Residency, Rd Number 16, beside Netaji park, Alkapur twp, Puppalguda, Manikonda, Hyderabad, Telangana 500089, India",
+      "distanceKm": 2.4,
+      "status": "verified",
+      "approved": true,
+      "closedOnGoogle": false
+    },
+    "pikadili": {
+      "placeId": "ChIJgf_c-YKVyzsRlb2zgXsJZdQ",
+      "matchedName": "Pikadilli Restaurant",
+      "address": "43, opposite Iguru, Chitrapuri Colony, Khajaguda, Hyderabad, Telangana 500104, India",
+      "distanceKm": 1.9,
+      "status": "manual",
+      "approved": true,
+      "closedOnGoogle": false
+    },
+    "itc-aashirvaad-soul-creations": {
+      "placeId": "ChIJk49sOgAVrjsRWpBte3ujrfQ",
+      "matchedName": "ITC Aashirvaad Soul Creations",
+      "address": "KITCHENS@, 35/4, 24TH MAIN, JP NAGAR 7TH PHASE, B.B, Achappa Layout, Puttenahalli, M.P South, J. P. Nagar, Bengaluru, Karnataka 560078, India",
+      "distanceKm": 509,
+      "status": "manual",
+      "approved": true,
+      "closedOnGoogle": false
+    },
+    "home-plate-by-eatfit": {
+      "placeId": "ChIJj4-4ALWRyzsR7ZTkfAvqvio",
+      "matchedName": "Eatfit",
+      "address": "14, Kukatpally Housing Board Rd, Kukatpally Housing Board Colony, K P H B Phase 3, Kukatpally, Hyderabad, Telangana 500072, India",
+      "distanceKm": 9.1,
+      "status": "manual",
+      "approved": true,
+      "closedOnGoogle": false
+    }
+  }
+}
