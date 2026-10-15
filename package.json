@@ -14,7 +14,8 @@
     "places:coverage": "tsx scripts/coverage-report.ts",
     "brand:images": "tsx scripts/make-brand-images.tsx",
     "preview:prod": "tsx --env-file=.env.local scripts/serve-dist.ts",
-    "build:api": "node scripts/build-api.mjs"
+    "build:api": "node scripts/build-api.mjs",
+    "places:enrich": "tsx --env-file=.env.local scripts/enrich-places.ts"
   },
   "dependencies": {
     "@fontsource-variable/bricolage-grotesque": "^5.3.0",
