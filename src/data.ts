@@ -15,7 +15,6 @@ if (import.meta.env.DEV) {
 export const sections: Section[] = file.sections;
 export const moods: Mood[] = file.moods;
 export const places: Place[] = file.places;
-export const dataUpdated = file.updated;
 
 export const sectionById = Object.fromEntries(sections.map((s) => [s.id, s])) as Record<SectionId, Section>;
 export const placeById = new Map(places.map((p) => [p.id, p]));

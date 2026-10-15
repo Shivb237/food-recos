@@ -120,6 +120,12 @@ describe("safety", () => {
     t += 61_000;
     expect((await call(h, A, { body: { action: "like", place: "salt", on: true } })).status).toBe(200);
   });
+  it("also limits one network address that keeps inventing new device ids", async () => {
+    const h = make();
+    const fresh = (i: number) => h(new Request("http://x.test/api/social", { method: "POST", headers: { "x-device": `device-${String(i).padStart(16, "0")}`, "x-forwarded-for": "203.0.113.9" }, body: JSON.stringify({ action: "like", place: "salt", on: true }) }));
+    for (let i = 0; i < 90; i++) expect((await fresh(i)).status).toBe(200);
+    expect((await fresh(999)).status).toBe(429);
+  });
   it("turns a Redis outage into a polite 503", async () => {
     const h = make({ redis: { pipeline: async () => { throw new Error("down"); } } });
     expect((await call(h, A)).status).toBe(503);

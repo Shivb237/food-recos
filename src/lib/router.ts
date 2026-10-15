@@ -37,8 +37,6 @@ export function buildUrl({ route, place }: Loc): string {
   return qs ? `${path}?${qs}` : path;
 }
 
-export const sameRoute = (a: Route, b: Route) => JSON.stringify(a) === JSON.stringify(b);
-
 export interface HistoryState {
   /** True when the sheet was opened by a push, so closing it can simply go back. */
   sheet?: boolean;

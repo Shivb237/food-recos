@@ -10,6 +10,7 @@ import { run, toObject, type Redis } from "./redis";
  *   comments:<place> LIST  the comments, newest on top, at most 200
  *   recent           LIST  the latest comments across all places, at most 20
  *   rl:<device>:<m>  a number: writes this device made in minute m (the turnstile)
+ *   rlip:<ip>:<m>    the same turnstile, per network address (so inventing new device ids does not help)
  *
  * No accounts: a phone invents a random id, keeps it in localStorage, and sends it as the X-Device header.
  * We store only a short fingerprint (SHA-256) of it, never the id itself, and never send any fingerprint back.
@@ -27,6 +28,8 @@ export interface SocialDeps {
 const MAX_COMMENTS_PER_PLACE = 200;
 const MAX_RECENT = 20;
 const WRITES_PER_MINUTE = 30;
+/** Inventing new device ids gets round the per-phone limit, so the same minute is also counted per network address. */
+const WRITES_PER_MINUTE_PER_IP = 90;
 const NAME_MAX = 40;
 const TEXT_MAX = 280;
 const DEVICE = /^[A-Za-z0-9_-]{16,64}$/;
@@ -111,8 +114,10 @@ export function createSocialHandler(deps: SocialDeps) {
 
       // The turnstile: at most 30 writes a minute per phone.
       const minute = Math.floor(now() / 60000);
-      const [used] = await redis.pipeline([["INCR", `rl:${me}:${minute}`], ["EXPIRE", `rl:${me}:${minute}`, 90]]);
-      if (Number(used) > WRITES_PER_MINUTE) return json({ error: "slow down a little" }, 429);
+      const ip = (req.headers.get("x-forwarded-for")?.split(",")[0] ?? req.headers.get("x-real-ip") ?? "unknown").trim();
+      const ipKey = `rlip:${await fingerprint(ip)}:${minute}`;
+      const [used, , ipUsed] = await redis.pipeline([["INCR", `rl:${me}:${minute}`], ["EXPIRE", `rl:${me}:${minute}`, 90], ["INCR", ipKey], ["EXPIRE", ipKey, 90]]);
+      if (Number(used) > WRITES_PER_MINUTE || Number(ipUsed) > WRITES_PER_MINUTE_PER_IP) return json({ error: "slow down a little" }, 429);
 
       if (body.action === "like") {
         if (typeof body.on !== "boolean") return json({ error: "bad request" }, 400);

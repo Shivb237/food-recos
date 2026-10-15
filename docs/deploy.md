@@ -53,7 +53,7 @@ git push -u origin main
 
 - Open the link on your phone. Photos and ratings show; a heart and a comment stick after a reload.
 - Paste the link into a WhatsApp chat: the orange "What should you order today?" card should appear (WhatsApp caches previews, so a brand-new link is best).
-- On your phone, open `https://<your-site>/?admin=<ADMIN_TOKEN>` once. A toast says "Admin mode on", and you can now delete any comment.
+- On your phone, open `https://<your-site>/#admin=<ADMIN_TOKEN>` once. A toast says "Admin mode on", and you can now delete any comment.
 - Share, Save and "Add to Home Screen" work from the browser menu.
 
 ## If something is off

@@ -59,14 +59,15 @@ function deviceId(): string {
 export const savedName = () => store.get("mp.name") ?? "";
 export const saveName = (n: string) => store.set("mp.name", n.slice(0, 40));
 
-/** Shivang visits /?admin=TOKEN once on his phone; the token is kept so he can delete any comment. */
+/**
+ * Shivang visits /#admin=TOKEN once on his phone; the token is kept so he can delete any comment.
+ * It sits after the "#" on purpose: browsers never send that part to the server, so it can't end up in server logs.
+ */
 export function captureAdminToken() {
-  const url = new URL(location.href);
-  const token = url.searchParams.get("admin");
+  const token = new URLSearchParams(location.hash.slice(1)).get("admin");
   if (!token) return;
   store.set("mp.admin", token);
-  url.searchParams.delete("admin");
-  history.replaceState(history.state, "", url.pathname + url.search);
+  history.replaceState(history.state, "", location.pathname + location.search);
   toast("Admin mode on for this phone");
 }
 

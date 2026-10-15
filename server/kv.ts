@@ -1,4 +1,4 @@
-import { memoryRedis, run, upstashFromEnv, upstashRedis, type Redis } from "./redis";
+import { memoryRedis, upstashFromEnv, upstashRedis, type Redis } from "./redis";
 
 /**
  * A daily-counter helper on top of Redis, used by the photo cap.
@@ -25,5 +25,3 @@ export function kvFromEnv(env: Record<string, string | undefined>): KV {
   const redis = upstashFromEnv(env);
   return redis ? kvOver(redis) : memoryKV();
 }
-
-export { run };

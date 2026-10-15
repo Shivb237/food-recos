@@ -3,7 +3,6 @@ import type { Mood, Place } from "../shared/types";
 import { moods, places, placeById, sectionById, sections } from "./data";
 import { StickerDefs } from "./cards/stickers";
 import { Hero, PickCard } from "./components/Hero";
-import { IconBack } from "./components/Icons";
 import { ListView, type ListProps } from "./components/ListView";
 import { MoodTiles } from "./components/MoodTiles";
 import { PersonalRow, SectionBlock } from "./components/Blocks";
