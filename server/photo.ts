@@ -109,6 +109,8 @@ export function createPhotoHandler(deps: PhotoDeps) {
         .filter((p) => p.name && PHOTO_NAME.test(p.name))
         .slice(0, n);
 
+      let limited = false;
+      const failures: Record<string, number> = {};
       const settled = await Promise.all(
         chosen.map(async (p): Promise<PhotoResult | null> => {
           try {
@@ -116,18 +118,27 @@ export function createPhotoHandler(deps: PhotoDeps) {
               headers,
               signal: AbortSignal.timeout(6000),
             });
-            if (!media.ok) return null;
+            if (media.status === 429) limited = true;
+            if (!media.ok) {
+              failures[String(media.status)] = (failures[String(media.status)] ?? 0) + 1;
+              return null;
+            }
             const uri = safeImageUrl(((await media.json()) as { photoUri?: string }).photoUri);
             if (!uri) return null;
             const a = p.authorAttributions?.[0];
             return { uri, author: (a?.displayName ?? "").slice(0, 80), authorUri: safeLink(a?.uri) };
           } catch {
+            failures.error = (failures.error ?? 0) + 1;
             return null;
           }
         }),
       );
       const photos = settled.filter((x): x is PhotoResult => !!x);
       await refund(n - photos.length);
+      // Google's own per-minute limit said no to every photo: tell the app to try again shortly rather than give up.
+      if (!photos.length && limited) return json({ photos: [], reason: "rate-limited" }, 200, "no-store");
+      // Nothing came back and it wasn't a rate limit: say what happened (counts only), so it can be diagnosed from outside.
+      if (!photos.length) return json({ photos: [], reason: chosen.length ? "photo-requests-failed" : "no-photos-listed", listed: (body.photos ?? []).length, failures }, 200, "no-store");
       return json({ photos });
     } catch {
       await refund(n);

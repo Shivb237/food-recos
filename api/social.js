@@ -507,6 +507,10 @@ var places_default = {
       rating: null,
       price: null,
       priceTier: 2,
+      mealPrice: 270,
+      priceBand: "mid",
+      priceSource: "No Hyderabad menu found; Bihari Bowl bowls in Chennai/Pune are \u20B9259\u2013271",
+      priceConfidence: "estimate",
       note: null,
       flag: null,
       closed: false,
@@ -514,11 +518,7 @@ var places_default = {
       swiggyUrl: null,
       zomatoUrl: "https://www.zomato.com/hyderabad/bihari-bowl-jubilee-hills",
       photo: null,
-      triedByShivang: true,
-      mealPrice: 270,
-      priceBand: "mid",
-      priceSource: "No Hyderabad menu found; Bihari Bowl bowls in Chennai/Pune are \u20B9259\u2013271",
-      priceConfidence: "estimate"
+      triedByShivang: true
     },
     {
       id: "rajthali",
@@ -539,6 +539,10 @@ var places_default = {
       },
       price: "\u20B9400\u2013600 per person",
       priceTier: 2,
+      mealPrice: 260,
+      priceBand: "mid",
+      priceSource: "Zomato delivery menu (Jubilee Hills): meal boxes \u20B9180\u2013340, middle of the range",
+      priceConfidence: "menu",
       note: "Unlimited thali, Jubilee Hills.",
       flag: null,
       closed: false,
@@ -546,11 +550,7 @@ var places_default = {
       swiggyUrl: null,
       zomatoUrl: "https://www.zomato.com/hyderabad/rajthali-jubilee-hills",
       photo: null,
-      triedByShivang: true,
-      mealPrice: 260,
-      priceBand: "mid",
-      priceSource: "Zomato delivery menu (Jubilee Hills): meal boxes \u20B9180\u2013340, middle of the range",
-      priceConfidence: "menu"
+      triedByShivang: true
     },
     {
       id: "chai-chakhna-company",
@@ -563,21 +563,25 @@ var places_default = {
         "snack"
       ],
       veg: "options",
-      rating: null,
-      price: null,
+      rating: {
+        value: 4.6,
+        count: "235",
+        source: "Google Maps"
+      },
+      price: "Under \u20B9200 per person",
       priceTier: 1,
-      note: null,
-      flag: null,
-      closed: false,
-      googleMapsUrl: null,
-      swiggyUrl: null,
-      zomatoUrl: null,
-      photo: null,
-      triedByShivang: true,
       mealPrice: 150,
       priceBand: "budget",
       priceSource: "Zomato average about \u20B9150 per order; no full menu found",
-      priceConfidence: "estimate"
+      priceConfidence: "estimate",
+      note: null,
+      flag: null,
+      closed: false,
+      googleMapsUrl: "https://maps.google.com/maps?cid=4530861782254557107",
+      swiggyUrl: null,
+      zomatoUrl: null,
+      photo: null,
+      triedByShivang: true
     },
     {
       id: "meal-o-clock-pure-veg",
@@ -598,6 +602,10 @@ var places_default = {
       },
       price: "Under \u20B9200 per person",
       priceTier: 1,
+      mealPrice: 150,
+      priceBand: "budget",
+      priceSource: "Zomato average about \u20B9100 per order; mini veg thali on menu, price not found",
+      priceConfidence: "estimate",
       note: "Homely veg meals and tiffin. Kondapur kitchen.",
       flag: null,
       closed: false,
@@ -605,11 +613,7 @@ var places_default = {
       swiggyUrl: null,
       zomatoUrl: "https://www.zomato.com/hyderabad/meal-o-clock-pure-veg-hitech-city",
       photo: null,
-      triedByShivang: true,
-      mealPrice: 150,
-      priceBand: "budget",
-      priceSource: "Zomato average about \u20B9100 per order; mini veg thali on menu, price not found",
-      priceConfidence: "estimate"
+      triedByShivang: true
     },
     {
       id: "pikadili",
@@ -617,24 +621,28 @@ var places_default = {
       searchName: "Pikadili",
       placesQuery: null,
       section: "best",
-      cuisine: null,
+      cuisine: "North Indian & street food",
       moods: [],
       veg: "options",
-      rating: null,
-      price: null,
+      rating: {
+        value: 4.7,
+        count: "116",
+        source: "Google Maps"
+      },
+      price: "\u20B9200\u20131,000 per person",
       priceTier: 3,
-      note: null,
-      flag: null,
-      closed: false,
-      googleMapsUrl: null,
-      swiggyUrl: null,
-      zomatoUrl: "https://www.zomato.com/hyderabad/pikadilli-4-manikonda",
-      photo: null,
-      triedByShivang: true,
       mealPrice: 400,
       priceBand: "premium",
       priceSource: "No delivery menu found; dine-in about \u20B91,500 for two points to premium",
-      priceConfidence: "estimate"
+      priceConfidence: "estimate",
+      note: null,
+      flag: null,
+      closed: false,
+      googleMapsUrl: "https://maps.google.com/maps?cid=15304649334750166421",
+      swiggyUrl: null,
+      zomatoUrl: "https://www.zomato.com/hyderabad/pikadilli-4-manikonda",
+      photo: null,
+      triedByShivang: true
     },
     {
       id: "millet-express",
@@ -656,18 +664,18 @@ var places_default = {
       },
       price: "\u20B9200 for two",
       priceTier: 2,
-      note: "Also has a few egg and chicken items.",
-      flag: null,
-      closed: false,
-      googleMapsUrl: null,
-      swiggyUrl: null,
-      zomatoUrl: null,
-      photo: null,
-      triedByShivang: true,
       mealPrice: 229,
       priceBand: "mid",
       priceSource: "Zomato delivery menu (Manikonda): veg khichdi \u20B9229, paneer \u20B9249",
-      priceConfidence: "menu"
+      priceConfidence: "menu",
+      note: "Also has a few egg and chicken items.",
+      flag: null,
+      closed: false,
+      googleMapsUrl: "https://maps.google.com/maps?cid=5224017045379485277",
+      swiggyUrl: null,
+      zomatoUrl: null,
+      photo: null,
+      triedByShivang: true
     },
     {
       id: "the-kulcha-kulture",
@@ -687,6 +695,10 @@ var places_default = {
       },
       price: "\u20B9200\u2013400 per person",
       priceTier: 2,
+      mealPrice: 280,
+      priceBand: "mid",
+      priceSource: "Mini kulcha thali exists but price not found; about \u20B9450 for two dining in",
+      priceConfidence: "estimate",
       note: "Reviewers love how crisp and well-stuffed the kulchas are. Kokapet outlet.",
       flag: null,
       closed: false,
@@ -694,11 +706,7 @@ var places_default = {
       swiggyUrl: null,
       zomatoUrl: "https://www.zomato.com/hyderabad/the-kulcha-kulture-gandipet",
       photo: null,
-      triedByShivang: true,
-      mealPrice: 280,
-      priceBand: "mid",
-      priceSource: "Mini kulcha thali exists but price not found; about \u20B9450 for two dining in",
-      priceConfidence: "estimate"
+      triedByShivang: true
     },
     {
       id: "haldirams",
@@ -713,21 +721,25 @@ var places_default = {
         "thali"
       ],
       veg: "pure",
-      rating: null,
+      rating: {
+        value: 4.4,
+        count: "784",
+        source: "Google Maps"
+      },
       price: "\u20B9200\u20131,000 per person",
       priceTier: 2,
-      note: "Other Hyderabad outlets are rated 4.6\u20134.7.",
-      flag: null,
-      closed: false,
-      googleMapsUrl: null,
-      swiggyUrl: "https://www.swiggy.com/restaurants/haldirams-restaurant-gachibowli-forest-dept-colony-hyderabad-311437",
-      zomatoUrl: "https://www.zomato.com/hyderabad/haldirams-gachibowli",
-      photo: null,
-      triedByShivang: true,
       mealPrice: 349,
       priceBand: "mid",
       priceSource: "Zomato delivery menu, another Hyderabad outlet: veg thali \u20B9349",
-      priceConfidence: "menu"
+      priceConfidence: "menu",
+      note: "Other Hyderabad outlets are rated 4.6\u20134.7.",
+      flag: null,
+      closed: false,
+      googleMapsUrl: "https://maps.google.com/maps?cid=2443585691041120534",
+      swiggyUrl: "https://www.swiggy.com/restaurants/haldirams-restaurant-gachibowli-forest-dept-colony-hyderabad-311437",
+      zomatoUrl: "https://www.zomato.com/hyderabad/haldirams-gachibowli",
+      photo: null,
+      triedByShivang: true
     },
     {
       id: "tadka-treats",
@@ -741,6 +753,10 @@ var places_default = {
       rating: null,
       price: null,
       priceTier: null,
+      mealPrice: null,
+      priceBand: null,
+      priceSource: null,
+      priceConfidence: null,
       note: null,
       flag: null,
       closed: false,
@@ -748,11 +764,7 @@ var places_default = {
       swiggyUrl: null,
       zomatoUrl: null,
       photo: null,
-      triedByShivang: true,
-      mealPrice: null,
-      priceBand: null,
-      priceSource: null,
-      priceConfidence: null
+      triedByShivang: true
     },
     {
       id: "mealful-rolls",
@@ -769,18 +781,18 @@ var places_default = {
       rating: null,
       price: null,
       priceTier: 1,
-      note: null,
-      flag: null,
-      closed: false,
-      googleMapsUrl: null,
-      swiggyUrl: null,
-      zomatoUrl: null,
-      photo: null,
-      triedByShivang: true,
       mealPrice: 198,
       priceBand: "budget",
       priceSource: "Zomato delivery menu: pack of 2 big rolls \u20B9198",
-      priceConfidence: "menu"
+      priceConfidence: "menu",
+      note: null,
+      flag: null,
+      closed: false,
+      googleMapsUrl: "https://maps.google.com/maps?cid=9196648365002323060",
+      swiggyUrl: null,
+      zomatoUrl: null,
+      photo: null,
+      triedByShivang: true
     },
     {
       id: "raju-gari-biryani",
@@ -800,6 +812,10 @@ var places_default = {
       },
       price: "\u20B9200\u2013400 per person",
       priceTier: 1,
+      mealPrice: 165,
+      priceBand: "budget",
+      priceSource: "Zomato delivery menu, other Hyderabad outlets: paneer biryani \u20B9165, veg dum biryani \u20B9149",
+      priceConfidence: "menu",
       note: "Has a paneer-mushroom biryani.",
       flag: "Reviews say quality varies between orders.",
       closed: false,
@@ -807,11 +823,7 @@ var places_default = {
       swiggyUrl: null,
       zomatoUrl: "https://www.zomato.com/hyderabad/raju-gari-biryani-manikonda",
       photo: null,
-      triedByShivang: true,
-      mealPrice: 165,
-      priceBand: "budget",
-      priceSource: "Zomato delivery menu, other Hyderabad outlets: paneer biryani \u20B9165, veg dum biryani \u20B9149",
-      priceConfidence: "menu"
+      triedByShivang: true
     },
     {
       id: "1881-dum-house",
@@ -831,6 +843,10 @@ var places_default = {
       },
       price: null,
       priceTier: 2,
+      mealPrice: 330,
+      priceBand: "mid",
+      priceSource: "No veg menu prices found; typical premium-biryani pricing",
+      priceConfidence: "estimate",
       note: "19 veg items, including a tandoori paneer dum biryani.",
       flag: null,
       closed: false,
@@ -838,11 +854,7 @@ var places_default = {
       swiggyUrl: null,
       zomatoUrl: "https://www.zomato.com/hyderabad/1881-dum-house-lucknows-legacy-manikonda",
       photo: null,
-      triedByShivang: true,
-      mealPrice: 330,
-      priceBand: "mid",
-      priceSource: "No veg menu prices found; typical premium-biryani pricing",
-      priceConfidence: "estimate"
+      triedByShivang: true
     },
     {
       id: "biryani-by-kilo",
@@ -863,18 +875,18 @@ var places_default = {
       },
       price: "\u20B9700 for two",
       priceTier: 2,
-      note: "Cooked per order in clay handis. Has a paneer biryani.",
-      flag: null,
-      closed: false,
-      googleMapsUrl: null,
-      swiggyUrl: "https://www.swiggy.com/city/hyderabad/biryani-by-kilo-sri-krishna-sanjay-commercial-gachibowli-rest594950",
-      zomatoUrl: "https://www.zomato.com/hyderabad/biryani-by-kilo-gachibowli",
-      photo: null,
-      triedByShivang: true,
       mealPrice: 319,
       priceBand: "mid",
       priceSource: "No Hyderabad menu found; single paneer biryani is \u20B9319 at other outlets",
-      priceConfidence: "estimate"
+      priceConfidence: "estimate",
+      note: "Cooked per order in clay handis. Has a paneer biryani.",
+      flag: null,
+      closed: false,
+      googleMapsUrl: "https://maps.google.com/maps?cid=2014436419308948016",
+      swiggyUrl: "https://www.swiggy.com/city/hyderabad/biryani-by-kilo-sri-krishna-sanjay-commercial-gachibowli-rest594950",
+      zomatoUrl: "https://www.zomato.com/hyderabad/biryani-by-kilo-gachibowli",
+      photo: null,
+      triedByShivang: true
     },
     {
       id: "salt",
@@ -895,6 +907,10 @@ var places_default = {
       },
       price: "\u20B9600\u20131,800 per person",
       priceTier: 3,
+      mealPrice: 450,
+      priceBand: "premium",
+      priceSource: "Dine-in about \u20B91,400\u20131,600 for two; delivery menu prices not found",
+      priceConfidence: "estimate",
       note: "Gachibowli, near Nanakramguda.",
       flag: null,
       closed: false,
@@ -902,11 +918,7 @@ var places_default = {
       swiggyUrl: null,
       zomatoUrl: "https://www.zomato.com/hyderabad/salt-indian-restaurant-nanakramguda",
       photo: null,
-      triedByShivang: true,
-      mealPrice: 450,
-      priceBand: "premium",
-      priceSource: "Dine-in about \u20B91,400\u20131,600 for two; delivery menu prices not found",
-      priceConfidence: "estimate"
+      triedByShivang: true
     },
     {
       id: "amritsari-aangan",
@@ -927,6 +939,10 @@ var places_default = {
       },
       price: "\u20B9400\u20131,200 per person",
       priceTier: 2,
+      mealPrice: 219,
+      priceBand: "mid",
+      priceSource: "Zomato delivery menu (Narsingi/Gandipet outlet): veg rice thali \u20B9219",
+      priceConfidence: "menu",
       note: "Kondapur branch. The closer Narsingi branch is 4.1 from 1,599 reviews.",
       flag: null,
       closed: false,
@@ -934,11 +950,7 @@ var places_default = {
       swiggyUrl: null,
       zomatoUrl: "https://www.zomato.com/hyderabad/amritsari-aangan-kondapur",
       photo: null,
-      triedByShivang: true,
-      mealPrice: 219,
-      priceBand: "mid",
-      priceSource: "Zomato delivery menu (Narsingi/Gandipet outlet): veg rice thali \u20B9219",
-      priceConfidence: "menu"
+      triedByShivang: true
     },
     {
       id: "the-punjabis-swag",
@@ -959,6 +971,10 @@ var places_default = {
       },
       price: "\u20B9400\u2013600 per person",
       priceTier: 2,
+      mealPrice: 300,
+      priceBand: "mid",
+      priceSource: "No menu prices found; about \u20B9500\u2013550 for two dining in",
+      priceConfidence: "estimate",
       note: "Big veg menu. Gachibowli.",
       flag: null,
       closed: false,
@@ -966,11 +982,7 @@ var places_default = {
       swiggyUrl: null,
       zomatoUrl: "https://www.zomato.com/hyderabad/the-punjabis-swag-gachibowli",
       photo: null,
-      triedByShivang: true,
-      mealPrice: 300,
-      priceBand: "mid",
-      priceSource: "No menu prices found; about \u20B9500\u2013550 for two dining in",
-      priceConfidence: "estimate"
+      triedByShivang: true
     },
     {
       id: "punjabi-affair",
@@ -984,21 +996,25 @@ var places_default = {
         "treat"
       ],
       veg: "both",
-      rating: null,
+      rating: {
+        value: 4.1,
+        count: "9,443",
+        source: "Google Maps"
+      },
       price: "\u20B9800 for two",
       priceTier: 3,
-      note: "Only 4 reviews on EazyDiner, too few to judge.",
-      flag: null,
-      closed: false,
-      googleMapsUrl: null,
-      swiggyUrl: null,
-      zomatoUrl: "https://www.zomato.com/hyderabad/punjabi-affair-kondapur",
-      photo: null,
-      triedByShivang: true,
       mealPrice: 350,
       priceBand: "premium",
       priceSource: "Veg thali about \u20B9350; Zomato delivery menu (Kondapur) veg mains \u20B9359\u2013469",
-      priceConfidence: "menu"
+      priceConfidence: "menu",
+      note: "Only 4 reviews on EazyDiner, too few to judge.",
+      flag: null,
+      closed: false,
+      googleMapsUrl: "https://maps.google.com/maps?cid=14399891009016302465",
+      swiggyUrl: null,
+      zomatoUrl: "https://www.zomato.com/hyderabad/punjabi-affair-kondapur",
+      photo: null,
+      triedByShivang: true
     },
     {
       id: "norfest-the-dhaba",
@@ -1011,9 +1027,17 @@ var places_default = {
         "punjabi"
       ],
       veg: "options",
-      rating: null,
-      price: null,
+      rating: {
+        value: 3.8,
+        count: "778",
+        source: "Google Maps"
+      },
+      price: "\u20B9200\u2013400 per person",
       priceTier: 2,
+      mealPrice: 299,
+      priceBand: "mid",
+      priceSource: "Gachibowli outlet delivery menu: veg thali \u20B9299; the Manikonda outlet lists larger thalis from \u20B9709",
+      priceConfidence: "estimate",
       note: null,
       flag: "Google lists the Manikonda dine-in outlet as permanently closed. If it still shows on Swiggy or Zomato, it's delivering from another kitchen.",
       closed: true,
@@ -1021,11 +1045,7 @@ var places_default = {
       swiggyUrl: null,
       zomatoUrl: "https://www.zomato.com/hyderabad/norfest-the-dhaba-manikonda",
       photo: null,
-      triedByShivang: true,
-      mealPrice: 299,
-      priceBand: "mid",
-      priceSource: "Gachibowli outlet delivery menu: veg thali \u20B9299; the Manikonda outlet lists larger thalis from \u20B9709",
-      priceConfidence: "estimate"
+      triedByShivang: true
     },
     {
       id: "itc-aashirvaad-soul-creations",
@@ -1047,18 +1067,18 @@ var places_default = {
       },
       price: "\u20B9500 for two",
       priceTier: 3,
-      note: "Pav bhaji and khichdi run about \u20B9280\u2013300.",
-      flag: null,
-      closed: false,
-      googleMapsUrl: null,
-      swiggyUrl: null,
-      zomatoUrl: "https://www.zomato.com/hyderabad/itc-aashirvaad-soul-creations-gachibowli",
-      photo: null,
-      triedByShivang: true,
       mealPrice: 400,
       priceBand: "premium",
       priceSource: "Hyderabad prices not found; same-brand veg thalis \u20B9297\u2013447 in other cities, and about \u20B9400\u2013500 by Shivang's orders",
-      priceConfidence: "estimate"
+      priceConfidence: "estimate",
+      note: "Pav bhaji and khichdi run about \u20B9280\u2013300.",
+      flag: null,
+      closed: false,
+      googleMapsUrl: "https://maps.google.com/maps?cid=17630927866972442714",
+      swiggyUrl: null,
+      zomatoUrl: "https://www.zomato.com/hyderabad/itc-aashirvaad-soul-creations-gachibowli",
+      photo: null,
+      triedByShivang: true
     },
     {
       id: "greens-and-more",
@@ -1074,18 +1094,18 @@ var places_default = {
       rating: null,
       price: null,
       priceTier: 2,
-      note: null,
-      flag: null,
-      closed: false,
-      googleMapsUrl: null,
-      swiggyUrl: null,
-      zomatoUrl: "https://www.zomato.com/hyderabad/greens-more-gachibowli",
-      photo: null,
-      triedByShivang: true,
       mealPrice: 290,
       priceBand: "mid",
       priceSource: "Zomato delivery menu, Hitech City outlet: salads and bowls \u20B9290\u2013320",
-      priceConfidence: "menu"
+      priceConfidence: "menu",
+      note: null,
+      flag: null,
+      closed: false,
+      googleMapsUrl: "https://maps.google.com/maps?cid=1786121236774935321",
+      swiggyUrl: null,
+      zomatoUrl: "https://www.zomato.com/hyderabad/greens-more-gachibowli",
+      photo: null,
+      triedByShivang: true
     },
     {
       id: "ath-all-things-healthy",
@@ -1101,18 +1121,18 @@ var places_default = {
       rating: null,
       price: null,
       priceTier: 1,
-      note: null,
-      flag: null,
-      closed: false,
-      googleMapsUrl: null,
-      swiggyUrl: null,
-      zomatoUrl: "https://www.zomato.com/hyderabad/ath-all-things-healthy-manikonda",
-      photo: null,
-      triedByShivang: true,
       mealPrice: 190,
       priceBand: "budget",
       priceSource: "Zomato average about \u20B9150 per order; no full menu found",
-      priceConfidence: "estimate"
+      priceConfidence: "estimate",
+      note: null,
+      flag: null,
+      closed: false,
+      googleMapsUrl: "https://maps.google.com/maps?cid=10946573230454133684",
+      swiggyUrl: null,
+      zomatoUrl: "https://www.zomato.com/hyderabad/ath-all-things-healthy-manikonda",
+      photo: null,
+      triedByShivang: true
     },
     {
       id: "harvest-salad-co",
@@ -1133,18 +1153,18 @@ var places_default = {
       },
       price: "\u20B9700 for two",
       priceTier: 2,
-      note: "Salads and bowls cost \u20B9329\u2013399.",
-      flag: null,
-      closed: false,
-      googleMapsUrl: null,
-      swiggyUrl: null,
-      zomatoUrl: "https://www.zomato.com/hyderabad/harvest-salad-co-manikonda",
-      photo: null,
-      triedByShivang: true,
       mealPrice: 299,
       priceBand: "mid",
       priceSource: "Zomato delivery menu: veg bowls \u20B9299",
-      priceConfidence: "menu"
+      priceConfidence: "menu",
+      note: "Salads and bowls cost \u20B9329\u2013399.",
+      flag: null,
+      closed: false,
+      googleMapsUrl: "https://maps.google.com/maps?cid=3387839739390294001",
+      swiggyUrl: null,
+      zomatoUrl: "https://www.zomato.com/hyderabad/harvest-salad-co-manikonda",
+      photo: null,
+      triedByShivang: true
     },
     {
       id: "lo-low-carb-and-keto-foods",
@@ -1164,18 +1184,18 @@ var places_default = {
       },
       price: "\u20B9500 for two",
       priceTier: 2,
-      note: null,
-      flag: null,
-      closed: false,
-      googleMapsUrl: null,
-      swiggyUrl: null,
-      zomatoUrl: "https://www.zomato.com/hyderabad/lo-low-carb-and-keto-foods-manikonda",
-      photo: null,
-      triedByShivang: true,
       mealPrice: 299,
       priceBand: "mid",
       priceSource: "No Hyderabad menu found; keto meals \u20B9289\u2013339 at other cities' outlets",
-      priceConfidence: "estimate"
+      priceConfidence: "estimate",
+      note: null,
+      flag: null,
+      closed: false,
+      googleMapsUrl: "https://maps.google.com/maps?cid=7057350599303417417",
+      swiggyUrl: null,
+      zomatoUrl: "https://www.zomato.com/hyderabad/lo-low-carb-and-keto-foods-manikonda",
+      photo: null,
+      triedByShivang: true
     },
     {
       id: "california-burrito",
@@ -1189,21 +1209,25 @@ var places_default = {
         "pizza"
       ],
       veg: "options",
-      rating: null,
-      price: null,
+      rating: {
+        value: 4.5,
+        count: "955",
+        source: "Google Maps"
+      },
+      price: "\u20B9200\u2013400 per person",
       priceTier: 2,
-      note: null,
-      flag: "Not healthy by default. Pick a bowl or salad.",
-      closed: false,
-      googleMapsUrl: null,
-      swiggyUrl: null,
-      zomatoUrl: "https://www.zomato.com/hyderabad/california-burrito-manikonda",
-      photo: null,
-      triedByShivang: true,
       mealPrice: 279,
       priceBand: "mid",
       priceSource: "Zomato delivery menu, nearby outlets: veg rice bowl \u20B9249\u2013279",
-      priceConfidence: "menu"
+      priceConfidence: "menu",
+      note: null,
+      flag: "Not healthy by default. Pick a bowl or salad.",
+      closed: false,
+      googleMapsUrl: "https://maps.google.com/maps?cid=15794485271856737040",
+      swiggyUrl: null,
+      zomatoUrl: "https://www.zomato.com/hyderabad/california-burrito-manikonda",
+      photo: null,
+      triedByShivang: true
     },
     {
       id: "great-indian-khichdi-by-eatfit",
@@ -1217,21 +1241,25 @@ var places_default = {
         "homestyle"
       ],
       veg: "pure",
-      rating: null,
-      price: null,
+      rating: {
+        value: 2.3,
+        count: "116",
+        source: "Google Maps"
+      },
+      price: "\u20B9200\u2013400 per person",
       priceTier: 2,
-      note: null,
-      flag: null,
-      closed: false,
-      googleMapsUrl: null,
-      swiggyUrl: null,
-      zomatoUrl: "https://www.zomato.com/hyderabad/great-indian-khichdi-by-eatfit-gachibowli",
-      photo: null,
-      triedByShivang: true,
       mealPrice: 209,
       priceBand: "mid",
       priceSource: "Zomato delivery menu (Gachibowli): dal makhani chawal \u20B9209",
-      priceConfidence: "menu"
+      priceConfidence: "menu",
+      note: null,
+      flag: null,
+      closed: false,
+      googleMapsUrl: "https://maps.google.com/maps?cid=4719820437888034596",
+      swiggyUrl: null,
+      zomatoUrl: "https://www.zomato.com/hyderabad/great-indian-khichdi-by-eatfit-gachibowli",
+      photo: null,
+      triedByShivang: true
     },
     {
       id: "home-plate-by-eatfit",
@@ -1248,18 +1276,18 @@ var places_default = {
       rating: null,
       price: null,
       priceTier: 2,
-      note: null,
-      flag: null,
-      closed: false,
-      googleMapsUrl: null,
-      swiggyUrl: null,
-      zomatoUrl: "https://www.zomato.com/hyderabad/home-plate-by-eatfit-gachibowli",
-      photo: null,
-      triedByShivang: true,
       mealPrice: 262,
       priceBand: "mid",
       priceSource: "Zomato delivery menu, another Hyderabad outlet: veg thali \u20B9262",
-      priceConfidence: "menu"
+      priceConfidence: "menu",
+      note: null,
+      flag: null,
+      closed: false,
+      googleMapsUrl: "https://maps.google.com/maps?cid=3080156530228892909",
+      swiggyUrl: null,
+      zomatoUrl: "https://www.zomato.com/hyderabad/home-plate-by-eatfit-gachibowli",
+      photo: null,
+      triedByShivang: true
     },
     {
       id: "sai-bihari-dhaba",
@@ -1273,21 +1301,25 @@ var places_default = {
         "homestyle"
       ],
       veg: "options",
-      rating: null,
-      price: null,
+      rating: {
+        value: 4.1,
+        count: "766",
+        source: "Google Maps"
+      },
+      price: "Under \u20B9200 per person",
       priceTier: 1,
-      note: null,
-      flag: null,
-      closed: false,
-      googleMapsUrl: null,
-      swiggyUrl: null,
-      zomatoUrl: null,
-      photo: null,
-      triedByShivang: true,
       mealPrice: 150,
       priceBand: "budget",
       priceSource: "Zomato average about \u20B9150 per order; no menu found",
-      priceConfidence: "estimate"
+      priceConfidence: "estimate",
+      note: null,
+      flag: null,
+      closed: false,
+      googleMapsUrl: "https://maps.google.com/maps?cid=15418324164163506720",
+      swiggyUrl: null,
+      zomatoUrl: null,
+      photo: null,
+      triedByShivang: true
     },
     {
       id: "bihari-dhaba",
@@ -1302,20 +1334,20 @@ var places_default = {
       ],
       veg: "options",
       rating: null,
-      price: null,
+      price: "Under \u20B9200 per person",
       priceTier: 1,
-      note: null,
-      flag: null,
-      closed: false,
-      googleMapsUrl: null,
-      swiggyUrl: null,
-      zomatoUrl: "https://www.zomato.com/hyderabad/bihari-dhaba-gachibowli",
-      photo: null,
-      triedByShivang: true,
       mealPrice: 150,
       priceBand: "budget",
       priceSource: "About \u20B9200 for two; no delivery menu prices found",
-      priceConfidence: "estimate"
+      priceConfidence: "estimate",
+      note: null,
+      flag: null,
+      closed: false,
+      googleMapsUrl: "https://maps.google.com/maps?cid=707811706938839849",
+      swiggyUrl: null,
+      zomatoUrl: "https://www.zomato.com/hyderabad/bihari-dhaba-gachibowli",
+      photo: null,
+      triedByShivang: true
     },
     {
       id: "udupis-upahar",
@@ -1336,6 +1368,10 @@ var places_default = {
       },
       price: "Under \u20B9200 per person",
       priceTier: 1,
+      mealPrice: 160,
+      priceBand: "budget",
+      priceSource: "No meal prices found; about \u20B9300 for two",
+      priceConfidence: "estimate",
       note: "Manikonda outlet. Dosas, meals, chole bhature.",
       flag: null,
       closed: false,
@@ -1343,11 +1379,7 @@ var places_default = {
       swiggyUrl: null,
       zomatoUrl: "https://www.zomato.com/hyderabad/udipis-upahar-manikonda",
       photo: null,
-      triedByShivang: true,
-      mealPrice: 160,
-      priceBand: "budget",
-      priceSource: "No meal prices found; about \u20B9300 for two",
-      priceConfidence: "estimate"
+      triedByShivang: true
     },
     {
       id: "jdm-punjabi-dhaba",
@@ -1369,6 +1401,10 @@ var places_default = {
       },
       price: "Under \u20B9200 per person",
       priceTier: 1,
+      mealPrice: 170,
+      priceBand: "budget",
+      priceSource: "Zomato delivery menu (Gachibowli): veg thali \u20B9160, paneer meal \u20B9170",
+      priceConfidence: "menu",
       note: "Financial District.",
       flag: null,
       closed: false,
@@ -1376,11 +1412,7 @@ var places_default = {
       swiggyUrl: null,
       zomatoUrl: "https://www.zomato.com/hyderabad/jdm-punjabi-dhaba-gachibowli",
       photo: null,
-      triedByShivang: true,
-      mealPrice: 170,
-      priceBand: "budget",
-      priceSource: "Zomato delivery menu (Gachibowli): veg thali \u20B9160, paneer meal \u20B9170",
-      priceConfidence: "menu"
+      triedByShivang: true
     },
     {
       id: "punjabi-paratha-junction",
@@ -1394,21 +1426,25 @@ var places_default = {
         "punjabi"
       ],
       veg: "options",
-      rating: null,
-      price: null,
+      rating: {
+        value: 4.4,
+        count: "100",
+        source: "Google Maps"
+      },
+      price: "Under \u20B9400 per person",
       priceTier: 1,
-      note: null,
-      flag: null,
-      closed: false,
-      googleMapsUrl: null,
-      swiggyUrl: null,
-      zomatoUrl: "https://www.zomato.com/hyderabad/punjabi-paratha-junction-manikonda",
-      photo: null,
-      triedByShivang: true,
       mealPrice: 180,
       priceBand: "budget",
       priceSource: "About \u20B9300 for two; no menu prices found",
-      priceConfidence: "estimate"
+      priceConfidence: "estimate",
+      note: null,
+      flag: null,
+      closed: false,
+      googleMapsUrl: "https://maps.google.com/maps?cid=10467652866577847605",
+      swiggyUrl: null,
+      zomatoUrl: "https://www.zomato.com/hyderabad/punjabi-paratha-junction-manikonda",
+      photo: null,
+      triedByShivang: true
     },
     {
       id: "balle-balle-punjabi",
@@ -1425,6 +1461,10 @@ var places_default = {
       rating: null,
       price: null,
       priceTier: 1,
+      mealPrice: 150,
+      priceBand: "budget",
+      priceSource: "Zomato average about \u20B9100 per order; no menu prices found",
+      priceConfidence: "estimate",
       note: null,
       flag: null,
       closed: false,
@@ -1432,11 +1472,7 @@ var places_default = {
       swiggyUrl: null,
       zomatoUrl: "https://www.zomato.com/hyderabad/balle-balle-punjabi-manikonda",
       photo: null,
-      triedByShivang: true,
-      mealPrice: 150,
-      priceBand: "budget",
-      priceSource: "Zomato average about \u20B9100 per order; no menu prices found",
-      priceConfidence: "estimate"
+      triedByShivang: true
     },
     {
       id: "box8",
@@ -1449,21 +1485,25 @@ var places_default = {
         "cheap"
       ],
       veg: "options",
-      rating: null,
-      price: null,
+      rating: {
+        value: 2.8,
+        count: "58",
+        source: "Google Maps"
+      },
+      price: "\u20B9400\u2013600 per person",
       priceTier: 2,
-      note: null,
-      flag: null,
-      closed: false,
-      googleMapsUrl: null,
-      swiggyUrl: null,
-      zomatoUrl: "https://www.zomato.com/hyderabad/box8-desi-meals-manikonda",
-      photo: null,
-      triedByShivang: true,
       mealPrice: 259,
       priceBand: "mid",
       priceSource: "Zomato delivery menu, other Hyderabad outlets: paneer mini meal \u20B9259, thali \u20B9279\u2013329",
-      priceConfidence: "menu"
+      priceConfidence: "menu",
+      note: null,
+      flag: null,
+      closed: false,
+      googleMapsUrl: "https://maps.google.com/maps?cid=13215716803403135996",
+      swiggyUrl: null,
+      zomatoUrl: "https://www.zomato.com/hyderabad/box8-desi-meals-manikonda",
+      photo: null,
+      triedByShivang: true
     },
     {
       id: "rolls-mania",
@@ -1478,21 +1518,25 @@ var places_default = {
         "pizza"
       ],
       veg: "options",
-      rating: null,
-      price: null,
+      rating: {
+        value: 4.1,
+        count: "71",
+        source: "Google Maps"
+      },
+      price: "Under \u20B9200 per person",
       priceTier: 1,
-      note: null,
-      flag: null,
-      closed: false,
-      googleMapsUrl: null,
-      swiggyUrl: null,
-      zomatoUrl: "https://www.zomato.com/hyderabad/rolls-mania-gachibowli",
-      photo: null,
-      triedByShivang: true,
       mealPrice: 170,
       priceBand: "budget",
       priceSource: "No Hyderabad menu found; average about \u20B9350 for two",
-      priceConfidence: "estimate"
+      priceConfidence: "estimate",
+      note: null,
+      flag: null,
+      closed: false,
+      googleMapsUrl: "https://maps.google.com/maps?cid=4131918526460018064",
+      swiggyUrl: null,
+      zomatoUrl: "https://www.zomato.com/hyderabad/rolls-mania-gachibowli",
+      photo: null,
+      triedByShivang: true
     },
     {
       id: "vellanki-foods",
@@ -1512,6 +1556,10 @@ var places_default = {
       },
       price: null,
       priceTier: null,
+      mealPrice: null,
+      priceBand: null,
+      priceSource: null,
+      priceConfidence: null,
       note: "Get the dry fruit pootharekulu. Madeenaguda branch.",
       flag: null,
       closed: false,
@@ -1519,11 +1567,7 @@ var places_default = {
       swiggyUrl: null,
       zomatoUrl: "https://www.zomato.com/hyderabad/vellanki-foods-madhapur",
       photo: null,
-      triedByShivang: true,
-      mealPrice: null,
-      priceBand: null,
-      priceSource: null,
-      priceConfidence: null
+      triedByShivang: true
     },
     {
       id: "manakamana-kitchen",
@@ -1537,21 +1581,25 @@ var places_default = {
         "homestyle"
       ],
       veg: "options",
-      rating: null,
-      price: null,
+      rating: {
+        value: 4.5,
+        count: "141",
+        source: "Google Maps"
+      },
+      price: "Under \u20B9200 per person",
       priceTier: 1,
-      note: "Cheap rotis. Order these when you have sabzi at home or are making some.",
-      flag: null,
-      closed: false,
-      googleMapsUrl: null,
-      swiggyUrl: null,
-      zomatoUrl: null,
-      photo: null,
-      triedByShivang: true,
       mealPrice: 100,
       priceBand: "budget",
       priceSource: "Sells rotis, not full meals; no menu found",
-      priceConfidence: "estimate"
+      priceConfidence: "estimate",
+      note: "Cheap rotis. Order these when you have sabzi at home or are making some.",
+      flag: null,
+      closed: false,
+      googleMapsUrl: "https://maps.google.com/maps?cid=14277877123961254943",
+      swiggyUrl: null,
+      zomatoUrl: null,
+      photo: null,
+      triedByShivang: true
     },
     {
       id: "amrutham-pure-vegetarian",
@@ -1574,6 +1622,10 @@ var places_default = {
       },
       price: "Under \u20B9200 per person",
       priceTier: 1,
+      mealPrice: 160,
+      priceBand: "budget",
+      priceSource: "Under \u20B9200 per person; no delivery menu found",
+      priceConfidence: "estimate",
       note: "No onion or garlic. Reviewers say the unlimited thali feels light. Puppalguda.",
       flag: null,
       closed: false,
@@ -1581,11 +1633,7 @@ var places_default = {
       swiggyUrl: null,
       zomatoUrl: null,
       photo: null,
-      triedByShivang: false,
-      mealPrice: 160,
-      priceBand: "budget",
-      priceSource: "Under \u20B9200 per person; no delivery menu found",
-      priceConfidence: "estimate"
+      triedByShivang: false
     },
     {
       id: "suruchi-tiffin-room",
@@ -1606,6 +1654,10 @@ var places_default = {
       },
       price: "Under \u20B9200 per person",
       priceTier: 1,
+      mealPrice: 150,
+      priceBand: "budget",
+      priceSource: "Under \u20B9200 per person; no delivery menu found",
+      priceConfidence: "estimate",
       note: "Ghee pongal gets special mention. Alkapur Township.",
       flag: null,
       closed: false,
@@ -1613,11 +1665,7 @@ var places_default = {
       swiggyUrl: null,
       zomatoUrl: null,
       photo: null,
-      triedByShivang: false,
-      mealPrice: 150,
-      priceBand: "budget",
-      priceSource: "Under \u20B9200 per person; no delivery menu found",
-      priceConfidence: "estimate"
+      triedByShivang: false
     },
     {
       id: "sai-deeksha-tiffins-and-snacks",
@@ -1638,6 +1686,10 @@ var places_default = {
       },
       price: "Under \u20B9200 per person",
       priceTier: 1,
+      mealPrice: 150,
+      priceBand: "budget",
+      priceSource: "Under \u20B9200 per person; no delivery menu found",
+      priceConfidence: "estimate",
       note: "Poori curry is the standout.",
       flag: null,
       closed: false,
@@ -1645,11 +1697,7 @@ var places_default = {
       swiggyUrl: null,
       zomatoUrl: null,
       photo: null,
-      triedByShivang: false,
-      mealPrice: 150,
-      priceBand: "budget",
-      priceSource: "Under \u20B9200 per person; no delivery menu found",
-      priceConfidence: "estimate"
+      triedByShivang: false
     },
     {
       id: "taara-kitchen",
@@ -1670,6 +1718,10 @@ var places_default = {
       },
       price: "Under \u20B9200 per person",
       priceTier: 1,
+      mealPrice: 190,
+      priceBand: "budget",
+      priceSource: "Under \u20B9200 per person; same-address Taram Kitchen is about \u20B9200 per order",
+      priceConfidence: "estimate",
       note: "Ghee karam dosa in the morning, paneer kulcha naan later.",
       flag: null,
       closed: false,
@@ -1677,11 +1729,7 @@ var places_default = {
       swiggyUrl: null,
       zomatoUrl: null,
       photo: null,
-      triedByShivang: false,
-      mealPrice: 190,
-      priceBand: "budget",
-      priceSource: "Under \u20B9200 per person; same-address Taram Kitchen is about \u20B9200 per order",
-      priceConfidence: "estimate"
+      triedByShivang: false
     },
     {
       id: "vaishnavi-tiffin-centre",
@@ -1702,6 +1750,10 @@ var places_default = {
       },
       price: "Under \u20B9200 per person",
       priceTier: 1,
+      mealPrice: 150,
+      priceBand: "budget",
+      priceSource: "About \u20B9200 for two; no menu found",
+      priceConfidence: "estimate",
       note: "Butter dosa and Mysore bonda. Manikonda Road.",
       flag: null,
       closed: false,
@@ -1709,11 +1761,7 @@ var places_default = {
       swiggyUrl: null,
       zomatoUrl: null,
       photo: null,
-      triedByShivang: false,
-      mealPrice: 150,
-      priceBand: "budget",
-      priceSource: "About \u20B9200 for two; no menu found",
-      priceConfidence: "estimate"
+      triedByShivang: false
     },
     {
       id: "varalakshmi-tiffins",
@@ -1733,6 +1781,10 @@ var places_default = {
       },
       price: "Under \u20B9200 per person",
       priceTier: 1,
+      mealPrice: 140,
+      priceBand: "budget",
+      priceSource: "Zomato delivery menu (Gachibowli): dosas \u20B9109\u2013179, idly \u20B9115\u2013149",
+      priceConfidence: "menu",
       note: "Ghee dosa and a chutney people rave about. Slightly pricier than nearby tiffin spots.",
       flag: null,
       closed: false,
@@ -1740,11 +1792,7 @@ var places_default = {
       swiggyUrl: null,
       zomatoUrl: null,
       photo: null,
-      triedByShivang: false,
-      mealPrice: 140,
-      priceBand: "budget",
-      priceSource: "Zomato delivery menu (Gachibowli): dosas \u20B9109\u2013179, idly \u20B9115\u2013149",
-      priceConfidence: "menu"
+      triedByShivang: false
     },
     {
       id: "vedham-pure-vegetarian",
@@ -1766,6 +1814,10 @@ var places_default = {
       },
       price: "\u20B9200\u2013600 per person",
       priceTier: 3,
+      mealPrice: 350,
+      priceBand: "premium",
+      priceSource: "No delivery menu found; dine-in \u20B9800\u20131,100 for two points to premium",
+      priceConfidence: "estimate",
       note: "A nicer sit-down place. Gachibowli.",
       flag: null,
       closed: false,
@@ -1773,11 +1825,7 @@ var places_default = {
       swiggyUrl: null,
       zomatoUrl: null,
       photo: null,
-      triedByShivang: false,
-      mealPrice: 350,
-      priceBand: "premium",
-      priceSource: "No delivery menu found; dine-in \u20B9800\u20131,100 for two points to premium",
-      priceConfidence: "estimate"
+      triedByShivang: false
     },
     {
       id: "oye-punjabi",
@@ -1798,6 +1846,10 @@ var places_default = {
       },
       price: "Under \u20B9200 per person",
       priceTier: 1,
+      mealPrice: 190,
+      priceBand: "budget",
+      priceSource: "About \u20B9200 for two; no delivery menu prices found",
+      priceConfidence: "estimate",
       note: "Aloo paratha and chole bhature. Gachibowli.",
       flag: null,
       closed: false,
@@ -1805,11 +1857,7 @@ var places_default = {
       swiggyUrl: null,
       zomatoUrl: "https://www.zomato.com/hyderabad/oye-punjabi-gachibowli",
       photo: null,
-      triedByShivang: false,
-      mealPrice: 190,
-      priceBand: "budget",
-      priceSource: "About \u20B9200 for two; no delivery menu prices found",
-      priceConfidence: "estimate"
+      triedByShivang: false
     },
     {
       id: "protein-ka-tadka",
@@ -1829,6 +1877,10 @@ var places_default = {
       },
       price: "\u20B9200\u2013400 per person",
       priceTier: 2,
+      mealPrice: 280,
+      priceBand: "mid",
+      priceSource: "No menu prices found; \u20B9200\u2013400 per person on Google",
+      priceConfidence: "estimate",
       note: "Cooked fresh in ghee and olive oil. Puppalguda.",
       flag: null,
       closed: false,
@@ -1836,11 +1888,7 @@ var places_default = {
       swiggyUrl: null,
       zomatoUrl: "https://www.zomato.com/hyderabad/protein-ka-tadka-manikonda",
       photo: null,
-      triedByShivang: false,
-      mealPrice: 280,
-      priceBand: "mid",
-      priceSource: "No menu prices found; \u20B9200\u2013400 per person on Google",
-      priceConfidence: "estimate"
+      triedByShivang: false
     },
     {
       id: "mojo-pizza",
@@ -1860,8 +1908,12 @@ var places_default = {
         count: "400",
         source: "Google Maps"
       },
-      price: null,
+      price: "Under \u20B9800 per person",
       priceTier: 1,
+      mealPrice: 199,
+      priceBand: "budget",
+      priceSource: "Items from \u20B999; no pizza menu prices found; about \u20B9150 per order",
+      priceConfidence: "estimate",
       note: "Veg pizzas with double toppings. Alkapur Township.",
       flag: null,
       closed: false,
@@ -1869,11 +1921,7 @@ var places_default = {
       swiggyUrl: null,
       zomatoUrl: "https://www.zomato.com/hyderabad/mojo-pizza-2x-toppings-manikonda",
       photo: null,
-      triedByShivang: false,
-      mealPrice: 199,
-      priceBand: "budget",
-      priceSource: "Items from \u20B999; no pizza menu prices found; about \u20B9150 per order",
-      priceConfidence: "estimate"
+      triedByShivang: false
     },
     {
       id: "hoy-punjab",
@@ -1893,7 +1941,7 @@ var places_default = {
         count: "4,686",
         source: "Google Maps"
       },
-      price: null,
+      price: "\u20B9400\u20131,200 per person",
       priceTier: 2,
       mealPrice: 213,
       priceBand: "mid",
@@ -2465,6 +2513,8 @@ function createPhotoHandler(deps) {
       }
       const body = await details.json();
       const chosen = orderByPicks(body.photos ?? [], read(deps.picks ?? {})[slug] ?? []).filter((p) => p.name && PHOTO_NAME.test(p.name)).slice(0, n);
+      let limited = false;
+      const failures = {};
       const settled = await Promise.all(
         chosen.map(async (p) => {
           try {
@@ -2472,18 +2522,25 @@ function createPhotoHandler(deps) {
               headers,
               signal: AbortSignal.timeout(6e3)
             });
-            if (!media.ok) return null;
+            if (media.status === 429) limited = true;
+            if (!media.ok) {
+              failures[String(media.status)] = (failures[String(media.status)] ?? 0) + 1;
+              return null;
+            }
             const uri = safeImageUrl((await media.json()).photoUri);
             if (!uri) return null;
             const a = p.authorAttributions?.[0];
             return { uri, author: (a?.displayName ?? "").slice(0, 80), authorUri: safeLink(a?.uri) };
           } catch {
+            failures.error = (failures.error ?? 0) + 1;
             return null;
           }
         })
       );
       const photos = settled.filter((x) => !!x);
       await refund(n - photos.length);
+      if (!photos.length && limited) return json2({ photos: [], reason: "rate-limited" }, 200, "no-store");
+      if (!photos.length) return json2({ photos: [], reason: chosen.length ? "photo-requests-failed" : "no-photos-listed", listed: (body.photos ?? []).length, failures }, 200, "no-store");
       return json2({ photos });
     } catch {
       await refund(n);

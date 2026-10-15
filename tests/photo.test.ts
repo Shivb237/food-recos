@@ -138,3 +138,13 @@ describe("kv", () => {
     expect(JSON.parse(init!.body as string)).toEqual([["INCRBY", "photo-cap:2026-10-15", 3], ["EXPIRE", "photo-cap:2026-10-15", 172800]]);
   });
 });
+
+describe("rate limiting by Google", () => {
+  it("says 'rate-limited' (and refunds) when Google refuses every photo with 429", async () => {
+    const kv = memoryKV();
+    const h = make({ kv, fetchImpl: fakeGoogle(3, { mediaStatus: 429 }) as unknown as typeof fetch });
+    const body = await (await get(h, "id=rajthali&n=3")).json();
+    expect(body).toEqual({ photos: [], reason: "rate-limited" });
+    expect(await kv.incrBy(`photo-cap:${new Date().toISOString().slice(0, 10)}`, 0, 60)).toBe(0);
+  });
+});

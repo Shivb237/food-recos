@@ -32,14 +32,22 @@ export function loadPhotos(id: string, n: number, w: number): Promise<PlacePhoto
   let p = cache.get(key);
   if (!p) {
     p = limited(async () => {
-      try {
-        const res = await fetch(`/api/photo?id=${encodeURIComponent(id)}&n=${n}&w=${w}`);
-        if (!res.ok) return [];
-        const body = (await res.json()) as { photos?: PlacePhoto[] };
-        return Array.isArray(body.photos) ? body.photos : [];
-      } catch {
-        return [];
+      // Google limits photo requests per minute. If it says "rate-limited", wait a moment and ask again (twice at most).
+      for (let attempt = 0; attempt < 3; attempt++) {
+        try {
+          const res = await fetch(`/api/photo?id=${encodeURIComponent(id)}&n=${n}&w=${w}`);
+          if (!res.ok) return [];
+          const body = (await res.json()) as { photos?: PlacePhoto[]; reason?: string };
+          if (body.reason === "rate-limited" && attempt < 2) {
+            await new Promise((r) => setTimeout(r, 3500 + attempt * 3000));
+            continue;
+          }
+          return Array.isArray(body.photos) ? body.photos : [];
+        } catch {
+          return [];
+        }
       }
+      return [];
     });
     cache.set(key, p);
   }
