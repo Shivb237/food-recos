@@ -1,4 +1,5 @@
 import { render } from "preact";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 import { App } from "./App";
 import "./styles/tokens.css";
 
@@ -12,3 +13,6 @@ if (import.meta.env.DEV && path === "/dev/cards") {
 } else {
   render(<App />, root);
 }
+
+// Add Vercel Speed Insights
+render(<SpeedInsights />, document.body);
