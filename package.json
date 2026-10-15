@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "npm run validate && tsc --noEmit && vite build",
+    "build": "npm run validate && tsc --noEmit && node scripts/build-api.mjs && vite build",
     "preview": "vite preview",
     "validate": "tsx scripts/validate-places.ts",
     "test": "vitest run",
@@ -13,7 +13,8 @@
     "places:resolve": "tsx --env-file=.env.local scripts/resolve-place-ids.ts",
     "places:coverage": "tsx scripts/coverage-report.ts",
     "brand:images": "tsx scripts/make-brand-images.tsx",
-    "preview:prod": "tsx --env-file=.env.local scripts/serve-dist.ts"
+    "preview:prod": "tsx --env-file=.env.local scripts/serve-dist.ts",
+    "build:api": "node scripts/build-api.mjs"
   },
   "dependencies": {
     "@fontsource-variable/bricolage-grotesque": "^5.3.0",
@@ -26,6 +27,7 @@
   "devDependencies": {
     "@preact/preset-vite": "^2.10.6",
     "@types/node": "^26.6.5",
+    "esbuild": "^0.28.2",
     "preact-render-to-string": "^6.8.1",
     "tsx": "^4.23.15",
     "typescript": "^7.0.2",

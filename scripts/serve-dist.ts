@@ -7,13 +7,17 @@
 import { createServer } from "node:http";
 import { existsSync, readFileSync, statSync } from "node:fs";
 import { extname, join, normalize, resolve } from "node:path";
-import { createRoutes, bundledData } from "../server/routes";
+// The same bundled functions Vercel runs, so this preview catches runtime problems.
+// @ts-expect-error generated JS
+import photo from "../api/photo.js";
+// @ts-expect-error generated JS
+import social from "../api/social.js";
 
 const root = resolve(import.meta.dirname, "..");
 const dist = join(root, "dist");
 const vercel = JSON.parse(readFileSync(join(root, "vercel.json"), "utf8")) as { headers: { source: string; headers: { key: string; value: string }[] }[] };
 const rules = vercel.headers.map((h) => ({ re: new RegExp(`^${h.source.replace(/\(\.\*\)/g, ".*")}$`), headers: h.headers }));
-const routes = createRoutes(bundledData);
+const routes: Record<string, (req: Request) => Promise<Response>> = { "/api/photo": photo.fetch, "/api/social": social.fetch };
 const MIME: Record<string, string> = {
   ".html": "text/html; charset=utf-8", ".js": "text/javascript", ".css": "text/css", ".json": "application/json", ".webmanifest": "application/manifest+json",
   ".png": "image/png", ".jpg": "image/jpeg", ".svg": "image/svg+xml", ".woff2": "font/woff2", ".txt": "text/plain",
