@@ -1,5 +1,6 @@
 import { render } from "preact";
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 import { App } from "./App";
 import "./styles/tokens.css";
 
@@ -11,6 +12,7 @@ if (import.meta.env.DEV && path === "/dev/cards") {
     <>
       <CardsPreview />
       <Analytics />
+      <SpeedInsights />
     </>,
     root
   ));
@@ -19,6 +21,7 @@ if (import.meta.env.DEV && path === "/dev/cards") {
     <>
       <PhotoPicker />
       <Analytics />
+      <SpeedInsights />
     </>,
     root
   ));
@@ -27,6 +30,7 @@ if (import.meta.env.DEV && path === "/dev/cards") {
     <>
       <App />
       <Analytics />
+      <SpeedInsights />
     </>,
     root
   );
