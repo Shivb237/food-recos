@@ -102,7 +102,9 @@ export function createPhotoHandler(deps: PhotoDeps) {
       });
       if (!details.ok) {
         await refund(n);
-        return json({ photos: [], reason: "upstream" }, 502, "no-store");
+        // 429 = Google's per-minute quota on place lookups: the app waits a moment and tries again.
+        if (details.status === 429) return json({ photos: [], reason: "rate-limited", step: "place-details" }, 200, "no-store");
+        return json({ photos: [], reason: "upstream", status: details.status }, 502, "no-store");
       }
       const body = (await details.json()) as { photos?: { name?: string; authorAttributions?: { displayName?: string; uri?: string }[] }[] };
       const chosen = orderByPicks(body.photos ?? [], read(deps.picks ?? {})[slug] ?? [])

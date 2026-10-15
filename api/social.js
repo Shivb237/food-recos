@@ -2509,7 +2509,8 @@ function createPhotoHandler(deps) {
       });
       if (!details.ok) {
         await refund(n);
-        return json2({ photos: [], reason: "upstream" }, 502, "no-store");
+        if (details.status === 429) return json2({ photos: [], reason: "rate-limited", step: "place-details" }, 200, "no-store");
+        return json2({ photos: [], reason: "upstream", status: details.status }, 502, "no-store");
       }
       const body = await details.json();
       const chosen = orderByPicks(body.photos ?? [], read(deps.picks ?? {})[slug] ?? []).filter((p) => p.name && PHOTO_NAME.test(p.name)).slice(0, n);

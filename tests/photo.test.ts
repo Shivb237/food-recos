@@ -99,6 +99,7 @@ describe("photo handler", () => {
     const f = vi.fn(async () => new Response("denied", { status: 403 }));
     const res = await get(make({ kv, fetchImpl: f as unknown as typeof fetch }), "id=rajthali");
     expect(res.status).toBe(502);
+    expect((await res.json()).status).toBe(403);
     expect(await kv.incrBy(`photo-cap:${new Date().toISOString().slice(0, 10)}`, 0, 60)).toBe(0);
   });
 });
@@ -146,5 +147,13 @@ describe("rate limiting by Google", () => {
     const body = await (await get(h, "id=rajthali&n=3")).json();
     expect(body).toEqual({ photos: [], reason: "rate-limited" });
     expect(await kv.incrBy(`photo-cap:${new Date().toISOString().slice(0, 10)}`, 0, 60)).toBe(0);
+  });
+});
+
+describe("place lookup quota", () => {
+  it("treats a 429 on the place lookup as rate-limited so the app retries", async () => {
+    const f = vi.fn(async () => new Response("slow down", { status: 429 }));
+    const body = await (await get(make({ fetchImpl: f as unknown as typeof fetch }), "id=rajthali")).json();
+    expect(body).toEqual({ photos: [], reason: "rate-limited", step: "place-details" });
   });
 });
