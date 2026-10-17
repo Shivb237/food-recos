@@ -63,7 +63,7 @@ export const saveName = (n: string) => store.set("mp.name", n.slice(0, 40));
  * Shivang visits /#admin=TOKEN once on his phone; the token is kept so he can delete any comment.
  * It sits after the "#" on purpose: browsers never send that part to the server, so it can't end up in server logs.
  */
-export function captureAdminToken() {
+function captureAdminToken() {
   const token = new URLSearchParams(location.hash.slice(1)).get("admin");
   if (!token) return;
   store.set("mp.admin", token);
@@ -81,9 +81,13 @@ async function api<T>(path: string, body?: unknown): Promise<{ ok: boolean; stat
 }
 
 // ---- the summary ----
-export async function refreshSummary() {
+/** Bumped whenever the screen changes ahead of the server (a tap on the heart) or a newer fetch starts, so an older answer can't overwrite it. */
+let summarySeq = 0;
+async function refreshSummary() {
+  const seq = ++summarySeq;
   try {
     const r = await api<Omit<SocialState, "status">>("/api/social");
+    if (seq !== summarySeq) return;
     if (r.status === 501 || r.status === 404) return set({ status: "off" });
     if (r.ok) set({ status: "ready", likes: r.data.likes ?? {}, commentCounts: r.data.commentCounts ?? {}, mine: r.data.mine ?? [], recent: r.data.recent ?? [] });
   } catch {
@@ -107,6 +111,7 @@ export async function setLike(place: string, on: boolean): Promise<void> {
   const was = state.mine.includes(place);
   if (was === on) return;
   const before = state;
+  summarySeq++; // any summary already on its way predates this tap
   set({
     mine: on ? [...state.mine, place] : state.mine.filter((p) => p !== place),
     likes: { ...state.likes, [place]: Math.max(0, (state.likes[place] ?? 0) + (on ? 1 : -1)) },

@@ -9,7 +9,7 @@ export interface KV {
   incrBy(key: string, n: number, ttlSec: number): Promise<number>;
 }
 
-export function kvOver(redis: Redis): KV {
+function kvOver(redis: Redis): KV {
   return {
     async incrBy(key, n, ttlSec) {
       const [value] = await redis.pipeline([["INCRBY", key, n], ["EXPIRE", key, ttlSec]]);

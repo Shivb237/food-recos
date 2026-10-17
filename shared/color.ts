@@ -10,7 +10,7 @@ export function hslToRgb(h: number, s: number, l: number): RGB {
   return [Math.round(f(0) * 255), Math.round(f(8) * 255), Math.round(f(4) * 255)];
 }
 
-export function luminance([r, g, b]: RGB): number {
+function luminance([r, g, b]: RGB): number {
   const lin = (c: number) => {
     const v = c / 255;
     return v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4;

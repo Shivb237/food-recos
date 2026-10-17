@@ -2339,6 +2339,8 @@ var MAX_COMMENTS_PER_PLACE = 200;
 var MAX_RECENT = 20;
 var WRITES_PER_MINUTE = 30;
 var WRITES_PER_MINUTE_PER_IP = 90;
+var READS_PER_MINUTE_PER_IP = 90;
+var MINE_TTL_SECONDS = 180 * 86400;
 var NAME_MAX = 40;
 var TEXT_MAX = 280;
 var DEVICE = /^[A-Za-z0-9_-]{16,64}$/;
@@ -2372,8 +2374,13 @@ function createSocialHandler(deps) {
     const device = req.headers.get("x-device") ?? "";
     const me = DEVICE.test(device) ? await fingerprint(device) : null;
     const url = new URL(req.url);
+    const ip = (req.headers.get("x-forwarded-for")?.split(",")[0] ?? req.headers.get("x-real-ip") ?? "unknown").trim();
+    const minute = Math.floor(now() / 6e4);
     try {
       if (req.method === "GET") {
+        const readKey = `rlr:${await fingerprint(ip)}:${minute}`;
+        const [reads] = await redis.pipeline([["INCR", readKey], ["EXPIRE", readKey, 90]]);
+        if (Number(reads) > READS_PER_MINUTE_PER_IP) return json({ error: "slow down a little" }, 429);
         const place2 = url.searchParams.get("place");
         if (place2) {
           if (!deps.validPlaces.has(place2)) return json({ error: "unknown place" }, 404);
@@ -2402,8 +2409,6 @@ function createSocialHandler(deps) {
       const body = parse(bodyText);
       if (!body || !body.place || !deps.validPlaces.has(body.place)) return json({ error: "unknown place" }, 400);
       const place = body.place;
-      const minute = Math.floor(now() / 6e4);
-      const ip = (req.headers.get("x-forwarded-for")?.split(",")[0] ?? req.headers.get("x-real-ip") ?? "unknown").trim();
       const ipKey = `rlip:${await fingerprint(ip)}:${minute}`;
       const [used, , ipUsed] = await redis.pipeline([["INCR", `rl:${me}:${minute}`], ["EXPIRE", `rl:${me}:${minute}`, 90], ["INCR", ipKey], ["EXPIRE", ipKey, 90]]);
       if (Number(used) > WRITES_PER_MINUTE || Number(ipUsed) > WRITES_PER_MINUTE_PER_IP) return json({ error: "slow down a little" }, 429);
@@ -2411,6 +2416,7 @@ function createSocialHandler(deps) {
         if (typeof body.on !== "boolean") return json({ error: "bad request" }, 400);
         const changed = Number(await run(redis, body.on ? "SADD" : "SREM", `mine:${me}`, place));
         if (changed) await run(redis, "HINCRBY", "likes:count", place, body.on ? 1 : -1);
+        if (changed && body.on) await run(redis, "EXPIRE", `mine:${me}`, MINE_TTL_SECONDS);
         return json({ ok: true, changed: !!changed });
       }
       if (body.action === "comment") {
@@ -2419,13 +2425,14 @@ function createSocialHandler(deps) {
         if (!name || !text) return json({ error: "a name and a comment are needed" }, 400);
         const item = { id: newId(), n: name, x: text, t: now(), o: me };
         const recent = { ...item, p: place };
-        await redis.pipeline([
+        const [length] = await redis.pipeline([
           ["LPUSH", `comments:${place}`, JSON.stringify(item)],
           ["LTRIM", `comments:${place}`, 0, MAX_COMMENTS_PER_PLACE - 1],
           ["HINCRBY", "comments:count", place, 1],
           ["LPUSH", "recent", JSON.stringify(recent)],
           ["LTRIM", "recent", 0, MAX_RECENT - 1]
         ]);
+        if (Number(length) > MAX_COMMENTS_PER_PLACE) await run(redis, "HINCRBY", "comments:count", place, -1);
         return json({ ok: true, comment: { id: item.id, name, text, t: item.t, mine: true } });
       }
       if (body.action === "delete") {
@@ -2455,7 +2462,6 @@ var read = (v) => typeof v === "function" ? v() : v;
 var PHOTO_NAME = /^places\/[A-Za-z0-9_-]+\/photos\/[A-Za-z0-9_-]+$/;
 var IMAGE_HOST = /(^|\.)(googleusercontent\.com|ggpht\.com)$/;
 var json2 = (body, status = 200, cache = "private, max-age=300") => new Response(JSON.stringify(body), { status, headers: { "Content-Type": "application/json", "Cache-Control": cache } });
-var clamp = (v, lo, hi, fallback) => Number.isFinite(v) ? Math.min(hi, Math.max(lo, Math.round(v))) : fallback;
 function safeImageUrl(raw) {
   try {
     const u = new URL(String(raw));
@@ -2477,6 +2483,39 @@ function orderByPicks(list, picks) {
   const rest = list.map((_, i) => i).filter((i) => !first.includes(i));
   return [...first, ...rest].map((i) => list[i]);
 }
+async function refused(res) {
+  const text = res.status === 429 ? await res.text().catch(() => "") : "";
+  return { ok: false, status: res.status, daily: /per.?day/i.test(text) };
+}
+async function fetchPhotoRefs(doFetch, key, placeId) {
+  try {
+    const res = await doFetch(`https://places.googleapis.com/v1/places/${encodeURIComponent(placeId)}`, {
+      headers: { "X-Goog-Api-Key": key, "X-Goog-FieldMask": "photos" },
+      signal: AbortSignal.timeout(6e3)
+    });
+    if (!res.ok) return await refused(res);
+    return { ok: true, photos: (await res.json()).photos ?? [] };
+  } catch {
+    return { ok: false, status: 0, daily: false };
+  }
+}
+async function fetchPhotoUri(doFetch, key, name, width) {
+  if (!PHOTO_NAME.test(name)) return { ok: false, status: 0, daily: false };
+  try {
+    const res = await doFetch(`https://places.googleapis.com/v1/${name}/media?maxWidthPx=${width}&skipHttpRedirect=true`, {
+      headers: { "X-Goog-Api-Key": key },
+      signal: AbortSignal.timeout(6e3)
+    });
+    if (!res.ok) return await refused(res);
+    const uri = safeImageUrl((await res.json()).photoUri);
+    return uri ? { ok: true, uri } : { ok: false, status: 0, daily: false };
+  } catch {
+    return { ok: false, status: 0, daily: false };
+  }
+}
+var SHAPES = { "1": { n: 1, w: 480 }, "4": { n: 4, w: 960 } };
+var ALLOWED_PARAMS = /* @__PURE__ */ new Set(["id", "n", "w", "fresh"]);
+var FRESH_PER_HOUR = 3;
 function createPhotoHandler(deps) {
   const doFetch = deps.fetchImpl ?? fetch;
   const now = deps.now ?? (() => /* @__PURE__ */ new Date());
@@ -2487,10 +2526,19 @@ function createPhotoHandler(deps) {
     const slug = q.get("id") ?? "";
     const entry = read(deps.placeIds)[slug];
     if (!entry || !entry.approved) return json2({ error: "unknown place" }, 404, "no-store");
+    const nParam = q.get("n") ?? "1";
+    const shape = SHAPES[nParam];
+    const wParam = q.get("w") ?? String(shape?.w);
+    if (!shape || wParam !== String(shape.w) || [...q.keys()].some((k) => !ALLOWED_PARAMS.has(k)))
+      return json2({ error: "unsupported request" }, 400, "no-store");
+    const { n, w } = shape;
     const fresh = q.get("fresh") === "1";
-    const n = clamp(Number(q.get("n") ?? 1), 1, 4, 1);
-    const w = clamp(Number(q.get("w") ?? 480), 160, 1200, 480);
     if (!deps.apiKey) return json2({ photos: [], reason: "not-configured" }, 200, "no-store");
+    if (fresh) {
+      const hour = now().toISOString().slice(0, 13);
+      const asked = await deps.kv.incrBy(`photo-fresh:${slug}:${hour}`, 1, 7200).catch(() => Infinity);
+      if (asked > FRESH_PER_HOUR) return json2({ photos: [], reason: "try-later" }, 200, "no-store");
+    }
     const capKey = `photo-cap:${now().toISOString().slice(0, 10)}`;
     let used;
     try {
@@ -2503,53 +2551,31 @@ function createPhotoHandler(deps) {
       await refund(n);
       return json2({ photos: [], reason: "daily-cap" }, 200, "public, max-age=60");
     }
-    const headers = { "X-Goog-Api-Key": deps.apiKey };
-    try {
-      const details = await doFetch(`https://places.googleapis.com/v1/places/${encodeURIComponent(entry.placeId)}`, {
-        headers: { ...headers, "X-Goog-FieldMask": "photos" },
-        signal: AbortSignal.timeout(6e3)
-      });
-      if (!details.ok) {
-        await refund(n);
-        if (details.status === 429) return json2({ photos: [], reason: "rate-limited", step: "place-details" }, 200, "no-store");
-        return json2({ photos: [], reason: "upstream", status: details.status }, 502, "no-store");
-      }
-      const body = await details.json();
-      const chosen = orderByPicks(body.photos ?? [], read(deps.picks ?? {})[slug] ?? []).filter((p) => p.name && PHOTO_NAME.test(p.name)).slice(0, n);
-      let limited = false;
-      const failures = {};
-      const settled = await Promise.all(
-        chosen.map(async (p) => {
-          try {
-            const media = await doFetch(`https://places.googleapis.com/v1/${p.name}/media?maxWidthPx=${w}&skipHttpRedirect=true`, {
-              headers,
-              signal: AbortSignal.timeout(6e3)
-            });
-            if (media.status === 429) limited = true;
-            if (!media.ok) {
-              failures[String(media.status)] = (failures[String(media.status)] ?? 0) + 1;
-              return null;
-            }
-            const uri = safeImageUrl((await media.json()).photoUri);
-            if (!uri) return null;
-            const a = p.authorAttributions?.[0];
-            return { uri, author: (a?.displayName ?? "").slice(0, 80), authorUri: safeLink(a?.uri) };
-          } catch {
-            failures.error = (failures.error ?? 0) + 1;
-            return null;
-          }
-        })
-      );
-      const photos = settled.filter((x) => !!x);
-      await refund(n - photos.length);
-      if (!photos.length && limited) return json2({ photos: [], reason: "rate-limited" }, 200, "no-store");
-      if (!photos.length) return json2({ photos: [], reason: chosen.length ? "photo-requests-failed" : "no-photos-listed", listed: (body.photos ?? []).length, failures }, 200, "no-store");
-      const shared = !fresh && ttl > 0 ? `public, max-age=300, s-maxage=${ttl}, stale-while-revalidate=${ttl}` : void 0;
-      return json2({ photos }, 200, shared ?? "private, max-age=300");
-    } catch {
+    const refs = await fetchPhotoRefs(doFetch, deps.apiKey, entry.placeId);
+    if (!refs.ok) {
       await refund(n);
-      return json2({ photos: [], reason: "upstream" }, 502, "no-store");
+      if (refs.status === 429) return json2({ photos: [], reason: refs.daily ? "quota-exhausted" : "rate-limited", step: "place-details" }, 200, "no-store");
+      return json2({ photos: [], reason: "upstream", status: refs.status }, 502, "no-store");
     }
+    const chosen = orderByPicks(refs.photos, read(deps.picks ?? {})[slug] ?? []).filter((p) => p.name && PHOTO_NAME.test(p.name)).slice(0, n);
+    const results = await Promise.all(chosen.map((p) => fetchPhotoUri(doFetch, deps.apiKey, p.name, w)));
+    const photos = [];
+    const failures = {};
+    results.forEach((r, i) => {
+      if (r.ok) {
+        const a = chosen[i].authorAttributions?.[0];
+        photos.push({ uri: r.uri, author: (a?.displayName ?? "").slice(0, 80), authorUri: safeLink(a?.uri) });
+      } else failures[r.status ? String(r.status) : "error"] = (failures[r.status ? String(r.status) : "error"] ?? 0) + 1;
+    });
+    await refund(n - photos.length);
+    if (!photos.length) {
+      const refusals = results.filter((r) => !r.ok);
+      if (refusals.some((r) => r.status === 429)) return json2({ photos: [], reason: refusals.some((r) => r.daily) ? "quota-exhausted" : "rate-limited" }, 200, "no-store");
+      return json2({ photos: [], reason: chosen.length ? "photo-requests-failed" : "no-photos-listed", listed: refs.photos.length, failures }, 200, "no-store");
+    }
+    const complete = photos.length === chosen.length;
+    const shared = complete && !fresh && ttl > 0 ? `public, max-age=300, s-maxage=${ttl}, stale-while-revalidate=${ttl}` : complete ? "private, max-age=300" : "no-store";
+    return json2({ photos }, 200, shared);
   };
 }
 

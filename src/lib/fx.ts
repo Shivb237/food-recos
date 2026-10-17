@@ -30,7 +30,7 @@ function ensureCanvas() {
 
 export interface BurstOptions { n?: number; spread?: number; hearts?: boolean; up?: number }
 
-export function burst(x: number, y: number, { n = 70, spread = 1, hearts = false, up = 1 }: BurstOptions = {}) {
+function burst(x: number, y: number, { n = 70, spread = 1, hearts = false, up = 1 }: BurstOptions = {}) {
   if (reducedMotion() || !ensureCanvas()) return;
   for (let k = 0; k < n; k++) {
     const a = -Math.PI / 2 + (Math.random() - 0.5) * Math.PI * spread;

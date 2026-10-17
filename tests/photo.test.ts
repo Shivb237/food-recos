@@ -39,22 +39,33 @@ describe("photo handler", () => {
   });
 
   it("returns photos with author credit, limited to n", async () => {
-    const res = await get(make(), "id=rajthali&n=2&w=640");
+    const res = await get(make({ fetchImpl: fakeGoogle(5) as unknown as typeof fetch }), "id=rajthali&n=4&w=960");
     const body = await res.json();
-    expect(body.photos).toHaveLength(2);
+    expect(body.photos).toHaveLength(4);
     expect(body.photos[0]).toMatchObject({ author: "Author 0", authorUri: "https://maps.google.com/contrib/0" });
     expect(body.photos[0].uri).toMatch(/^https:\/\/lh3\.googleusercontent\.com\//);
     expect(res.headers.get("cache-control")).toMatch(/s-maxage=43200/); // shared cache, so Google is asked once per place, not once per visit
   });
 
-  it("asks Google for the free 'photos' field only, and clamps size and count", async () => {
+  it("asks Google for the free 'photos' field only", async () => {
     const f = fakeGoogle(10) as ReturnType<typeof vi.fn>;
     const h = make({ fetchImpl: f as unknown as typeof fetch });
-    const body = await (await get(h, "id=rajthali&n=99&w=99999")).json();
+    const body = await (await get(h, "id=rajthali&n=4&w=960")).json();
     expect(body.photos).toHaveLength(4);
     const calls = f.mock.calls.map((c) => ({ url: String(c[0]), init: c[1] as RequestInit }));
     expect((calls[0]!.init.headers as Record<string, string>)["X-Goog-FieldMask"]).toBe("photos");
-    expect(calls.filter((c) => c.url.includes("maxWidthPx=1200"))).toHaveLength(4);
+    expect(calls.filter((c) => c.url.includes("maxWidthPx=960"))).toHaveLength(4);
+  });
+
+  it("refuses any request shape the app never sends, before touching Google or the counter", async () => {
+    const f = fakeGoogle();
+    const h = make({ fetchImpl: f as unknown as typeof fetch });
+    for (const qs of ["id=rajthali&n=2", "id=rajthali&n=99&w=99999", "id=rajthali&n=1&w=481", "id=rajthali&n=4&w=480", "id=rajthali&x=1"]) {
+      const res = await get(h, qs);
+      expect(res.status, qs).toBe(400);
+      expect(res.headers.get("cache-control")).toBe("no-store");
+    }
+    expect(f).not.toHaveBeenCalled();
   });
 
   it("answers 'no photos' in mock mode (no API key) without touching Google", async () => {
@@ -67,18 +78,18 @@ describe("photo handler", () => {
   it("stops at the daily cap and refunds the reservation", async () => {
     const kv = memoryKV();
     const f = fakeGoogle();
-    const h = make({ dailyCap: 3, kv, fetchImpl: f as unknown as typeof fetch });
-    expect((await (await get(h, "id=rajthali&n=2")).json()).photos).toHaveLength(2);
-    const over = await (await get(h, "id=rajthali&n=2")).json();
+    const h = make({ dailyCap: 5, kv, fetchImpl: fakeGoogle(5) as unknown as typeof fetch });
+    expect((await (await get(h, "id=rajthali&n=4&w=960")).json()).photos).toHaveLength(4);
+    const over = await (await get(h, "id=rajthali&n=4&w=960")).json();
     expect(over).toEqual({ photos: [], reason: "daily-cap" });
-    // The refused request gave its 2 back, so one more photo still fits under the cap of 3.
+    // The refused request gave its 4 back, so one more photo still fits under the cap of 5.
     expect((await (await get(h, "id=rajthali&n=1")).json()).photos).toHaveLength(1);
   });
 
   it("refunds photos that Google could not deliver", async () => {
     const kv = memoryKV();
     const h = make({ kv, dailyCap: 10, fetchImpl: fakeGoogle(3, { mediaStatus: 500 }) as unknown as typeof fetch });
-    expect((await (await get(h, "id=rajthali&n=3")).json()).photos).toEqual([]);
+    expect((await (await get(h, "id=rajthali&n=1")).json()).photos).toEqual([]);
     expect(await kv.incrBy(`photo-cap:${new Date().toISOString().slice(0, 10)}`, 0, 60)).toBe(0);
   });
 
@@ -144,7 +155,7 @@ describe("rate limiting by Google", () => {
   it("says 'rate-limited' (and refunds) when Google refuses every photo with 429", async () => {
     const kv = memoryKV();
     const h = make({ kv, fetchImpl: fakeGoogle(3, { mediaStatus: 429 }) as unknown as typeof fetch });
-    const body = await (await get(h, "id=rajthali&n=3")).json();
+    const body = await (await get(h, "id=rajthali&n=1")).json();
     expect(body).toEqual({ photos: [], reason: "rate-limited" });
     expect(await kv.incrBy(`photo-cap:${new Date().toISOString().slice(0, 10)}`, 0, 60)).toBe(0);
   });
@@ -155,6 +166,12 @@ describe("place lookup quota", () => {
     const f = vi.fn(async () => new Response("slow down", { status: 429 }));
     const body = await (await get(make({ fetchImpl: f as unknown as typeof fetch }), "id=rajthali")).json();
     expect(body).toEqual({ photos: [], reason: "rate-limited", step: "place-details" });
+  });
+
+  it("says 'quota-exhausted' (no point retrying) when Google's per-day quota is the one hit", async () => {
+    const f = vi.fn(async () => new Response("Quota exceeded for GetPlaceRequest per day", { status: 429 }));
+    const body = await (await get(make({ fetchImpl: f as unknown as typeof fetch }), "id=rajthali")).json();
+    expect(body).toMatchObject({ photos: [], reason: "quota-exhausted" });
   });
 });
 
@@ -168,9 +185,24 @@ describe("shared cache", () => {
     expect(bad.headers.get("cache-control")).toBe("no-store");
   });
 
-  it("skips the shared cache when the app asks for a fresh link", async () => {
-    const res = await get(make({ cacheSeconds: 600 }), "id=rajthali&fresh=1");
-    expect(res.headers.get("cache-control")).toBe("private, max-age=300");
+  it("skips the shared cache when the app asks for a fresh link, and allows only a few per hour per place", async () => {
+    const f = fakeGoogle();
+    const h = make({ cacheSeconds: 600, fetchImpl: f as unknown as typeof fetch });
+    for (let i = 0; i < 3; i++) expect((await get(h, "id=rajthali&fresh=1")).headers.get("cache-control")).toBe("private, max-age=300");
+    const calls = f.mock.calls.length;
+    expect(await (await get(h, "id=rajthali&fresh=1")).json()).toEqual({ photos: [], reason: "try-later" });
+    expect(f.mock.calls.length).toBe(calls);
+  });
+
+  it("does not keep a partial answer in the shared cache", async () => {
+    const f = vi.fn(async (input: RequestInfo | URL) => {
+      const url = String(input);
+      if (!url.includes("/media")) return fakeGoogle(2)(input);
+      return url.includes("/ref0/") ? Response.json({ photoUri: "https://lh3.googleusercontent.com/a" }) : new Response("no", { status: 500 });
+    });
+    const res = await get(make({ fetchImpl: f as unknown as typeof fetch }), "id=rajthali&n=4&w=960");
+    expect((await res.json()).photos).toHaveLength(1);
+    expect(res.headers.get("cache-control")).toBe("no-store");
   });
 
   it("can be switched off with 0", async () => {

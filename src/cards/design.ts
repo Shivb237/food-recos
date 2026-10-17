@@ -8,19 +8,19 @@ import type { Place, SectionId } from "../../shared/types";
  * and no two places in a section share a hue + pattern.
  */
 
-export const STICKER_KINDS = [
+const STICKER_KINDS = [
   "handi", "thali", "dosa", "wheat", "chai", "bowl", "salad", "roll", "laddoo",
   "pizza", "samosa", "leaf", "chilli", "flame", "sparkle",
 ] as const;
 export type StickerKind = (typeof STICKER_KINDS)[number];
 
-export const PATTERN_KINDS = ["dots", "stripes", "rings", "waves", "gingham", "scallops", "rays", "arches"] as const;
-export type PatternKind = (typeof PATTERN_KINDS)[number];
+const PATTERN_KINDS = ["dots", "stripes", "rings", "waves", "gingham", "scallops", "rays", "arches"] as const;
+type PatternKind = (typeof PATTERN_KINDS)[number];
 
-export const LAYOUT_KINDS = [
+const LAYOUT_KINDS = [
   "bottom-left", "bottom-right", "top-left", "top-right", "bottom-center", "center",
 ] as const;
-export type LayoutKind = (typeof LAYOUT_KINDS)[number];
+type LayoutKind = (typeof LAYOUT_KINDS)[number];
 
 export interface StickerPlacement {
   kind: StickerKind;

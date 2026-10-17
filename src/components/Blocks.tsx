@@ -6,7 +6,7 @@ import { SECTION_EYEBROW } from "../moods";
 
 interface RowProps { places: Place[]; onOpen: (p: Place) => void; label: string }
 
-export function PlaceRail({ places, onOpen, label }: RowProps) {
+function PlaceRail({ places, onOpen, label }: RowProps) {
   return (
     <Rail label={label}>
       {places.map((p) => (

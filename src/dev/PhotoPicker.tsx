@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "preact/hooks";
+import { useEffect, useMemo, useRef, useState } from "preact/hooks";
 import type { PlaceIdEntry } from "../../shared/placeIds";
 import type { Place } from "../../shared/types";
 import { places, sectionById } from "../data";
@@ -22,8 +22,11 @@ interface Found { placeId: string; name: string; address: string; lat: number | 
 const MAX_PICKS = 4;
 const mapsLink = (placeId: string) => `https://www.google.com/maps/place/?q=place_id:${placeId}`;
 
+/** The dev routes refuse requests without this, so another website can't drive them. */
+export const DEV_HEADERS = { "X-Dev-Tool": "1" };
+
 export async function api<T>(path: string, body?: unknown): Promise<T> {
-  const res = await fetch(path, body === undefined ? undefined : { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+  const res = await fetch(path, body === undefined ? { headers: DEV_HEADERS } : { method: "POST", headers: { ...DEV_HEADERS, "Content-Type": "application/json" }, body: JSON.stringify(body) });
   const data = await res.json().catch(() => ({}));
   if (!res.ok) throw new Error((data as { error?: string }).error ?? `HTTP ${res.status}`);
   return data as T;
@@ -99,7 +102,10 @@ export function PhotoGrid({ place, picks, onPicks, onUsage, placeId, persist = t
   const [total, setTotal] = useState(0);
 
   /** Load all photos, or only the `only` positions again (a retry after Google refused some). */
+  const loading = useRef(false); // a second click before the button greys out must not start a second billed run
   const load = async (only?: number[]) => {
+    if (loading.current) return;
+    loading.current = true;
     setBusy(true);
     setError(null);
     try {
@@ -111,6 +117,7 @@ export function PhotoGrid({ place, picks, onPicks, onUsage, placeId, persist = t
     } catch (e) {
       setError((e as Error).message);
     } finally {
+      loading.current = false;
       setBusy(false);
     }
   };

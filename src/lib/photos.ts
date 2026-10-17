@@ -27,9 +27,13 @@ function limited<T>(job: () => Promise<T>): Promise<T> {
   });
 }
 
+/** Set when Google says its daily quota is used up: no point asking again for a while, so cards go straight to their generated look. */
+let pausedUntil = 0;
+const PAUSE_MS = 10 * 60_000;
+
 /**
  * One request per (place, size) per visit; only successes are remembered, so a failure can be retried later.
- * If Google says "rate-limited" the server asks us to wait and ask again (twice at most).
+ * There is no retry here: the hook below owns retrying, so one card can never turn into a burst of requests.
  * `fresh` skips the shared cache (used when an image link has gone stale).
  */
 export function loadPhotos(id: string, n: number, w: number, fresh = false): Promise<PlacePhoto[]> {
@@ -37,31 +41,26 @@ export function loadPhotos(id: string, n: number, w: number, fresh = false): Pro
   const hit = !fresh && cache.get(key);
   if (hit) return hit;
   const p = limited(async () => {
-    for (let attempt = 0; attempt < 3; attempt++) {
-      try {
-        const res = await fetch(`/api/photo?id=${encodeURIComponent(id)}&n=${n}&w=${w}${fresh ? "&fresh=1" : ""}`);
-        if (!res.ok) return [];
-        const body = (await res.json()) as { photos?: PlacePhoto[]; reason?: string };
-        if (body.reason === "rate-limited" && attempt < 2) {
-          await new Promise((r) => setTimeout(r, 2500 + attempt * 2500));
-          continue;
-        }
-        return Array.isArray(body.photos) ? body.photos : [];
-      } catch {
-        return [];
-      }
+    if (Date.now() < pausedUntil) return [];
+    try {
+      const res = await fetch(`/api/photo?id=${encodeURIComponent(id)}&n=${n}&w=${w}${fresh ? "&fresh=1" : ""}`);
+      if (!res.ok) return [];
+      const body = (await res.json()) as { photos?: PlacePhoto[]; reason?: string };
+      if (body.reason === "quota-exhausted") pausedUntil = Date.now() + PAUSE_MS;
+      return Array.isArray(body.photos) ? body.photos : [];
+    } catch {
+      return [];
     }
-    return [];
   });
   cache.set(key, p);
   p.then((photos) => { if (!photos.length && cache.get(key) === p) cache.delete(key); }); // don't remember failures
   return p;
 }
 
-export type PhotoState = { status: "none" } | { status: "loading" } | { status: "ready"; photos: PlacePhoto[] };
+type PhotoState = { status: "none" } | { status: "loading" } | { status: "ready"; photos: PlacePhoto[] };
 
 /** Retry delays for a place whose photo could not be loaded (the generated card is shown meanwhile). */
-const RETRY_MS = [8000, 25000, 70000];
+const RETRY_MS = [5000, 20000, 60000];
 /** After this long without an answer, stop showing the skeleton and show the generated card (the photo still swaps in when it arrives). */
 const SKELETON_MS = 4500;
 

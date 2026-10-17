@@ -1,6 +1,6 @@
 # Deploying to Vercel
 
-Nothing here has been run yet: the project is built and checked locally, and these are the steps to put it on the internet.
+The site is live on Vercel from GitHub. These are the steps that were followed, kept for setting it up again or on another account.
 
 ## 0. What goes where
 

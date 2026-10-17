@@ -3,7 +3,12 @@ import { SECTION_IDS, VEG_KINDS } from "./types";
 import { BANDS, BAND_TIER, bandFor } from "./price";
 
 const slug = z.string().regex(/^[a-z0-9]+(-[a-z0-9]+)*$/, "slug must be lowercase-with-dashes");
-const url = z.string().url().nullable();
+/** https only, and only on the named site, so a typo or a pasted `javascript:` link can never become an Order button. */
+const siteUrl = (host: RegExp, name: string) =>
+  z.string().refine((v) => { try { const u = new URL(v); return u.protocol === "https:" && host.test(u.hostname); } catch { return false; } }, `must be an https ${name} link`).nullable();
+const swiggy = siteUrl(/(^|\.)swiggy\.com$/, "swiggy.com");
+const zomato = siteUrl(/(^|\.)zomato\.com$/, "zomato.com");
+const maps = siteUrl(/^(maps\.google\.com|www\.google\.com|google\.com|maps\.app\.goo\.gl|goo\.gl)$/, "Google Maps");
 
 export const placeSchema = z.object({
   id: slug,
@@ -30,9 +35,9 @@ export const placeSchema = z.object({
   note: z.string().min(1).nullable(),
   flag: z.string().min(1).nullable(),
   closed: z.boolean(),
-  googleMapsUrl: url,
-  swiggyUrl: url,
-  zomatoUrl: url,
+  googleMapsUrl: maps,
+  swiggyUrl: swiggy,
+  zomatoUrl: zomato,
   photo: z.string().startsWith("/").nullable(),
   triedByShivang: z.boolean(),
 });

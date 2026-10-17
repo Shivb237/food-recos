@@ -98,7 +98,7 @@ export function SheetShell({ onClose, labelledBy, children }: { onClose: () => v
   );
 }
 
-export function shareUrl(place: Place) {
+function shareUrl(place: Place) {
   return `${location.origin}/?p=${place.id}`;
 }
 

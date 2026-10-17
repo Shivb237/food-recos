@@ -3,8 +3,11 @@
  * They back the /dev/photos picker: reading and writing the data/*.json files, and calling Google on your behalf.
  */
 import { existsSync, readFileSync, renameSync, writeFileSync } from "node:fs";
+import { join } from "node:path";
 import type { PlaceIdEntry, PlaceIdsFile } from "../shared/placeIds";
+import { CENTER, distanceKm } from "../shared/geo";
 import { memoryKV } from "./kv";
+import { PHOTO_NAME, fetchPhotoRefs, fetchPhotoUri, type Refused } from "./photo";
 import { createRoutes } from "./routes";
 import { placeSchema, crossCheck, placesFileSchema } from "../shared/schema";
 import { BAND_TIER, bandFor } from "../shared/price";
@@ -13,15 +16,23 @@ import type { Place, PlacesFile } from "../shared/types";
 
 type Route = (req: Request) => Promise<Response>;
 
+/** Where the data files live and what to run after changing them. Tests swap both. */
+export const devConfig = {
+  dir: "data",
+  /** The deployed functions have the data baked in, so they must be re-bundled after every write. */
+  rebuild: async () => {
+    // @ts-expect-error plain JS build script
+    await (await import("../scripts/build-api.mjs")).bundleApi();
+  },
+};
 const FILES = {
-  places: "data/places.json",
-  ids: "data/place-ids.json",
-  picks: "data/photo-picks.json",
-  overrides: "data/place-id-overrides.json",
-  review: "data/place-id-review.json",
+  get places() { return join(devConfig.dir, "places.json"); },
+  get ids() { return join(devConfig.dir, "place-ids.json"); },
+  get picks() { return join(devConfig.dir, "photo-picks.json"); },
+  get overrides() { return join(devConfig.dir, "place-id-overrides.json"); },
+  get review() { return join(devConfig.dir, "place-id-review.json"); },
 };
 const MAX_PICKS = 4;
-const CENTER = { latitude: 17.4049, longitude: 78.3866 };
 const KEY = () => process.env.GOOGLE_MAPS_API_KEY;
 
 const readJson = <T>(file: string, fallback: T): T => (existsSync(file) ? (JSON.parse(readFileSync(file, "utf8")) as T) : fallback);
@@ -32,17 +43,11 @@ function writeJson(file: string, value: unknown) {
 const json = (body: unknown, status = 200) => new Response(JSON.stringify(body), { status, headers: { "Content-Type": "application/json", "Cache-Control": "no-store" } });
 
 const knownSlugs = () => new Set((readJson<{ places: { id: string }[] }>(FILES.places, { places: [] })).places.map((p) => p.id));
-const km = (lat: number, lng: number) => {
-  const r = (d: number) => (d * Math.PI) / 180;
-  const h = Math.sin(r(lat - CENTER.latitude) / 2) ** 2 + Math.cos(r(CENTER.latitude)) * Math.cos(r(lat)) * Math.sin(r(lng - CENTER.longitude) / 2) ** 2;
-  return Math.round(12742 * Math.asin(Math.sqrt(h)) * 10) / 10;
-};
+const km = (latitude: number, longitude: number) => Math.round(distanceKm(CENTER, { latitude, longitude }) * 10) / 10;
 
 /** Photos from Google's list for one place, with their positions. Each one is a billed request, so it has its own daily cap. */
 const devKv = memoryKV();
 const PLACE_ID = /^[A-Za-z0-9_-]{10,200}$/;
-const PHOTO_NAME = /^places\/[A-Za-z0-9_-]+\/photos\/[A-Za-z0-9_-]+$/;
-const IMAGE_HOST = /(^|\.)(googleusercontent\.com|ggpht\.com)$/;
 
 const routes: Record<string, Route> = {
   "/api/dev/state": async () =>
@@ -96,11 +101,10 @@ const routes: Record<string, Route> = {
     if (!entry || ("approved" in entry && !entry.approved)) return json({ error: "no approved match for this place" }, 404);
     if (!KEY()) return json({ error: "no API key" }, 503);
     const w = Math.min(640, Math.max(160, Math.round(Number(q.get("w")) || 360)));
-    const headers = { "X-Goog-Api-Key": KEY()! };
 
-    const details = await fetch(`https://places.googleapis.com/v1/places/${encodeURIComponent(entry.placeId)}`, { headers: { ...headers, "X-Goog-FieldMask": "photos" }, signal: AbortSignal.timeout(8000) });
-    if (!details.ok) return json({ error: `Google ${details.status}` }, 502);
-    const list = ((await details.json()) as { photos?: { name?: string; authorAttributions?: { displayName?: string; uri?: string }[] }[] }).photos ?? [];
+    const refs = await fetchPhotoRefs(fetch, KEY()!, entry.placeId);
+    if (!refs.ok) return json({ error: `Google ${refs.status || "unreachable"}` }, 502);
+    const list = refs.photos;
 
     const only = (q.get("only") ?? "").split(",").filter(Boolean).map(Number);
     const wanted = list.map((p, index) => ({ p, index })).filter((x) => !only.length || only.includes(x.index));
@@ -116,34 +120,21 @@ const routes: Record<string, Route> = {
     // Google limits photo requests per minute, so go three at a time and wait out a 429 before giving up on a photo.
     const failed: { index: number; status: number; reason: string }[] = [];
     const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+    const why = (r: Refused) =>
+      r.status === 429 ? (r.daily ? "Google DAILY photo quota reached" : "Google per-minute limit hit") : r.status ? `Google error ${r.status}` : "Google returned no usable image";
     async function fetchOne(index: number, name: string | undefined) {
       if (!name || !PHOTO_NAME.test(name)) return void failed.push({ index, status: 0, reason: "Google gave no usable photo reference" });
-      for (let attempt = 0; attempt < 3; attempt++) {
-        try {
-          const m = await fetch(`https://places.googleapis.com/v1/${name}/media?maxWidthPx=${w}&skipHttpRedirect=true`, { headers, signal: AbortSignal.timeout(8000) });
-          if (!m.ok) {
-            const msg = ((await m.json().catch(() => ({}))) as { error?: { message?: string } }).error?.message ?? "";
-            const quota = msg.match(/limit '([^']+)'/)?.[1];
-            const daily = /day/i.test(quota ?? msg);
-            // A per-minute limit clears in seconds, so wait and retry; a daily one will not, so don't waste time.
-            if (m.status === 429 && !daily && attempt < 2) {
-              await sleep(attempt === 0 ? 2500 : 6000);
-              continue;
-            }
-            return void failed.push({
-              index,
-              status: m.status,
-              reason: m.status === 429 ? (daily ? `Google DAILY photo quota reached${quota ? ` (${quota})` : ""}` : `Google per-minute limit hit${quota ? ` (${quota})` : ""}`) : `Google error ${m.status}`,
-            });
-          }
-          const uri = ((await m.json()) as { photoUri?: string }).photoUri;
-          if (!uri || !IMAGE_HOST.test(new URL(uri).hostname)) return void failed.push({ index, status: 0, reason: "Google returned an unexpected image link" });
-          const a = list[index]?.authorAttributions?.[0];
-          return { index, uri, author: a?.displayName ?? "", authorUri: a?.uri ?? null };
-        } catch {
-          if (attempt === 2) return void failed.push({ index, status: 0, reason: "timed out reaching Google" });
-        }
+      let r = await fetchPhotoUri(fetch, KEY()!, name, w);
+      // A per-minute limit clears in seconds, so wait and retry; a daily one will not, so don't waste time.
+      for (let attempt = 0; !r.ok && r.status === 429 && !r.daily && attempt < 2; attempt++) {
+        await sleep(attempt === 0 ? 2500 : 6000);
+        r = await fetchPhotoUri(fetch, KEY()!, name, w);
       }
+      if (r.ok) {
+        const a = list[index]?.authorAttributions?.[0];
+        return { index, uri: r.uri, author: a?.displayName ?? "", authorUri: a?.uri ?? null };
+      }
+      failed.push({ index, status: r.status, reason: why(r) });
     }
     const photos: { index: number; uri: string; author: string; authorUri: string | null }[] = [];
     for (let i = 0; i < wanted.length; i += 3) {
@@ -190,8 +181,9 @@ const routes: Record<string, Route> = {
     if (!b?.place || !b.placeId || !PLACE_ID.test(b.placeId)) return json({ errors: ["missing place or Google place id"] }, 400);
 
     const ids = readJson<PlaceIdsFile>(FILES.ids, { resolvedAt: "", places: {} });
-    if (Object.values(ids.places).some((e) => e.placeId === b.placeId)) return json({ errors: ["this Google place is already on the site"] }, 409);
     const file = readJson<PlacesFile>(FILES.places, null as unknown as PlacesFile);
+    const onSite = new Set(file.places.map((x) => x.id));
+    if (Object.entries(ids.places).some(([slug, e]) => onSite.has(slug) && e.placeId === b.placeId)) return json({ errors: ["this Google place is already on the site"] }, 409);
 
     const p = b.place;
     const base = slugify(String(p.searchName || p.name || ""));
@@ -233,6 +225,7 @@ const routes: Record<string, Route> = {
     writeJson(FILES.overrides, overrides);
     writeJson(FILES.picks, allPicks);
     writeJson(FILES.places, next); // last, so a failure above never leaves a place without its photo links
+    await devConfig.rebuild();
     return json({ ok: true, id });
   },
 
@@ -245,6 +238,7 @@ const routes: Record<string, Route> = {
     if (clean.length) all[id] = clean;
     else delete all[id];
     writeJson(FILES.picks, all);
+    await devConfig.rebuild();
     return json({ ok: true, picks: clean });
   },
 
@@ -277,6 +271,7 @@ const routes: Record<string, Route> = {
     writeJson(FILES.overrides, overrides);
     writeJson(FILES.ids, ids);
     writeJson(FILES.picks, picks);
+    await devConfig.rebuild();
     return json({ ok: true, entry: ids.places[b.id] ?? null });
   },
 };
@@ -289,9 +284,17 @@ const publicRoutes = createRoutes({
 
 const LOCAL_HOST = /^(localhost|127\.0\.0\.1|\[::1\])(:\d+)?$/;
 
+/**
+ * Local-only, and not callable from another website open in the same browser: a page on any other site could otherwise
+ * POST to localhost and rewrite the data files. A custom header can't be sent cross-site without a CORS preflight, which these routes never answer.
+ */
+function allowed(req: Request): boolean {
+  const origin = req.headers.get("origin");
+  return LOCAL_HOST.test(new URL(req.url).host) && req.headers.get("x-dev-tool") === "1" && (!origin || LOCAL_HOST.test(new URL(origin).host));
+}
+
 export function devRoutes(): Record<string, Route> {
-  const guard = (route: Route): Route => async (req) =>
-    LOCAL_HOST.test(new URL(req.url).host) ? route(req) : json({ error: "dev routes are local only" }, 403);
+  const guard = (route: Route): Route => async (req) => (allowed(req) ? route(req) : json({ error: "dev routes are local only" }, 403));
   return {
     ...publicRoutes,
     ...Object.fromEntries(Object.entries(routes).map(([path, r]) => [path, guard(r)])),

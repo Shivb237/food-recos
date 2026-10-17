@@ -1,13 +1,13 @@
 import type { VegKind } from "../../shared/types";
 
-export const VEG_LABEL: Record<VegKind, string> = {
+const VEG_LABEL: Record<VegKind, string> = {
   pure: "Pure veg",
   both: "Veg & non-veg",
   options: "Veg options",
 };
 
 /** The Indian food-pack squares: green dot = veg, brown triangle = non-veg. */
-export function VegMark({ kind }: { kind: "veg" | "nonveg" }) {
+function VegMark({ kind }: { kind: "veg" | "nonveg" }) {
   return <i class={`vmark ${kind}`} aria-hidden="true" />;
 }
 

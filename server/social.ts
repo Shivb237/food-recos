@@ -11,6 +11,7 @@ import { run, toObject, type Redis } from "./redis";
  *   recent           LIST  the latest comments across all places, at most 20
  *   rl:<device>:<m>  a number: writes this device made in minute m (the turnstile)
  *   rlip:<ip>:<m>    the same turnstile, per network address (so inventing new device ids does not help)
+ *   rlr:<ip>:<m>     reads this network address made in minute m (reading costs Redis commands too)
  *
  * No accounts: a phone invents a random id, keeps it in localStorage, and sends it as the X-Device header.
  * We store only a short fingerprint (SHA-256) of it, never the id itself, and never send any fingerprint back.
@@ -30,6 +31,10 @@ const MAX_RECENT = 20;
 const WRITES_PER_MINUTE = 30;
 /** Inventing new device ids gets round the per-phone limit, so the same minute is also counted per network address. */
 const WRITES_PER_MINUTE_PER_IP = 90;
+/** Reads are cheap but not free (every one is several Redis commands), so one address gets a generous limit. */
+const READS_PER_MINUTE_PER_IP = 90;
+/** A phone that has not come back for this long forgets which places it hearted; its hearts stay counted. */
+const MINE_TTL_SECONDS = 180 * 86400;
 const NAME_MAX = 40;
 const TEXT_MAX = 280;
 const DEVICE = /^[A-Za-z0-9_-]{16,64}$/;
@@ -76,9 +81,14 @@ export function createSocialHandler(deps: SocialDeps) {
     const device = req.headers.get("x-device") ?? "";
     const me = DEVICE.test(device) ? await fingerprint(device) : null;
     const url = new URL(req.url);
+    const ip = (req.headers.get("x-forwarded-for")?.split(",")[0] ?? req.headers.get("x-real-ip") ?? "unknown").trim();
+    const minute = Math.floor(now() / 60000);
 
     try {
       if (req.method === "GET") {
+        const readKey = `rlr:${await fingerprint(ip)}:${minute}`;
+        const [reads] = await redis.pipeline([["INCR", readKey], ["EXPIRE", readKey, 90]]);
+        if (Number(reads) > READS_PER_MINUTE_PER_IP) return json({ error: "slow down a little" }, 429);
         const place = url.searchParams.get("place");
         if (place) {
           if (!deps.validPlaces.has(place)) return json({ error: "unknown place" }, 404);
@@ -113,8 +123,6 @@ export function createSocialHandler(deps: SocialDeps) {
       const place = body.place;
 
       // The turnstile: at most 30 writes a minute per phone.
-      const minute = Math.floor(now() / 60000);
-      const ip = (req.headers.get("x-forwarded-for")?.split(",")[0] ?? req.headers.get("x-real-ip") ?? "unknown").trim();
       const ipKey = `rlip:${await fingerprint(ip)}:${minute}`;
       const [used, , ipUsed] = await redis.pipeline([["INCR", `rl:${me}:${minute}`], ["EXPIRE", `rl:${me}:${minute}`, 90], ["INCR", ipKey], ["EXPIRE", ipKey, 90]]);
       if (Number(used) > WRITES_PER_MINUTE || Number(ipUsed) > WRITES_PER_MINUTE_PER_IP) return json({ error: "slow down a little" }, 429);
@@ -124,6 +132,7 @@ export function createSocialHandler(deps: SocialDeps) {
         // SADD/SREM answer 1 only if something really changed. Only then do we touch the counter.
         const changed = Number(await run(redis, body.on ? "SADD" : "SREM", `mine:${me}`, place));
         if (changed) await run(redis, "HINCRBY", "likes:count", place, body.on ? 1 : -1);
+        if (changed && body.on) await run(redis, "EXPIRE", `mine:${me}`, MINE_TTL_SECONDS);
         return json({ ok: true, changed: !!changed });
       }
 
@@ -133,13 +142,15 @@ export function createSocialHandler(deps: SocialDeps) {
         if (!name || !text) return json({ error: "a name and a comment are needed" }, 400);
         const item: StoredComment = { id: newId(), n: name, x: text, t: now(), o: me };
         const recent: RecentComment = { ...item, p: place };
-        await redis.pipeline([
+        const [length] = await redis.pipeline([
           ["LPUSH", `comments:${place}`, JSON.stringify(item)],
           ["LTRIM", `comments:${place}`, 0, MAX_COMMENTS_PER_PLACE - 1],
           ["HINCRBY", "comments:count", place, 1],
           ["LPUSH", "recent", JSON.stringify(recent)],
           ["LTRIM", "recent", 0, MAX_RECENT - 1],
         ]);
+        // The LTRIM above dropped the oldest comment, so the count must drop with it or it drifts above the list.
+        if (Number(length) > MAX_COMMENTS_PER_PLACE) await run(redis, "HINCRBY", "comments:count", place, -1);
         return json({ ok: true, comment: { id: item.id, name, text, t: item.t, mine: true } });
       }
 

@@ -16,7 +16,7 @@ export interface ServerData {
 }
 
 /** Data baked into the build. The dev server swaps in versions read from disk so edits show up without a restart. */
-export const bundledData: ServerData = {
+const bundledData: ServerData = {
   placeIds: () => (placeIdsFile as PlaceIdsFile).places,
   picks: () => picksFile as Record<string, number[]>,
 };
@@ -47,6 +47,6 @@ export function createRoutes(data: ServerData, env: Env = process.env, kv: KV = 
   return { "/api/photo": photo, "/api/social": social };
 }
 
-export const routes = createRoutes(bundledData);
+const routes = createRoutes(bundledData);
 export const photoHandler = routes["/api/photo"]!;
 export const socialHandler = routes["/api/social"]!;

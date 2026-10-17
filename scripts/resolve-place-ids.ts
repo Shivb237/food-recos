@@ -8,6 +8,7 @@
  * Writes data/place-ids.json (used by the app) and data/place-id-review.json (candidates, for people).
  * Put a hand-picked ID in data/place-id-overrides.json ({ "slug": "ChIJ..." }) to override a bad match.
  */
+import { CENTER, distanceKm } from "../shared/geo";
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { placesFileSchema } from "../shared/schema";
 import type { PlaceIdEntry, PlaceIdsFile } from "../shared/placeIds";
@@ -19,7 +20,6 @@ if (!KEY) {
   process.exit(1);
 }
 const force = process.argv.includes("--force");
-const CENTER = { latitude: 17.4049, longitude: 78.3866 };
 const read = <T>(file: string, fallback: T): T => (existsSync(file) ? JSON.parse(readFileSync(file, "utf8")) : fallback);
 
 const { places } = placesFileSchema.parse(read("data/places.json", null));
@@ -37,11 +37,7 @@ interface Candidate {
   googleMapsUri?: string;
 }
 
-const km = (a: typeof CENTER, b: { latitude: number; longitude: number }) => {
-  const r = (d: number) => (d * Math.PI) / 180;
-  const h = Math.sin(r(b.latitude - a.latitude) / 2) ** 2 + Math.cos(r(a.latitude)) * Math.cos(r(b.latitude)) * Math.sin(r(b.longitude - a.longitude) / 2) ** 2;
-  return 12742 * Math.asin(Math.sqrt(h));
-};
+const km = distanceKm;
 const STOP = new Set(["the", "and", "by", "of", "pure", "veg", "hyderabad"]);
 const tokens = (s: string) => normalise(s).split(" ").filter((t) => t && !STOP.has(t));
 const cidOf = (u?: string | null) => u?.match(/cid=(\d+)/)?.[1];

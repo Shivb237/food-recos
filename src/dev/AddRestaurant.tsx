@@ -3,7 +3,7 @@ import { BAND_LABEL, bandFor } from "../../shared/price";
 import { slugify } from "../../shared/slug";
 import type { Place, Rating, SectionId, VegKind } from "../../shared/types";
 import { moods, places, sections } from "../data";
-import { PhotoGrid, api } from "./PhotoPicker";
+import { DEV_HEADERS, PhotoGrid, api } from "./PhotoPicker";
 import "./picker.css";
 
 /** Dev-only: add a restaurant to the site. Search Google, check the pre-filled details, price it, pick photos, save. */
@@ -90,7 +90,7 @@ export function AddRestaurant() {
       mealPrice: meal, priceSource: source || null, priceConfidence: meal ? confidence : null,
     };
     try {
-      const r = await fetch("/api/dev/add/save", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ placeId: chosen.placeId, googleName: chosen.name, address: chosen.address, lat: chosen.lat, lng: chosen.lng, closedOnGoogle: closed, picks, place }) });
+      const r = await fetch("/api/dev/add/save", { method: "POST", headers: { ...DEV_HEADERS, "Content-Type": "application/json" }, body: JSON.stringify({ placeId: chosen.placeId, googleName: chosen.name, address: chosen.address, lat: chosen.lat, lng: chosen.lng, closedOnGoogle: closed, picks, place }) });
       const body = await r.json();
       if (!r.ok) setErrors(body.errors ?? [body.error ?? `HTTP ${r.status}`]);
       else { setSaved(body.id); setChosen(null); setResults(null); setQ(""); }

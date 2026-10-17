@@ -18,7 +18,7 @@ Chosen by Shivang: **self-hosted site + Google Places API (New) photos.** Nothin
 | `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN` | Likes and comments. |
 | `ADMIN_TOKEN` (optional) | Lets Shivang delete anyone's comment. |
 
-## `/api/photo?place=<name>&n=1..4&w=200..1200`
+## `/api/photo?id=<slug>&n=1&w=480` (card) or `&n=4&w=960` (gallery)
 
 1. Reject names not in `places.json` (stops anyone burning the quota with arbitrary queries).
 2. **Resolve the place ID** with Text Search, field mask `places.id` only (the "IDs only" SKU has an unlimited free tier). Bias to Manikonda: circle centre 17.4049, 78.3866, radius ~15 km. Allow a per-place `query` override in data for chains or ambiguous names. **Place IDs may be cached indefinitely**, so store them (in memory, Redis, or a generated JSON).
@@ -41,7 +41,7 @@ Chosen by Shivang: **self-hosted site + Google Places API (New) photos.** Nothin
 
 ### Photo speed and quotas (Oct 2026)
 
-Each place needs one free "Place Details" lookup plus one billed photo download, and a page shows about 10 places, so without caching every visit cost about 10 lookups. A 300-a-day lookup quota ran out within about 30 visits, and cards then fell back to generated art. Fixes: `/api/photo` answers are cached by Vercel's shared cache for `PHOTO_CACHE_SECONDS` (default 12 h), so Google is asked about once per place per half-day; the app retries failures later, never sticks on a skeleton (4.5 s max), and asks for a `fresh` link if a cached image link has gone stale. Judgment call: this caches Google's temporary `photoUri`, not photo names or image bytes; set `PHOTO_CACHE_SECONDS=0` to turn it off. Quotas to set: Place Details per day 3,000+ (free for us), per minute 300; Place Photos per day about 200, per minute 120.
+Each place needs one free "Place Details" lookup plus one billed photo download, and a page shows about 10 places, so without caching every visit cost about 10 lookups. A 300-a-day lookup quota ran out within about 30 visits, and cards then fell back to generated art. Fixes: `/api/photo` answers are cached by Vercel's shared cache for `PHOTO_CACHE_SECONDS` (default 12 h), so Google is asked about once per place per half-day; the app retries failures later, never sticks on a skeleton (4.5 s max), and asks for a `fresh` link if a cached image link has gone stale (limited to 3 per place per hour). Only those two request shapes are accepted, because every distinct address is its own cache entry; partial answers are never cached; a per-day Google quota stops the app asking for 10 minutes. Judgment call: this caches Google's temporary `photoUri`, not photo names or image bytes; set `PHOTO_CACHE_SECONDS=0` to turn it off. Quotas to set: Place Details per day 3,000+ (free for us), per minute 300; Place Photos per day about 200, per minute 120.
 
 ### Notes from the build (Oct 2026)
 

@@ -28,7 +28,7 @@ function write(key: string, list: string[]) {
   listeners.forEach((l) => l());
 }
 
-export function useStoredList(key: string): string[] {
+function useStoredList(key: string): string[] {
   const [, tick] = useState(0);
   useEffect(() => {
     const l = () => tick((n) => n + 1);

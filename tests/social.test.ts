@@ -49,6 +49,24 @@ describe("likes", () => {
   });
 });
 
+describe("storage limits", () => {
+  it("lets a phone's hearted-places list expire", async () => {
+    const seen: unknown[][] = [];
+    const spy: Redis = { pipeline: async (cmds) => { seen.push(...cmds); return redis.pipeline(cmds); } };
+    await call(make({ redis: spy }), A, { body: { action: "like", place: "salt", on: true } });
+    expect(seen.some((c) => c[0] === "EXPIRE" && String(c[1]).startsWith("mine:") && Number(c[2]) > 86400)).toBe(true);
+  });
+
+  it("keeps the comment count equal to the list when the oldest comment drops off", async () => {
+    const h = make();
+    for (let i = 0; i < 201; i++) {
+      t += 5000; // spread out so the turnstile never trips
+      await call(h, i % 2 ? A : B, { body: { action: "comment", place: "box8", name: "N", text: `c${i}` } });
+    }
+    expect((await (await call(h, A)).json()).commentCounts.box8).toBe(200);
+  });
+});
+
 describe("comments", () => {
   it("stores, lists newest first, and counts", async () => {
     const h = make();
@@ -125,6 +143,14 @@ describe("safety", () => {
     const fresh = (i: number) => h(new Request("http://x.test/api/social", { method: "POST", headers: { "x-device": `device-${String(i).padStart(16, "0")}`, "x-forwarded-for": "203.0.113.9" }, body: JSON.stringify({ action: "like", place: "salt", on: true }) }));
     for (let i = 0; i < 90; i++) expect((await fresh(i)).status).toBe(200);
     expect((await fresh(999)).status).toBe(429);
+  });
+  it("limits how often one network address can read", async () => {
+    const h = make();
+    const read = () => h(new Request("http://x.test/api/social", { headers: { "x-device": A, "x-forwarded-for": "203.0.113.7" } }));
+    for (let i = 0; i < 90; i++) expect((await read()).status).toBe(200);
+    expect((await read()).status).toBe(429);
+    t += 61_000;
+    expect((await read()).status).toBe(200);
   });
   it("turns a Redis outage into a polite 503", async () => {
     const h = make({ redis: { pipeline: async () => { throw new Error("down"); } } });
