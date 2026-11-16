@@ -579,7 +579,7 @@ var places_default = {
       closed: false,
       googleMapsUrl: "https://maps.google.com/maps?cid=4530861782254557107",
       swiggyUrl: null,
-      zomatoUrl: null,
+      zomatoUrl: "https://www.zomato.com/hyderabad/chai-chakhna-company-jubilee-hills",
       photo: null,
       triedByShivang: true
     },
@@ -673,7 +673,7 @@ var places_default = {
       closed: false,
       googleMapsUrl: "https://maps.google.com/maps?cid=5224017045379485277",
       swiggyUrl: null,
-      zomatoUrl: null,
+      zomatoUrl: "https://www.zomato.com/hyderabad/millet-express-manikonda",
       photo: null,
       triedByShivang: true
     },
@@ -1759,7 +1759,7 @@ var places_default = {
       closed: false,
       googleMapsUrl: "https://maps.google.com/maps?cid=7717209219865728972",
       swiggyUrl: null,
-      zomatoUrl: null,
+      zomatoUrl: "https://www.zomato.com/hyderabad/vaishnavi-tiffins-manikonda",
       photo: null,
       triedByShivang: false
     },
@@ -1790,7 +1790,7 @@ var places_default = {
       closed: false,
       googleMapsUrl: "https://maps.google.com/maps?cid=789457810313219373",
       swiggyUrl: null,
-      zomatoUrl: null,
+      zomatoUrl: "https://www.zomato.com/hyderabad/varalakshmi-tiffins-gachibowli",
       photo: null,
       triedByShivang: false
     },
@@ -1823,7 +1823,7 @@ var places_default = {
       closed: false,
       googleMapsUrl: "https://maps.google.com/maps?cid=13425063907160355249",
       swiggyUrl: null,
-      zomatoUrl: null,
+      zomatoUrl: "https://www.zomato.com/hyderabad/vedham-vegetarians-delight-gachibowli",
       photo: null,
       triedByShivang: false
     },
@@ -1952,7 +1952,7 @@ var places_default = {
       closed: false,
       googleMapsUrl: "https://maps.google.com/maps?cid=11001035560471678777",
       swiggyUrl: null,
-      zomatoUrl: null,
+      zomatoUrl: "https://www.zomato.com/hyderabad/hoy-punjab-restaurant-manikonda",
       photo: null,
       triedByShivang: true
     }
