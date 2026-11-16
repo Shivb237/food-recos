@@ -9,6 +9,7 @@ import { PersonalRow, SectionBlock } from "./components/Blocks";
 import { PlaceDetail, RollingView, SheetShell } from "./components/Sheet";
 import { burstAt, reducedMotion } from "./lib/fx";
 import { pickRandom } from "./lib/pick";
+import { BANDS, BAND_LABEL, type PriceBand } from "../shared/price";
 import { type HistoryState, type Route, useLocationState } from "./lib/router";
 import { buildIndex, searchPlaces } from "./lib/search";
 import { clearRecent, useRecent, useSaved } from "./lib/storage";
@@ -45,6 +46,8 @@ export function App() {
   const lastPick = useRef<string | null>(null);
   const timers = useRef<ReturnType<typeof setTimeout>[]>([]);
   const [pick, setPick] = useState<PickState | null>(null);
+  const [pickBand, setPickBand] = useState<PriceBand | null>(null);
+  const homePool = places.filter((p) => !p.closed && (!pickBand || p.priceBand === pickBand));
 
   const place = loc.place ? placeById.get(loc.place) ?? null : null;
   const sheetOpen = !!place || !!pick?.rolling;
@@ -182,7 +185,13 @@ export function App() {
                 <section class="block" aria-labelledby="moods-h">
                   <header class="phead"><div><h2 id="moods-h">What are you craving?</h2></div></header>
                   <MoodTiles moods={moods} counts={moodCounts} onPick={(m: Mood) => navigate({ view: "mood", id: m.id })} />
-                  <PickCard onPick={() => runPick(places, true)} />
+                  <div class="chips pick-chips" role="group" aria-label="Budget for the pick">
+                    <button class="chip" type="button" aria-pressed={pickBand === null} onClick={() => setPickBand(null)}>Any price</button>
+                    {BANDS.map((b) => (
+                      <button key={b} class="chip" type="button" aria-pressed={pickBand === b} onClick={() => setPickBand(pickBand === b ? null : b)}>{BAND_LABEL[b]}</button>
+                    ))}
+                  </div>
+                  <PickCard onPick={() => runPick(homePool, true)} hint={pickBand ? `One of ${homePool.length} ${BAND_LABEL[pickBand].toLowerCase()} places` : undefined} />
                 </section>
                 {social.status === "ready" && lovedPlaces.length > 0 && <PersonalRow title="Most loved" sub="What people here are liking." places={lovedPlaces} onOpen={openPlace} />}
                 {social.status === "ready" && <SayingFeed items={social.recent} onOpen={openPlace} />}
@@ -217,7 +226,7 @@ export function App() {
             <PlaceDetail
               place={place}
               label={pick?.landed && lastPick.current === place.id ? "Tonight, try" : null}
-              onAgain={pick?.landed && lastPick.current === place.id ? () => runPick(places, false) : undefined}
+              onAgain={pick?.landed && lastPick.current === place.id ? () => runPick(homePool, false) : undefined}
             />
           ) : null}
         </SheetShell>
